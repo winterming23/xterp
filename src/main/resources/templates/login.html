@@ -32,12 +32,27 @@
 				<!--<label>验证码:</label>-->
 			<!--</div>-->
 
-			<div class="layui-form-item input-item">
+			<!--<div class="usernameWrapDiv">-->
+				<!--<div class="usernameLabel">-->
+					<!--<label>验证码:</label>-->
+				<!--</div>-->
+				<!--<div class="cardDiv">-->
+					<!--<label for="userName">输入验证码</label>-->
+					<!--<input id="loginCard" class="layui-input cardInput" type="text" name="card" placeholder="输入验证码">-->
+				<!--</div>-->
+				<!--<div class="codeDiv">-->
+					<!--<input id="loginCode" class="layui-input codeInput"  type="button">-->
+				<!--</div>-->
+			<!--</div>-->
+			<div class="layui-form-item ">
 				<label for="userName">输入验证码</label>
 				<input id="loginCard" style="width: 150px;display: inline" class="layui-input cardInput" type="text" name="card" placeholder="输入验证码">
+
+			</div>
+			<div class="codeDiv" style=" position: absolute;  top: 180px; left: 180px;">
 				<input id="loginCode" style="width: 100px;display: inline" class="layui-input codeInput"  type="button">
 			</div>
-			
+
 		</div>
 		<!--<div class="layui-form-item input-item" id="imgCode">
 			<label for="code">验证码</label>
@@ -126,7 +141,7 @@
                 btn.text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
                 $.post("/login/login",data.field,function(rs){
                     //设置登录按钮 恢复可点击   在前端防止 重复点击
-                    //btn.text("登录").attr("disabled",false).removeClass("layui-disabled");
+                    btn.text("登录").attr("disabled",false).removeClass("layui-disabled");
                     layer.msg(rs.msg);
                     if(rs.code != 200){
                         layer.msg(rs.msg);

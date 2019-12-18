@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
     <title>财务主页</title>
@@ -11,12 +12,12 @@
         #myChart{
             position: absolute;
             top: 20%;
-            left: 8%;
+            left: 3%;
         }
         #main{
             position: absolute;
             top: 20%;
-            right: 8%;
+            right: 3%;
         }
     </style>
 </head>
@@ -227,13 +228,13 @@
                 yes:function () {
                     location.href='/finance/pageFinance';
                 },
-                cancel:function (index, layero) {
+               /* cancel:function (index, layero) {
                     if(confirm('确定要关闭么')){ //只有当点击confirm框的确定时，该层才会关闭
                         layer.close(index);
                         location.href='/finance/pageFinance';
                     }
                     return false;
-                }
+                }*/
             });
         });
     });

@@ -12,6 +12,8 @@
 	<link rel="icon" href="/resources/favicon.ico">
 	<link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
 	<link rel="stylesheet" href="/resources/css/public.css" media="all" />
+	<script src="/resources/jss/jquery-3.4.1.min.js"></script>
+
 </head>
 <body class="loginBody">
 	<form class="layui-form">
@@ -24,11 +26,24 @@
 			<label for="password">密码</label>
 			<input type="password" placeholder="请输入密码" autocomplete="off" name="pwd" class="layui-input" lay-verify="required">
 		</div>
-		<div class="layui-form-item input-item" id="imgCode">
+
+		<div class="usernameWrapDiv">
+			<!--<div class="usernameLabel">-->
+				<!--<label>验证码:</label>-->
+			<!--</div>-->
+
+			<div class="layui-form-item input-item">
+				<label for="userName">输入验证码</label>
+				<input id="loginCard" style="width: 150px;display: inline" class="layui-input cardInput" type="text" name="card" placeholder="输入验证码">
+				<input id="loginCode" style="width: 100px;display: inline" class="layui-input codeInput"  type="button">
+			</div>
+			
+		</div>
+		<!--<div class="layui-form-item input-item" id="imgCode">
 			<label for="code">验证码</label>
 			<input type="text" placeholder="请输入验证码" autocomplete="off" id="code" class="layui-input">
 			<img src="/resources/images/code.jpg">
-		</div>
+		</div>-->
 		<div class="layui-form-item">
 			<button class="layui-btn layui-block" lay-filter="login" lay-submit>登录</button>
 		</div>
@@ -41,6 +56,52 @@
 	<script type="text/javascript" src="/resources/layui/layui.js"></script>
 	<script type="text/javascript" src="/resources/js/cache.js"></script>
 <script type="text/javascript">
+
+    $(function () {
+        // 页面初始化生成验证码
+        window.onload = createCode('#loginCode');
+        // 验证码切换
+        $('#loginCode').click(function () {
+            createCode('#loginCode');
+        });
+
+    });
+    // 生成验证码
+    function createCode(codeID) {
+        var code = "";
+        // 验证码长度
+        var codeLength = 4;
+        // 验证码dom元素
+        var checkCode = $(codeID);
+        // 验证码随机数
+        var random = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
+            'S','T','U','V','W','X','Y','Z'];
+        for (var i = 0;i < codeLength; i++){
+            // 随机数索引
+            var index = Math.floor(Math.random()*36);
+            code += random[index];
+        }
+        // 将生成的随机验证码赋值
+        checkCode.val(code);
+    }
+    // 校验验证码、用户名、密码
+    function validateCode(inputID,codeID) {
+        var inputCode = $(inputID).val().toUpperCase();
+        var cardCode = $(codeID).val();
+        if (inputCode.length<=0){
+            layer.alert("验证码不能为空");
+            return false;
+        }
+        if (inputCode != cardCode){
+            layer.alert("请输入正确验证码");
+            return false;
+        }
+        return true;
+    }
+
+
+
+
     layui.use(['form','layer','jquery'],function(){
         var form = layui.form,
             layer = parent.layer === undefined ? layui.layer : top.layer
@@ -55,20 +116,27 @@
         //登录按钮
         form.on("submit(login)",function(data){
             var btn =  $(this);
-            //设置登录按钮  为不可点击
-            btn.text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
-            $.post("/login/login",data.field,function(rs){
-                //设置登录按钮 恢复可点击   在前端防止 重复点击
-                btn.text("登录").attr("disabled",false).removeClass("layui-disabled");
-                layer.msg(rs.msg);
-                if(rs.code != 200){
+
+            if (!validateCode('#loginCard','#loginCode')){
+                // alert("验证码不正确");
+                return false;
+                //阻断提示
+            }else {
+                //设置登录按钮  为不可点击
+                btn.text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
+                $.post("/login/login",data.field,function(rs){
+                    //设置登录按钮 恢复可点击   在前端防止 重复点击
+                    //btn.text("登录").attr("disabled",false).removeClass("layui-disabled");
                     layer.msg(rs.msg);
-                }else{
-                    //跳转到templates/system/index/index.html页面
-                    layer.msg(rs.msg);
-                    location.href="/sys/index";
-                }
-            });
+                    if(rs.code != 200){
+                        layer.msg(rs.msg);
+                    }else{
+                        //跳转到templates/system/index/index.html页面
+                        layer.msg(rs.msg);
+                        location.href="/sys/index";
+                    }
+                });
+			}
             return false;
         })
 

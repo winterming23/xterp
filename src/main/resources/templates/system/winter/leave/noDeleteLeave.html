@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>请假</title>
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css">
+    <link href="/resources/layui/css/layui.css" />
+    <script src="/resources/csss/jquery-1.8.3.min.js"></script>
+    <script src=/resources/csss/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<div id="fsWin" style="width: 95%;">
+    <table style="width: 100%;height: 100%" id="ftop"
+           class="table table-border table-bordered table-hover table-bg table-sort">
+        <thead>
+        <tr class="text-c">
+            <th>编号</th>
+            <th>用户姓名</th>
+            <th>请假原因</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>总时长</th>
+            <th>审核</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="leave,leaveStat : ${noDeleteLeave}">
+            <td th:text="${leaveStat.count}"></td>
+            <td th:text="${leave.userId}"></td>
+            <td th:text="${leave.reason}"></td>
+            <td th:text="${leave.startTime}"></td>
+            <td th:text="${leave.endTime}"></td>
+            <td th:text="${leave.allHour}"></td>
+            <td th:text="${leave.verifyStatus}"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript" th:inline="none">
+    $("#ftop").DataTable({
+        aLengthMenu: [3, 5, 10]
+    });
+</script>
+</body>
+</html>

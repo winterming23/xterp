@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sxt.sys.mapper.winter.SaleMapper">
+    <!-- 多对一 多个考勤对一个用户  一对多标签 <collection ofType="com.sxt.sys.domain.winter.WordAttendance" autoMapping="true">-->
+    <!--<resultMap id="saleToUser" type="com.sxt.sys.domain.winter.Sale" autoMapping="true">
+        <id property="id" column="id"></id>
+        <result property="userId" column="userId"></result>
+        <result property="clientId" column="clientId"></result>
+        <result property="productId" column="productId"></result>
+        <result property="depotId" column="depotId"></result>
+        <result property="depotHeadId" column="depotHeadId"></result>
+        <association property="userId" javaType="com.sxt.sys.domain.zqw.Userinfo" autoMapping="true">
+            <id property="id" column="id"></id>
+            <result property="userName" column="userName"></result>
+        </association>
+        <association property="clientId" javaType="com.sxt.sys.domain.vin.Supplier" autoMapping="true">
+            <id property="id" column="id"></id>
+        </association>
+        <association property="productId" javaType="com.sxt.sys.domain.vin.Product" autoMapping="true">
+            <id property="id" column="id"></id>
+        </association>
+        <association property="depotId" javaType="com.sxt.sys.domain.qxs.warehouse.Depot" autoMapping="true">
+            <id property="id" column="id"></id>
+        </association>
+        <association property="depotHeadId" javaType="com.sxt.sys.domain.qxs.warehouse.Depothead" autoMapping="true">
+            <id property="id" column="id"></id>
+        </association>
+    </resultMap>-->
+    <!--添加销售信息-->
+    <insert id="saveSale" parameterType="com.sxt.sys.domain.winter.Sale">
+        insert into sale values(#{id},#{userId},#{clientId},#{productId},#{depotId},#{state},#{deleteFlag})
+    </insert>
+    <!--修改销售状态-->
+    <update id="updateSaleState" parameterType="com.sxt.sys.domain.winter.Sale">
+        update sale set state = #{state} where id = #{id}
+    </update>
+    <!--修改所有销售信息-->
+    <update id="updateSale" parameterType="com.sxt.sys.domain.winter.Sale">
+        update sale set
+        userId = #{userId},clientId = #{clientId},productId = #{productId},
+        depotId = #{depotId},state = #{state},deleteFlag = #{deleteFlag}
+        where id = #{id}
+    </update>
+    <!--删除标记销售信息-->
+    <delete id="deleteSale">
+        update sale set deleteFlag = #{deleteFlag}
+        where id = #{id}
+    </delete>
+
+    <!-- 未删除标记销售信息 --><!--resultMap="saleToUser"-->
+    <select id="getAllNoDeleteSale" resultType="hashmap">
+         select u.userName,su.supplier,p.product_name,de.name deName,d.number depotName,s.number saleNumber,
+        s.discounts,s.money,s.reality,s.commission,s.state from sale s
+        inner join userinfo u on s.userId = u.id
+        inner join supplier su on s.clientId = su.id
+        inner join product p on s.productId = p.id
+		inner join depot de on s.depotId = de.id
+        inner join depothead d on s.depotheadId = d.id
+        where s.deleteFlag = 0
+        order by d.createTime desc
+    </select>
+
+    <!-- 查询已删除标记销售信息 --><!--resultMap="saleToUser"-->
+    <select id="getAllDeleteSale" resultType="hashmap">
+         select u.userName,su.supplier,p.product_name,de.name deName,d.number depotName,s.number saleNumber,
+        s.discounts,s.money,s.reality,s.commission,s.state from sale s
+        inner join userinfo u on s.userId = u.id
+        inner join supplier su on s.clientId = su.id
+        inner join product p on s.productId = p.id
+		inner join depot de on s.depotId = de.id
+        inner join depothead d on s.depotheadId = d.id
+        where s.deleteFlag = 1
+        order by d.createTime desc
+    </select>
+
+    <!-- 查询已删除标记销售信息 -->
+    <select id="getAllSale" resultType="com.sxt.sys.domain.winter.Sale">
+        select * from sale order by id desc
+    </select>
+
+    <!-- 查询单条销售数据 -->
+    <select id="findSaleOne" resultType="com.sxt.sys.domain.winter.Sale">
+        select * from sale where id = #{id}
+    </select>
+</mapper>

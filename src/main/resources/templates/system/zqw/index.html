@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS-only Material Inputs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="/resources/zqw/css/style.css">
+  <link rel="stylesheet" href="/resources/zqw/css/style1.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+  <form method="post" action="inserPro">
+    <h1>添加生产计划</h1>
+    <!--<hr class="sep"/>-->
+    <div class="group" >
+      <textarea ></textarea><span class="highlight"></span><span class="bar"></span>
+      <div class="center-on-page">
+        <div class="select">
+          <select name="id" id="slct"  >
+            <option>产品名称</option>
+            <option th:each="dgselepds:${dgselepd}"
+                    th:value="${dgselepds.id}" th:text="${dgselepds.product_name}" >
+           </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <input type="date" name="startTime"/><span class="highlight"></span><span class="bar"></span>
+      <label>开始时间</label>
+    </div>
+    <div class="group">
+      <input type="date" name="endTime"/><span class="highlight"></span><span class="bar"></span>
+      <label>预计结束时间</label>
+    </div>
+      <div class="group">
+          <textarea type="textarea" required="required" name=""></textarea><span class="highlight"></span><span class="bar"></span>
+          <label>添加所需物料</label>
+      </div>
+
+    <!--复选框-->
+      <div class="group">
+          <input type="number" required="required" name="prquantity"/><span class="highlight"></span><span class="bar"></span>
+          <label>生产数量</label>
+      </div>
+    <div class="group">
+      <textarea ></textarea><span class="highlight"></span><span class="bar"></span>
+      <div class="center-on-page">
+        <div class="select">
+          <select name="personCharge" id="slct" >
+            <option>负责人</option>
+            <option th:each="seleuserfs:${seleuserf}"
+                    th:value="${seleuserfs.id}" th:text="${seleuserfs.userName}" >
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="btn-box">
+     <!-- <button class="btn btn-cancel" type="button">cancel</button>-->
+      <button class="btn btn-submit" type="submit">submit</button>
+      <h5>*these buttons do nothing <span class="emoji">&#x1F609;</span></h5>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sxt.sys.mapper.qxs.finance.AccountMapper">
+    <update id="updateAccount" parameterType="Account">
+        update account
+        <set>
+            <if test="cardNumber != null">
+                cardNumber=#{cardNumber},
+            </if>
+            <if test="remark != null">
+                remark=#{remark}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>

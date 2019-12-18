@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加培训信息</title>
+    <script src="/resources/jss/jquery-2.1.1.js"></script>
+    <script src="/resources/csss/jquery.dataTables.min.js"></script>
+    <script src="/resources/jss/bootstrap.min.js"></script>
+    <script src="/resources/csss/bootstrap.css"></script>
+</head>
+<body>
+<table border="1px red ">
+    <input type="hidden" id="recruitId" name="recruitId" value="0">
+    <tr>
+        <td>标题：</td>
+        <td><input type="text" id="title" name="title" required="required"/></td>
+    </tr>
+    <tr>
+        <td>内容描述：</td>
+        <td><input type="text" id="content" name="content" required="required"/></td>
+    </tr>
+    <tr>
+        <td>职位：</td>
+        <td><input type="text" id="position" name="position" required="required"/></td>
+    </tr>
+    <tr>
+        <td>工资金额:</td>
+        <td><input type="text" name="salary" id="salary" required="required"></td>
+    </tr>
+    <tr>
+        <td>联系电话:</td>
+        <td><input type="text" name="phone" id="phone" required="required"></td>
+    </tr>
+    <tr>
+        <td>联系地址:</td>
+        <td><input type="text" name="address" id="address" required="required"></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">
+            <input type="submit"   value="保存"  id="sub">
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $("#sub").click(function () {
+        debugger;
+        var recruitId = $("#recruitId").val();
+        var title = $("#title").val();
+        var content = $("#content").val();
+        var position = $("#position").val();
+        var salary = $("#salary").val();
+        var phone = $("#phone").val();
+        var address = $("#address").val();
+        $.ajax({
+            url:"saveRecruit",
+            dateType:"json",
+            type:"post",
+            data:{
+                'recruitId':recruitId,
+                'title':title,
+                'content':content,
+                'position':position,
+                'salary':salary,
+                'phone':phone,
+                'address':address,
+                'deleteFlag':0
+            },
+            async:false,
+            success:function (resp) {
+                if (resp!="false"){
+                    alert("添加成功")
+                    window.location.href="/getRecruit"
+                }else {
+                    alert("添加失败")
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>所有未删除的招聘信息</title>
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css">
+    <link href="/resources/layui/css/layui.css" />
+    <script src="/resources/csss/jquery-1.8.3.min.js"></script>
+    <script src="/resources/csss/jquery.dataTables.min.js"></script>
+    <script src="/resources/layui/layui.js"></script>
+</head>
+<body>
+<div id="fsWin" style="width: 95%;">
+    <table style="width: 100%;height: 100%" id="ftop"
+           class="table table-border table-bordered table-hover table-bg table-sort">
+        <thead>
+        <tr class="text-c">
+            <th>编号</th>
+            <th>标题</th>
+            <th>内容描述</th>
+            <th>职位</th>
+            <th>工资金额</th>
+            <th>联系电话</th>
+            <th>联系地址</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="recruit,recruitStat : ${noDeleteRecruit}">
+            <td th:text="${recruitStat.count}"></td>
+            <td th:text="${recruit.title}"></td>
+            <td th:text="${recruit.content}"></td>
+            <td th:text="${recruit.position}"></td>
+            <td th:text="${recruit.salary}"></td>
+            <td th:text="${recruit.phone}"></td>
+            <td th:text="${recruit.address}"></td>
+            <td><a href="addRecruit">添加</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript" th:inline="none">
+    $("#ftop").DataTable({
+        aLengthMenu: [3, 5, 10]
+    });
+</script>
+</body>
+</html>

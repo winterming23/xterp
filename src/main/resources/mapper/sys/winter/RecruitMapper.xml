@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 招聘信息sql -->
+<mapper namespace="com.sxt.sys.mapper.winter.RecruitMapper">
+    <!-- 添加招聘信息 -->
+    <insert id="saveRecruit" parameterType="com.sxt.sys.domain.winter.Recruit">
+        insert into recruit values(#{recruitId},#{title},#{content},#{position},#{salary},#{phone},#{address},#{deleteFlag})
+    </insert>
+
+    <!-- 修改招聘信息 -->
+    <update id="updateRecruit" parameterType="com.sxt.sys.domain.winter.Recruit">
+        update recruit set title = #{title},content = #{content},
+        content = #{content},position = #{position},salary = #{salary},
+        phone = #{phone},address = #{address} where recruitId = #{recruitId}
+    </update>
+
+    <!-- 删除招聘信息 -->
+    <delete id="deleteRecruit" parameterType="com.sxt.sys.domain.winter.Recruit">
+        update recruit set deleteFlag = #{deleteFlag} where recruitId = #{recruitId}
+    </delete>
+
+    <!-- 查询所有未删除的招聘信息 -->
+    <select id="getAllNoDeleteRecruit" resultType="com.sxt.sys.domain.winter.Recruit">
+        select * from recruit where deleteFlag = 0 order by recruitId desc
+    </select>
+
+    <!-- 查询所有已删除的招聘信息 -->
+    <select id="getAllDeleteRecruit" resultType="com.sxt.sys.domain.winter.Recruit">
+        select * from recruit where deleteFlag = 1 order by recruitId desc
+    </select>
+
+    <!-- 查询所有招聘信息 -->
+    <select id="getAllRecruit" resultType="com.sxt.sys.domain.winter.Recruit">
+        select * from recruit
+    </select>
+
+    <!-- 查询单个招聘信息 -->
+    <select id="findRecruitOne" resultType="com.sxt.sys.domain.winter.Recruit">
+        select * from recruit where recruitId = #{recruitId}
+    </select>
+</mapper>

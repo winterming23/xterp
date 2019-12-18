@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sxt.sys.mapper.winter.ApplyForMapper">
+    <!-- 查询所有未删除的申请数据 -->
+    <select id="getAllNoDeleteApplyFor" resultType="com.sxt.sys.domain.winter.ApplyFor">
+        select * from applyFor where deleteFlag = 0 order by id desc
+    </select>
+    <!-- 查询所有已删除的申请数据 -->
+    <select id="getAllDeleteApplyFor" resultType="com.sxt.sys.domain.winter.ApplyFor">
+        select * from applyFor where deleteFlag = 1 order by id desc
+    </select>
+    <!-- 倒序查询申请数据 -->
+    <select id="getAllApplyFor" resultType="com.sxt.sys.domain.winter.ApplyFor">
+        select * from applyfor where id = #{id} order by id desc
+    </select>
+    <!-- 根据编号查询单条数据 -->
+    <select id="findApplyFoyOne" resultType="com.sxt.sys.domain.winter.ApplyFor">
+        select * from applyfor where id = #{id}
+    </select>
+    <!-- 添加申请数据 -->
+    <insert id="saveApplyFor" parameterType="com.sxt.sys.domain.winter.ApplyFor">
+        insert into applyfor values(#{id},#{type},#{productId},#{number},
+        #{itemDescribe},#{approval},#{proposer},#{auditor},#{deleteFlag})
+    </insert>
+    <!-- 修改数据 -->
+    <update id="updateApplyFor" parameterType="com.sxt.sys.domain.winter.ApplyFor">
+        update applyfor set type = #{type},productId = #{productId},number = #{number},itemDescribe = #{itemDescribe},approval = #{approval},proposer = #{proposer},auditor = #{auditor},deleteFlag = #{deleteFlag}
+        where id = #{id}
+    </update>
+    <!-- 删除标记修改 -->
+    <delete id="deleteApplyFor" parameterType="com.sxt.sys.domain.winter.ApplyFor">
+        update applyfor set deteleFlag = #{deleteFlag} where id = #{id}
+    </delete>
+</mapper>

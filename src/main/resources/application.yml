@@ -1,0 +1,74 @@
+#配置数据源的属性
+spring:
+  # 视图解析器
+  thymeleaf:
+    encoding: utf-8
+    suffix: .html
+    prefix: classpath:/templates/
+    mode: HTML
+    cache: false
+    servlet:
+      content-type: text/html
+  mvc:
+  static-path-pattern: /static/**
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/erp?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=UTC
+      username: root
+      password: root
+      max-active: 20
+      max-wait: 5000
+      initial-size: 1
+      filters: stat,log4j,wall
+      validationQuery: SELECT 'x'   #验证连接
+      enable: true
+      #监控配置
+      stat-view-servlet:
+        enabled: true
+        login-username: root
+        login-password: 123456
+        allow:
+        deny:
+        url-pattern: /druid/*
+
+  #      web-stat-filter:
+  #        enabled: true
+  #        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+#配置mybatisplus
+mybatis-plus:
+  mapper-locations:
+  - classpath:mapper/*/*Mapper.xml
+  global-config:
+    db-config:
+      id-type: auto
+    banner: true
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+    # mybatis 配置
+mybatis:
+  # mapper.xml文件所在
+  mapper-locations: classpath:mapper/*/*.xml
+  # 实体类所在包
+  type-aliases-package: com.sxt.sys.domain
+  configuration:
+    # 打印数据库语句 用于测试
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#shiro的配置
+shiro:
+  hash-algorithm-name: md5
+  hash-iterations: 2
+  anon-urls:
+  - /index.html*
+  - /sys/toLogin*
+  - /login/login*
+  - /resources/**
+  login-url: /index.html
+  log-out-url: /login/logout*
+  authc-ulrs:
+  - /**

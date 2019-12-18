@@ -1,0 +1,243 @@
+<!--
+* @program: xterp
+* @description:
+* @author: snow
+* @create: 2019-12-11 11:54
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加记录</title>
+    <script src="/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" />
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css" />
+</head>
+<body>
+    <div class="layui-tab" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">采购消费记录</li>
+            <li>订单入账记录</li>
+        </ul>
+        <div class="layui-tab-content">
+            <!--公司消费记录-->
+            <div class="layui-tab-item layui-show">
+                <table class="layui-table">
+                    <thead>
+                        <tr>
+                            <th>采购订单编号</th>
+                            <th>供应商名称</th>
+                            <th>供应商账号</th>
+                            <th>员工编号</th>
+                            <th>订单总额</th>
+                            <th>已付金额</th>
+                            <th>报销类型</th>
+                            <th>报销金额</th>
+                            <th>添加记录</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each=" ready:${readys[1]}">
+                            <td th:text="${ready.id}"></td>
+                            <td th:text="${ready.sName}"></td>
+                            <td th:text="${ready.accoun}"></td>
+                            <td th:text="${ready.pid}"></td>
+                            <td th:text="${ready.total}"></td>
+                            <td th:text="${ready.amount}"></td>
+                            <td th:text="${ready.costType}"></td>
+                            <td th:text="${ready.costPrice}"></td>
+                            <td >
+                                <button th:onclick="add([[${ready.accoun}]],[[${ready.total}]],[[${ready.amount}]],[[${ready.id}]],0)"
+                                        class="layui-btn layui-btn-sm">
+                                    <i class="layui-icon">&#xe654;</i>
+                                </button>
+                                <button class="layui-btn layui-btn-sm">
+                                    <i class="layui-icon">&#xe602;</i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="layui-tab-item">
+                <!--订单入账记录-->
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th>销售订单编号</th>
+                        <th>负责人编号</th>
+                        <th>客户编号</th>
+                        <th>客户姓名</th>
+                        <th>银行卡号</th>
+                        <th>项目总额</th>
+                        <th>已付金额</th>
+                        <th>员工提成</th>
+                        <th>添加记录</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each=" r:${readys[2]}">
+                        <td th:text="${r.saleId}"></td>
+                        <td th:text="${r.userId}"></td>
+                        <td th:text="${r.suId}"></td>
+                        <td th:text="${r.suName}"></td>
+                        <td th:text="${r.account}"></td>
+                        <td th:text="${r.money}"></td>
+                        <td th:text="${r.reality}"></td>
+                        <td th:text="${r.commission}"></td>
+                        <td>
+                            <button th:onclick="add([[${r.suId}]],[[${r.money}]],[[${r.reality}]],[[${r.saleId}]],1)"
+                                    class="layui-btn layui-btn-sm">
+                                <i class="layui-icon">&#xe654;</i>
+                            </button>
+                            <button type="button" class="layui-btn layui-btn-sm">
+                                <i class="layui-icon">&#xe602;</i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="/resources/jss/jquery-3.4.1.min.js"></script>
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+    function add(a,b,c,e,d) {
+        if (d == 1) {
+            //收入记录添加
+            var clientId = a;//客户编号
+            var payable = b;//应付金额
+            var actual_payment = c;//实际收款
+            var id = e;//销售订单编号
+            var dom = "<div><table class='layui-table'><thead><tr>" +
+                "<th>客户编号</th>" +
+                "<th>应付金额</th>" +
+                "<th>付款类型</th>" +
+                "<th>实际收款</th>" +
+                "<th>负责人编号</th>" +
+                "<th>订单描述</th>" +
+                "</tr></thead><tbody><tr>" +
+                "<td><input type='text' name='clientId' value='" + clientId + "' readonly='readonly' required lay-verify='required' autocomplete='off' class='layui-input' /></td>" +
+                "<td><input type='text' name='payable' value='" + payable + "' readonly='readonly' required lay-verify='required' autocomplete='off' class='layui-input' /></td>" +
+                "<td><select name='city'class='layui-input' lay-verify='' lay-search>" +
+                " <option value='记账'>记账</option>" +
+                " <option value='定金'>定金</option>" +
+                " <option value='全款'>全款</option>" +
+                "</select></td>" +
+                "<td><input type='text' name='actual_payment' value='" + actual_payment + "' readonly required lay-verify='required' autocomplete='off' class='layui-input' /></td>" +
+                "<td><input type='text' name='principal' placeholder='请输入' required lay-verify='required' autocomplete='off' class='layui-input' /></td>" +
+                "<td><input type='text' name='remark' placeholder='请输入' lay-verify='required' autocomplete='off' class='layui-input' /></td>" +
+                "</tr></tbody></table></div>";
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open({
+                    title: '添加收入记录',
+                    type: 1,
+                    area: ['90%', '40%'],
+                    content: dom,
+                    shadeClose: true, //开启遮罩关闭
+                    btn: ['确认', '取消'],
+                    yes: function () {
+                        var clientId = $("input[name='clientId']").val();//客户编号
+                        var payable = $("input[name='payable']").val();//总金额
+                        var actual_payment = $("input[name='actual_payment']").val();//已付金额
+                        var paymentMethod = $("select option:checked").val();//付款类型
+                        var principal = $("input[name='principal']").val();//负责人编号
+                        var remark = $("input[name='remark']").val();//描述
+                        //alert(clientId + "=" + payable + "=" + actual_payment + "=" + paymentMethod)
+                        if(paymentMethod!=null && principal!=null && paymentMethod!="" && principal!="") {
+                            $.ajax({
+                                url:'/finance/addIncome',
+                                dataType:'json',
+                                type:'post',
+                                data:{'clientId':clientId,'payable':payable,'actualPayment':actual_payment,
+                                    'paymentMethod':paymentMethod,'principal':principal,'remark':remark,'id':id},
+                                success:function (resp) {
+                                    if(resp){
+                                        if (resp) {
+                                            alert('数据添加成功！');
+                                            location.href = '/finance/addReady';
+                                        } else {
+                                            alert('添加失败...')
+                                        }
+                                    }
+                                }
+                            });
+                        }else {
+                            alert('不能为空...');
+                        }
+                    }
+                });
+            });
+        } else if(d==0) {
+            //支出记录添加
+            var account = a;//供应商账号
+            var payment_amount = b;//应付金额
+            var actual_payment = c;//实际付款
+            var id = e;//采购订单编号
+            //alert(account+"=="+payment_amount+"=="+actual_payment);
+            var dom = "<div><table class='layui-table'><thead><tr>" +
+                "<th>支出类型</th>" +
+                "<th>订单总额</th>" +
+                "<th>已付金额</th>" +
+                "<th>收款方账号</th>" +
+                "<th>负责人编号</th>" +
+                "<th>订单描述</th>" +
+                "</tr></thead><tbody><tr>" +
+                "<td><input type='text' name='type' value='采购' readonly='readonly' required lay-verify='required' autocomplete='off' class='layui-input' /></td>" +
+                "<td><input type='text' name='payment_amount' value='" + payment_amount + "' readonly required lay-verify='required' autocomplete='off' class='layui-input' /></td>" +
+                "<td><input type='text' name='actual_payment' value='" + actual_payment + "' readonly required lay-verify='required' autocomplete='off' class='layui-input' /></td>" +
+                "<td><input type='text' name='account' value='" + account + "' readonly required lay-verify='required' autocomplete='off' class='layui-input' /></td>" +
+                "<td><input type='text' name='principal' placeholder='请输入' required='required' lay-verify='required' autocomplete='off' class='layui-input' /></td>" +
+                "<td><input type='text' name='remark' placeholder='请输入' lay-verify='required' autocomplete='off' class='layui-input' /></td>" +
+                "</tr></tbody></table></div>";
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open({
+                    title: '添加支出记录',
+                    type: 1,
+                    area: ['90%', '40%'],
+                    content: dom,
+                    shadeClose: true, //开启遮罩关闭
+                    btn: ['确认', '取消'],
+                    yes: function () {
+                        var type = $("input[name='type']").val();//类型
+                        var payment_amount = $("input[name='payment_amount']").val();//总金额
+                        var actual_payment = $("input[name='actual_payment']").val();//已付金额
+                        var account = $("input[name='account']").val();//收款方账号
+                        var principal = $("input[name='principal']").val();//负责人编号
+                        var remark = $("input[name='remark']").val();//描述
+                        //alert(type+"=="+payment_amount+"=="+actual_payment);
+                        if(principal!=null && principal!=""){
+                            $.ajax({
+                                url: '/finance/addExpenditure',
+                                dataType: 'json',
+                                type: 'post',
+                                data: {
+                                    'type': type, 'paymentAmount': payment_amount, 'actualPayment': actual_payment,
+                                    'account': account, 'principal': principal, 'remark': remark, 'orderId': id
+                                },
+                                success: function (resp) {
+                                    if (resp) {
+                                        alert('数据添加成功！');
+                                        location.href = '/finance/addReady';
+                                    } else {
+                                        alert('添加失败...')
+                                    }
+                                }
+                            });
+                        }else {
+                            alert('不可为空...')
+                        }
+                    }
+                });
+            });
+        }
+    }
+</script>
+</body>
+</html>

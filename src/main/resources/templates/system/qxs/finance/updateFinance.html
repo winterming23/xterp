@@ -1,0 +1,221 @@
+<!--
+* @program: xterp
+* @description:
+* @author: snow
+* @create: 2019-12-11 11:54
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>财务记录修改页面</title>
+    <script src="/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href=/resources/layui/css/layui.css" />
+    <script src="/resources/jss/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <div>
+        <table class="layui-table" lay-size="lg">
+            <thead th:if="${ex!=null}">
+                <tr>
+                    <th>支出编号</th>
+                    <td>
+                        <input readonly name="expenditureId" th:value="${ex.expenditureId}" autocomplete='off' class='layui-input'/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>支出类型</th>
+                    <td>
+                        <input readonly name="type" th:value="${ex.type}" autocomplete='off' class='layui-input'/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>应付金额</th>
+                    <td>
+                        <input readonly name="paymentAmount" th:value="${ex.paymentAmount}" autocomplete='off' class='layui-input'/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>实付金额</th>
+                    <td>
+                        <input readonly name="actualPayment" th:value="${ex.actualPayment}" autocomplete='off' class='layui-input'/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>尾款</th>
+                    <td>
+                        <input required readonly placeholder='请输入' name="balancePayment" th:value="${ex.balancePayment}" autocomplete='off' class='layui-input'/>
+                    </td>
+                </tr>
+                <tr th:if="${ex.balancePayment>0}">
+                    <th>尾款清算</th>
+                    <td>
+                        <input required placeholder='请输入本次支付金额' name="number" autocomplete='off' class='layui-input'/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>收款方账号</th>
+                    <td>
+                        <input required placeholder='请输入' th:onclick="state([[${ex.confirmPayment}]])" name="account" th:value="${ex.account}" autocomplete='off' class='layui-input'/>
+                        <script>
+                            function state(state) {
+                                if(state==1){
+                                    $("input[name='account']").attr('readonly','readonly');
+                                }
+                            }
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <th>负责人编号</th>
+                    <td>
+                        <input required placeholder='请输入' name="principal" th:value="${ex.principal}" autocomplete='off' class='layui-input'/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>描述</th>
+                    <td>
+                        <input placeholder='请输入' name="remark" th:value="${ex.remark}" autocomplete='off' class='layui-input'/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button onclick="exupdate()" type="button" class="layui-btn layui-btn-fluid">修改</button>
+                    </td>
+                </tr>
+            <script>
+                function exupdate() {
+                    var expenditureId = $("input[name='expenditureId']").val();//编号
+                    var balancePayment = $("input[name='balancePayment']").val();//尾款
+                    var account = $("input[name='account']").val();//账号
+                    var principal = $("input[name='principal']").val();//负责人
+                    var remark = $("input[name='remark']").val();//描述
+                    var number = $("input[name='number']").val();//本次结算金额
+                    var actualPayment = $("input[name='actualPayment']").val();//已付金额
+                    //alert(expenditureId+"=="+balancePayment+"=="+account+"=="+principal+"=="+remark)
+                    if(number==null || number==""){
+                        number=0;
+                    }
+                    if(confirm('是否确定修改!')){
+                        $.ajax({
+                            url:'/finance/updateExpenditure',
+                            dataType:'json',
+                            type:'post',
+                            data:{'expenditureId':expenditureId,'balancePayment':balancePayment,
+                                'account':account,'principal':principal,'remark':remark,'actualPayment':actualPayment,'number':number},
+                            success:function (resp) {
+                                debugger
+                                if(resp){
+                                    alert('数据已修改!');
+                                    parent.location.reload();
+                                    location.href='/finance/pageFinanceDetails';
+                                }else {
+                                    alert('修改失败...')
+                                }
+                            }
+                        })
+                    }
+                }
+            </script>
+            </thead>
+            <thead th:if="${in!=null}">
+            <tr>
+                <th>收入编号</th>
+                <td>
+                    <input readonly name="incomeId" th:value="${in.incomeId}" autocomplete='off' class='layui-input'/>
+                </td>
+            </tr>
+            <tr>
+                <th>客户编号</th>
+                <td>
+                    <input readonly name="clientId" th:value="${in.clientId}" autocomplete='off' class='layui-input'/>
+                </td>
+            </tr>
+            <tr>
+                <th>应付金额</th>
+                <td>
+                    <input readonly name="payable" th:value="${in.payable}" autocomplete='off' class='layui-input'/>
+                </td>
+            </tr>
+            <tr>
+                <th>付款类型</th>
+                <td>
+                    <input readonly name="paymentMethod" th:value="${in.paymentMethod}" autocomplete='off' class='layui-input'/>
+                </td>
+            </tr>
+            <tr>
+                <th>实际收款</th>
+                <td>
+                    <input readonly name="actualPayment" th:value="${in.actualPayment}" autocomplete='off' class='layui-input'/>
+                </td>
+            </tr>
+            <tr>
+                <th>尾款</th>
+                <td>
+                    <input required readonly placeholder='请输入' name="balancePayment" th:value="${in.balancePayment}" autocomplete='off' class='layui-input'/>
+                </td>
+            </tr>
+            <tr th:if="${in.balancePayment>0}">
+                <th>尾款清算</th>
+                <td>
+                    <input required placeholder='请输入本次支付金额' name="number" autocomplete='off' class='layui-input'/>
+                </td>
+            </tr>
+            <tr>
+                <th>负责人编号</th>
+                <td>
+                    <input required placeholder='请输入' name="principal" th:value="${in.principal}" autocomplete='off' class='layui-input'/>
+                </td>
+            </tr>
+            <tr>
+                <th>描述</th>
+                <td>
+                    <input placeholder='请输入' name="remark" th:value="${in.remark}" autocomplete='off' class='layui-input'/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button onclick="inupdate()" type="button" class="layui-btn layui-btn-fluid">修改</button>
+                </td>
+            </tr>
+            </thead>
+            <script>
+                function inupdate() {
+                    debugger;
+                    var incomeId = $("input[name='incomeId']").val();//编号
+                    var balancePayment = $("input[name='balancePayment']").val();//尾款
+                    var principal = $("input[name='principal']").val();//负责人
+                    var remark = $("input[name='remark']").val();//描述
+                    var number = $("input[name='number']").val();//本次结算金额
+                    var actualPayment = $("input[name='actualPayment']").val();//已付金额
+                    alert(number)
+                    if(number==null || number==""){
+                        number=0;
+                    }
+                    if(confirm('是否确定修改!')){
+                        $.ajax({
+                            url:'/finance/updateIncome',
+                            dataType:'json',
+                            type:'post',
+                            data:{'incomeId':incomeId,'balancePayment':balancePayment,
+                                'principal':principal,'remark':remark,'actualPayment':actualPayment,'number':number},
+                            success:function (resp) {
+                                if(resp){
+                                    alert('数据已修改。。。');
+                                    parent.location.reload();
+                                    location.href='/finance/pageFinanceDetails';
+                                }else {
+                                    alert('修改失败...')
+                                }
+                            }
+                        })
+                    }
+                }
+            </script>
+        </table>
+    </div>
+<script>
+
+</script>
+</body>
+</html>

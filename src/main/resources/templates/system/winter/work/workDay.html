@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="打卡日程">
+    <meta name="description" content="Helloweba，在线演示HTML、CSS、jquery、PHP示例DEMO。">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/resources/layui/css/layui.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/fullcalendar/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/resources/fullcalendar/css/fullcalendar.css">
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css" />
+    <style type="text/css">
+        #calendar {
+            width: 900px;
+            margin: 20px auto 10px auto
+        }
+        .button{
+            text-align: center;
+        }
+    </style>
+    <script src='/resources/fullcalendar/js/jquery-1.9.1.min.js'></script>
+    <script src='/resources/fullcalendar/js/jquery-ui-1.10.2.custom.min.js'></script>
+    <script src='/resources/fullcalendar/js/fullcalendar.min.js'></script>
+    <script src="/resources/layui/layui.js"></script>
+    <script src="/resources/csss/jquery.dataTables.min.js"></script>
+    <script src="/resources/jss/winter/work/Date.js"></script>
+    <script type="text/javascript">
+        function callback(arr){
+            console.log(arr);
+        }
+        $(function() {
+            var userId = $("#userId").val();
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                theme: false,
+                monthNames: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+                monthNamesShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+                dayNames: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+                dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+                today: ["今天"],
+                buttonText: {
+                    today: '今天',
+                    month: '月',
+                    week: '周',
+                    day: '日'
+                },
+                firstDay: 1,
+                editable: false, //支持Event日程拖动修改，默认false
+                timeFormat: 'H:mm',
+                axisFormat: 'H:mm',
+                events:function(start, end, callback) {
+                    currentTime();
+                    $.ajax({
+                        url: "work",
+                        data:{'userId':1},
+                        dataType:'json',
+                        cache:false,
+                        success:function(doc) {
+                            var events = [];
+                            var obj = doc;
+                            console.log(obj);
+                            for (var key in obj) {
+                                var list = obj[key];
+                                var attendanceDate = yearToDate(list.attendanceDate);
+                                var startTime = hourMinuteSecond(list.startTime);
+                                var start = attendanceDate+" "+startTime;
+                                var endTime = hourMinuteSecond(list.endTime);
+                                var end = attendanceDate+" "+endTime;
+                                var id = list.id;
+                                console.log(startTime)
+                                events.push({
+                                     title: '上班签到',
+                                     start: start,
+                                     id: id,
+                                     className: 'label-info',
+                                     allDay: false,
+                                    backgroundColor:"#FFB90F"
+                                 });
+                                events.push({
+                                    title:'下班签退',
+                                    start:end,
+                                    id:id,
+                                    className:'labl-info',
+                                    allDay:false,
+                                    backgroundColor:"#8DEEEE"
+                                })
+                            }
+                            console.log(events);
+                            callback(events);
+                        },
+                        error:function() {
+                            alert('出错啦！！请联系管理员！！');
+                        }
+                    })
+                }
+            });
+        });
+        //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+        layui.use('element', function() {
+            // Tab的切换功能，切换事件监听等，需要依赖element模块
+            var element = layui.element;
+            element.on("tab(tab-all)", function (data) {
+                //选择第二条tab
+                if(data.index == 1){
+                    $.ajax({
+                        url:"/work",
+                        type:"post",
+                        success:function (resp) {
+                            debugger;
+                            var obj = eval("(" + resp + ")");//解析json
+                            console.log(obj)
+                            var str = "";
+                            for (var key in obj) {
+                                var list = obj[key];
+                                var userName = list.userName;
+                                var attendanceDate = yearToDate(list.attendanceDate);
+                                var startTime = hourMinuteSecond(list.startTime);
+                                var endTime = hourMinuteSecond(list.endTime);
+                                var week = list.week;
+                                var allHour = hourMinuteSecond(list.allHour);
+                                var state = list.state;
+                                var states = "";
+                                if(state == 0){
+                                    states = "早卡";
+                                }else if(state == 1){
+                                    states = "工时不足";
+                                }else if(state == 2){
+                                    states = "全勤";
+                                }else if(state == 3){
+                                    states = "缺勤";
+                                }else if(state == 4){
+                                    states = "未打晚卡"
+                                }else if(state == 5){
+                                    states = "未打早卡"
+                                }
+                                var keys = parseInt(key)+1;
+                                str = "<tr class='text-c'>" +
+                                    "<td>"+keys+"</td>" +
+                                    "<td>"+userName+"</td>" +
+                                    "<td>"+attendanceDate+"</td>" +
+                                    "<td>"+week+"</td>" +
+                                    "<td>"+startTime+"</td>" +
+                                    "<td>"+endTime+"</td>" +
+                                    "<td>"+allHour+"</td>" +
+                                    "<td>"+states+"</td>" +
+                                    "</tr>"
+                                //"<td><button class ='addWork'>"+添加+"</button></td>" +
+                                $("#workDay").append(str);
+                            }
+                        }
+
+                    })
+                }
+            });
+        });
+        $("#ftop").DataTable({
+            aLengthMenu: [3, 5, 10]
+        });
+    </script>
+</head>
+
+<body>
+
+<div class="layui-tab layui-tab-card"  lay-filter="tab-all">
+    <ul class="layui-tab-title">
+        <li class="layui-this">打卡日历</li>
+        <li>考勤申请</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <div id="main" style="width:80%">
+                <h2 class="top_title"><a href="#">打卡考勤</a></h2>
+                <div class="button">
+                    <button>打卡</button>
+                    <p>1.（法定上班时间为08:30:00，晚于该时间即为迟到。
+                        法定下班时间为18:00:00，早于该时间即为早退）;</p>
+                    <p>2.下班后还未进行上班打卡的员工，则视为旷工，当天则不允许打卡，
+                        如果当天忘记打卡，需第二天向领导进行申诉申请，并说明原因</p>
+                    <input type="hidden" name="userId" id="userId" value="1"/><!--th:value="${user.id}"-->
+                </div>
+                <div id='calendar' style="width:60%"></div>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+                <table style="width: 100%;height: 100%" id="ftop"
+                       class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th>编号</th>
+                        <th>用户名称</th>
+                        <th>考勤日期</th>
+                        <th>星期几</th>
+                        <th>上班时间</th>
+                        <th>下班时间</th>
+                        <th>总时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="workDay">
+                    <!--<tr th:each="work,workStat : ${employeeAttendance}">
+                        &lt;!&ndash;<td th:text="${employeeStat.userId}"></td>&ndash;&gt;
+                        <td th:text="${workStat.index}")></td>
+                        <td th:text="${work.attendanceDate}")></td>
+                        <td th:text="${work.week}"></td>
+                        <td th:text="${work.startTime}"></td>
+                        <td th:text="${work.endTime}"></td>
+                        <td th:text="${work.allHour}"></td>
+                        <td th:switch="${work.state}">
+                            <p th:case="0">早卡</p>
+                            <p th:case="1">工时不足</p>
+                            <p th:case="2">全勤</p>
+                            <p th:case="3">缺勤</p>
+                            <p th:case="4">未打晚卡</p>
+                            <p th:case="5">未打早卡</p>
+                        </td>
+                        <td><a href="addRecruit">考勤申请</a></td>
+                    </tr>-->
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
+
+<!--
+id	可选，事件唯一标识，重复的事件具有相同的id
+title	必须，事件在日历上显示的title
+allDay	可选，true or false，是否是全天事件。
+start	必须，事件的开始时间。
+end	可选，结束时间。
+url	可选，当指定后，事件被点击将打开对应url。
+className	指定事件的样式。
+editable	事件是否可编辑，可编辑是指可以移动, 改变大小等。
+source	指向次event的eventsource对象。
+color	背景和边框颜色。
+backgroundColor	背景颜色。
+borderColor	边框颜色。
+textColor	文本颜色。
+-->

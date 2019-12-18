@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>财务主页</title>
+    <script src="/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" />
+    <script src="/resources/jss/echarts.js"></script>
+    <script src="/resources/jss/jquery-3.4.1.min.js"></script>
+    <style>
+        #myChart{
+            position: absolute;
+            top: 20%;
+            left: 8%;
+        }
+        #main{
+            position: absolute;
+            top: 20%;
+            right: 8%;
+        }
+    </style>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="myChart" style="width:700px; height: 400px; "></div>
+    <div id="main" style="width: 600px;height:400px;"></div>
+
+<script type="text/javascript">
+    //南丁格尔图
+    var my = echarts.init(document.getElementById('myChart'));
+    my.setOption({
+        title : {
+            text: '收入 支出对比图'
+        },
+        series : [
+            {
+                name: '收入 支出对比图',
+                type: 'pie',
+                // 扇形图半径
+                radius: '95%',
+                data:[
+                    {value:0, name:'支出'},
+                    {value:0, name:'收入'},
+                ]
+            }
+        ],
+        // 阴影
+        itemStyle: {
+            // 阴影的大小
+            shadowBlur: 200,
+            // 设置扇形的颜色
+            //color: '#c23531',
+            // 阴影水平方向上的偏移
+            shadowOffsetX: 0,
+            // 阴影垂直方向上的偏移
+            shadowOffsetY: 0,
+            // 阴影颜色
+            shadowColor: 'rgba(0, 0, 0, 0)'
+        }
+    });
+    my.showLoading();//数据加载完之前先显示一段简单的loading动画
+
+    var zc=[]; //用于存放支出类型的值
+    var sr=[];  //用于存放收入类型的值
+    var zcType;//支出类型
+    var srType;//收入类型
+    //进行南丁格尔图数据加载
+    $.ajax({
+        url:"/finance/queryNotDeleteFs",
+        dataType:"json",
+        type:"post",
+        success:function (resp) {
+            debugger;
+            if(resp!=null){
+                var z=0;
+                var s=0;
+                for (var i=0;i<resp.length;i++){
+                    if(resp[i].type==1){
+                        z+=resp[i].totalMoney;
+                        zcType = '支出';
+                    }
+                    if(resp[i].type==2){
+                        s+=resp[i].totalMoney
+                        srType = '收入';
+                    }
+                }
+                zc.push(z);
+                sr.push(s);
+                //隐藏加载动画
+                my.hideLoading();
+                //加载数据图表
+                my.setOption({
+                    series:[{
+                        type:'pie',
+                        radius:'95%',
+                        data:[
+                            {value:zc,name:zcType},
+                            {value:sr,name:srType}
+                        ]
+                    }]
+                });
+            }else {
+                alert("图表请求数据失败!");
+                my.hideLoading();
+            }
+        }
+    });
+
+    //柱状统计图
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '财务详情'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#283b56'
+                }
+            }
+        },
+        legend: {
+            data:['支出','收入']
+        },
+        xAxis: [{
+            name:"付款时间",
+            data: ["仓库","采购","薪资"]
+        },{
+            data:['1','2','3']
+        }
+        ],
+        yAxis: [{
+           /* data:['1','2','3']*/
+        },{name:'收款时间'}],
+        series: [{
+            name: '支出',
+            type: 'bar',
+            //data: [30, 20]
+        },
+            {
+                name:"收入",
+                type:'line',
+                //data: [30, 100, 45]
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    myChart.showLoading();
+
+    var fk = [];//支出的值
+    var sk = [];//收入的值
+    var fkDates=[];//支出时间
+    var skDates=[];//收入时间
+    /**
+     * 加载财政详情数据
+     */
+    $.ajax({
+        url:"/finance/queryNotDeleteFinance",
+        dataType:"json",
+        type:"post",
+        data:{},
+        success:function (resp) {
+            //debugger;
+            if(resp!=null){
+                for (var i=0;i<resp[1].length;i++){
+                    //获取支出
+                    fk.push(resp[1][i].actualPayment);
+                    fkDates.push(resp[1][i].dateReceopt);
+                    }
+                    for (var j=0;j<resp[2].length;j++){
+                        //获取收入
+                        sk.push(resp[2][j].payable);
+                        skDates.push(resp[2][j].dateRecorded);
+                    }
+                //隐藏加载动画
+                myChart.hideLoading();
+                //加载数据图表
+                myChart.setOption({
+                    xAxis:[
+                        {
+                            data:fkDates
+                        },{
+                            data:skDates
+                        }
+                    ],
+                    series:[
+                        {
+                            name: '支出',
+                            type: 'bar',
+                            data: fk
+                        },{
+                            name: '收入',
+                            type: 'line',
+                            data: sk
+                        }
+                    ]
+                });
+                }else {
+                alert("图表数据加载失败！");
+                myChart.hideLoading();
+                }
+            }
+    });
+    //打开汇总详情页面
+    $("#myChart").click(function () {
+        layui.use('layer',function () {
+            var layer = layui.layer; //独立版的layer无需执行这一句
+            layer.open({
+                title:'财务年度报表详情',
+                type:2,
+                skin: 'layui-layer-lan ', //样式类名
+                closeBtn: 1, //显示关闭按钮
+                anim: 2,
+                area:['70%','60%'],
+                resize:true,
+                id: '1', //防止重复弹出
+                shadeClose: true, //开启遮罩关闭
+                shade:[0.5], //透明度，背景颜色
+                content: ['/finance/pageDetailsFs'],
+                offset:'auto',
+                btn:['确认','取消'],
+                yes:function () {
+                    location.href='/finance/pageFinance';
+                },
+                cancel:function (index, layero) {
+                    if(confirm('确定要关闭么')){ //只有当点击confirm框的确定时，该层才会关闭
+                        layer.close(index);
+                        location.href='/finance/pageFinance';
+                    }
+                    return false;
+                }
+            });
+        });
+    });
+
+    //打开详情页面
+    $("#main").click(function () {
+        layui.use('layer',function () {
+            var layer = layui.layer; //独立版的layer无需执行这一句
+            layer.open({
+                title:'财务详情',
+                type:2,
+                skin: 'layui-layer-lan ', //样式类名
+                closeBtn: 1, //显示关闭按钮
+                anim: 2,
+                area:['95%','85%'],
+                resize:true,
+                //id: '1', //防止重复弹出
+                shadeClose: true, //开启遮罩关闭
+                shade:[0.5], //透明度，背景颜色
+                content: ['/finance/pageFinanceDetails'],
+                offset:'80px',
+                btn:['确认','结算','取消'],
+                yes:function () {
+                    location.href='/finance/pageFinance';
+                },
+                cancel:function (index, layero) {
+                    if(confirm('确定要关闭么')){ //只有当点击confirm框的确定时，该层才会关闭
+                        layer.close(index);
+                        location.href='/finance/pageFinance';
+                    }
+                    return false;
+                },
+                btn2:function () {
+                    debugger;
+                    if(confirm('是否对所有记录进行结算')){
+                        var dom = "<div><table class='layui-table' lay-size='sm'><thead>" +
+                            "<tr><th>操作人</th>" +
+                            "<th>描述</th></tr></thead><tbody>" +
+                            "<tr><td>" +
+                            "<input required placeholder='请输入操作人编号' name='userId' autocomplete='off' class='layui-input'/>" +
+                            "</td><td>" +
+                            "<textarea name='remark' required placeholder='请输入' class='layui-textarea'></textarea>" +
+                            "</td></tr>" +
+                            "</tbody></table></div>";
+                        layer.open({
+                            title:'记录结算',
+                            type:1,
+                            //skin: 'layui-layer-lan ', //样式类名
+                            closeBtn: 1, //显示关闭按钮
+                            anim: 2,
+                            area:['30%','30%'],
+                            resize:true,
+                            //id: '1', //防止重复弹出
+                            shadeClose: true, //开启遮罩关闭
+                            shade:[0.5], //透明度，背景颜色
+                            content: dom,
+                            btn:['确定','取消'],
+                            yes:function () {
+                               var userId = $("input[name='userId']").val();
+                               var remark = $("textarea[name='remark']").val();
+                                $.ajax({
+                                    url:'/finance/sum',
+                                    dataType:'json',
+                                    type:'post',
+                                    data:{'userId':userId,'remark':remark},
+                                    success:function (resp) {
+                                        if(resp==0){
+                                            alert('数据已进行结算...');
+                                            parent.location.reload();
+                                            location.href='/finance/pageFinanceDetails';
+                                        }else if(resp==1){
+                                            alert('支出数据已进行结算。。');
+                                            parent.location.reload();
+                                            location.href='/finance/pageFinanceDetails';
+                                        }else if(resp==2){
+                                            alert('收入数据已进行结算。。')
+                                            parent.location.reload();
+                                            location.href='/finance/pageFinanceDetails';
+                                        }else {
+                                            alert('当前没有数据可结算。。')
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    })
+</script>
+</body>
+</html>

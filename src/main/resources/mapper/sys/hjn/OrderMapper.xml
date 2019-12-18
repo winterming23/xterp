@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.sxt.sys.mapper.hjn.OrderMapper.java">
+    <select id="findOrder"  resultType="java.util.HashMap">
+        select Orders.id,Orders.orderid,supplier.supplier,userInfo.userName,Orders.createtime,Orders.total_tax from Orders,supplier,userInfo
+        <where>
+            <if test="1==1">
+                Orders.supplierid=supplier.id
+            </if>
+            <if test="orderid !=null">
+                orderid like #{orderid}
+            </if>
+            <if test="createtime!=null">
+                createtime>=#{createtime}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

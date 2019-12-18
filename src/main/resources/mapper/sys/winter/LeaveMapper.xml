@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 请假操作语句 -->
+<mapper namespace="com.sxt.sys.mapper.winter.LeaveMapper">
+    <!-- 添加请假数据 -->
+    <insert id="saveLeave" parameterType="com.sxt.sys.domain.winter.Leave">
+      insert into `leave` values
+      (#{leaveId},#{userId},#{reason},
+      #{startTime},#{endTime},#{allHour},#{verifyStatus})
+    </insert>
+    <!-- 修改请假数据 -->
+    <update id="updateLeave" parameterType="com.sxt.sys.domain.winter.Leave">
+        update `leave` set userId = #{userId},
+        reason = #{reason},startTime = #{startTime},
+        endTime = #{endTime},allHour = #{allHour},verifyStatus = #{verifyStatus}
+        where leaveId = #{leaveId}
+    </update>
+    <!-- 修改请假状态 -->
+    <update id="updateLeaveStatus" parameterType="com.sxt.sys.domain.winter.Leave">
+        update `leave`
+        <set>
+            <if test="verifyStatus != null">
+                verifyStatus = #{verifyStatus}
+            </if>
+        </set>
+        where leaveId = #{leaveId}
+    </update>
+    <!-- 删除请假数据 -->
+    <delete id="deleteLeave" parameterType="com.sxt.sys.domain.winter.Leave">
+        update `leave` set deleteFlag = #{deleteFlag} where leaveId = #{leaveId}
+    </delete>
+    <!-- 未删除的请假数据 -->
+    <select id="getAllNoDeleteLeave" resultType="com.sxt.sys.domain.winter.Leave">
+        select * from `leave` where deleteFlag = 0 order by leaveId desc
+    </select>
+    <!-- 已删除的请假数据 -->
+    <select id="getAllDeleteLeave" resultType="com.sxt.sys.domain.winter.Leave">
+        select * from `leave` where deleteFlag = 1 order by leaveId dosc
+    </select>
+    <!-- 全部数据 -->
+    <select id="getAllLeave" resultType="com.sxt.sys.domain.winter.Leave">
+        select * from `leave` order by leaveId desc
+    </select>
+    <!-- 查询单条请假数据 -->
+    <select id="findLeaveOne" resultType="com.sxt.sys.domain.winter.Leave">
+        select * from `leave` where leaveId = #{leaveId}
+    </select>
+</mapper>

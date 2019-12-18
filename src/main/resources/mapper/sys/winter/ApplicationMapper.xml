@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sxt.sys.mapper.winter.ApplicationMapper">
+    <!-- 根据申请人查询该申请人所有的申请数据 -->
+    <select id="getAllApplicationProposer" resultType="int">
+        select * from application where proposer = #{proposer} order by id desc
+    </select>
+    <!-- 根据审批人查询该审批人可审批的所有申请数据 -->
+    <select id="getAllApplicationAuditor" resultType="int">
+        select * from application where auditor = #{auditor} order by id desc
+    </select>
+    <!-- 修改审批时间 -->
+    <update id="updateApplicationAuditTime" parameterType="com.sxt.sys.domain.winter.Application">
+        update application set auditTime = #{auditTime} where id = #{id}
+    </update>
+    <!-- 修改审批状态 -->
+    <update id="updateApplicationApproval" parameterType="com.sxt.sys.domain.winter.Application">
+        update application set approval = #{approval} where id = #{id}
+    </update>
+    <!-- 添加审批数据 -->
+    <insert id="saveApplication" parameterType="com.sxt.sys.domain.winter.Application">
+        insert into application values(#{id},#{workId},#{cause},
+        #{proposer},#{applicationTime},#{approval},#{auditor},#{auditTime},#{deleteFlag});
+    </insert>
+    <!-- 删除申请数据 删除标记修改 -->
+    <delete id="deleteApplication" parameterType="int">
+        update application set deleteFlag = #{deleteFlag} where id = #{id}
+    </delete>
+</mapper>

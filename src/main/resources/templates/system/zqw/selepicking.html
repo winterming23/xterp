@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css">
+    <script src="/resources/csss/jquery-1.8.3.min.js"></script>
+    <script src="/resources/csss/jquery.dataTables.min.js"></script>
+
+</head>
+<body>
+
+<table  id = "tbo"
+        class="table table-border table-bordered table-hover table-bg table-sort">
+    <thead>
+    <tr class="text-c">
+        <th width="100">生产名称</th>
+        <th width="100">出库时间</th>
+        <th width="100">负责人</th>
+        <th width="100">所需原料详情</th>
+        <th width="100">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="selePickadd:${selePickadd}" height="40px" class="text-c">
+        <td th:text="${selePickadd.product_name}"></td>
+        <td th:text="${selePickadd.startTime}"></td>
+        <td th:text="${selePickadd.product_name}"></td>
+        <td><a th:href="@{/selepropick(pickingid=${selePickadd.pickingid})}">领料详情</a></td>
+        <td>
+            <a>修改</a>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+<script>
+    $(function(){
+        $('#tbo').DataTable({
+            "aLengthMenu":[4,6]  , //每页显示数
+        });
+    });
+
+</script>
+</body>
+</html>

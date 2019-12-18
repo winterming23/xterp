@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>财务年度报表详情</title>
+    <script src="/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" />
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css" />
+    <script src="/resources/csss/jquery-1.8.3.min.js"></script>
+    <script src="/resources/csss/jquery.dataTables.min.js"></script>
+</head>
+    <body>
+    <div id="fsWin" style="width: 95%;">
+       <table style="width: 100%;height: 100%" id="ftop" class="table table-border table-bordered table-hover table-bg table-sort">
+           <thead>
+                <tr class="text-c">
+                    <th>编号</th>
+                    <th>结算金额</th>
+                    <th>结算时间</th>
+                    <th>类型</th>
+                    <th>操作人编号</th>
+                    <th>状态</th>
+                    <th>描述</th>
+                    <th>操作</th>
+                </tr>
+           </thead>
+           <tbody>
+                <tr th:each="fs : ${fsList}" class="text-c">
+                    <td th:text="${fs.id}"></td>
+                    <td th:text="${fs.totalMoney}"></td>
+                    <td th:text="${fs.balanceDate}"></td>
+                    <td th:text="${fs.type==1?'支出':'收入'}"></td>
+                    <td th:text="${fs.userId}"></td>
+                    <td th:text="${fs.deleteFlag==0?'正常':'已删除'}"></td>
+                    <td th:text="${fs.remark}"></td>
+                    <td >
+                        <button th:if="${fs.deleteFlag==0}" class="layui-btn layui-btn-xs" th:onclick="|fsDelete('${fs.id} ')|">
+                            <i class="layui-icon">&#xe640;</i>删除
+                        </button>
+                    </td>
+                </tr>
+           </tbody>
+       </table>
+    </div>
+
+    <script>
+        $("#ftop").DataTable({
+            aLengthMenu:[3,5,10]
+        });
+
+        //删除
+        function fsDelete(id) {
+            var fsId = id;
+            layui.use('layer',function () {
+                var layer = layui.layer; //独立版的layer无需执行这一句
+                layer.open({
+                    title:'警告',
+                    type:0,
+                    closeBtn: 1,
+                    id: '1', //防止重复弹出
+                    shadeClose: true, //开启遮罩关闭
+                    content:'是否确定删除',
+                    btn:['确定','取消'],
+                    yes:function (index, layero) {
+                        $.ajax({
+                            url:'/finance/deleteFlagFs',
+                            type:'post',
+                            dataType:'json',
+                            data:{'flag':1,'id':fsId},
+                            success:function (resp) {
+                                if(resp){
+                                    alert("数据已删除..")
+                                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                                    location.href='/finance/pageDetailsFs';
+                                }
+                            }
+                        })
+                    }
+                });
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>所需原料</title>
+    <script src="/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" />
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css" />
+</head>
+<body>
+<table class="layui-table" th:each="selepropick:${selepropick}" style="width: 600px">
+    <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+    </colgroup>
+    <thead>
+    <tr>
+        <th>所需物料</th>
+        <th>物料名称</th>
+        <th>所需数量</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>主板数量</td>
+        <td th:text="${selepropick.motherboard}"></td>
+        <td th:text="${selepropick.numberzb}"></td>
+    </tr>
+    <tr>
+        <td>cpu数量</td>
+        <td th:text="${selepropick.cpu}"></td>
+        <td th:text="${selepropick.numbercpu}"></td>
+    </tr>
+    <tr>
+        <td>内存条数量</td>
+        <td th:text="${selepropick.memories}"></td>
+        <td th:text="${selepropick.numbernc}"></td>
+    </tr>
+    <tr>
+        <td>显卡数量</td>
+        <td th:text="${selepropick.video_card}"></td>
+        <td th:text="${selepropick.numberxk}"></td>
+    </tr>
+    <tr>
+        <td>硬盘数量</td>
+        <td th:text="${selepropick.disks}"></td>
+        <td th:text="${selepropick.numberyp}"></td>
+    </tr>
+    <tr>
+        <td>固态硬盘数量</td>
+        <td th:text="${selepropick.ssd}"></td>
+        <td th:text="${selepropick.numbergtyp}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

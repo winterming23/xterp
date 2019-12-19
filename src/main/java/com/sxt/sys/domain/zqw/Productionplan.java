@@ -13,7 +13,6 @@ public class Productionplan {
   private long productionAudit;//生产审核是否通过 0-通过 1-不通过
   private long deleteProd;//删除标记
   private long pickingid;//领料编号
-
   @Override
   public String toString() {
     return "Productionplan{" +
@@ -26,6 +25,9 @@ public class Productionplan {
             ", deleteProd=" + deleteProd +
             ", pickingid=" + pickingid +
             '}';
+  }
+
+  public Productionplan() {
   }
 
   public long getId() {
@@ -90,9 +92,6 @@ public class Productionplan {
 
   public void setPickingid(long pickingid) {
     this.pickingid = pickingid;
-  }
-
-  public Productionplan() {
   }
 
   public Productionplan(long id, long productId, Date startTime, Date endTime, long personCharge, long productionAudit, long deleteProd, long pickingid) {

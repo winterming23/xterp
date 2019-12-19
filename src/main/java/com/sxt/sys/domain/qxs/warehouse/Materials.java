@@ -16,8 +16,10 @@ import lombok.NoArgsConstructor;
 public class Materials {
 
     private Integer id;
-    private String mName;
-    private String remark;
+    private String mName;//类型名称
+    private String remark;//描述
     private String mType;//类型:成品/材料
     private String mUnit;//计量单位
+    private Double price;//单价
+    private String designation;//材料名称
 }

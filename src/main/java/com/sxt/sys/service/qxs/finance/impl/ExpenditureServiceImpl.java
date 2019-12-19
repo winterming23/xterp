@@ -71,24 +71,22 @@ public class ExpenditureServiceImpl implements ExpenditureServiceI {
 
     /**
      * 修改付款状态
-     * @param state 状态；0：未付款；1：已付款；3：取消付款 默认0
-     * @param id
+     * @param expenditure 状态；0：未付款；1：已付款；3：取消付款 默认0
      * @return
      */
     @Override
-    public boolean confirmation(Integer state, Integer id) {
-        return expenditureMapper.confirmation(state,id);
+    public boolean confirmation(Expenditure expenditure) {
+        return expenditureMapper.confirmation(expenditure);
     }
 
     /**
      * 标记删除
-     * @param deleteFlag ；0：未删除；1：已删除
-     * @param id
+     * @param expenditure ；0：未删除；1：已删除
      * @return
      */
     @Override
-    public boolean deleteExpenditure(Integer deleteFlag, Integer id) {
-        return expenditureMapper.deleteExpenditure(deleteFlag,id);
+    public boolean deleteExpenditure(Expenditure expenditure) {
+        return expenditureMapper.deleteExpenditure(expenditure);
     }
 
     /**

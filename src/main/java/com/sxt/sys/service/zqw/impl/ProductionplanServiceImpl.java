@@ -110,5 +110,10 @@ public class ProductionplanServiceImpl implements ProductionplanServiceI {
         return productionplanMapper.selepropick(pickingid);
     }
 
+    @Override
+    public List<HashMap> seleProckll() {
+        return productionplanMapper.seleProckll();
+    }
+
 
 }

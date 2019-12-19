@@ -35,4 +35,12 @@ public interface MaterialsMapper {
      */
     @Update("insert into materials values(null,#{mName},#{remark},#{mType},#{mUnit})")
     boolean addMaterials(Materials materials);
+
+    /**
+     * 根据类型查询
+     * @param type
+     * @return
+     */
+    @Select("select * from materials where mName=#{type}")
+    List<Materials> queryType(String type);
 }

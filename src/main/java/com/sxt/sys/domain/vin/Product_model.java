@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 产品型号类
  */
@@ -25,6 +27,6 @@ public class Product_model {
     private Double weight;//裸机重量
     private String model_type;//型号类别
     private String delete_Flag;//删除标记（0==未删除,1==删除)
-    private long product_type;//产品类别
-//    private Product productModel;
+    private Date createtime;//产品型号创建时间
+    private String status;//审核状态
 }

@@ -79,5 +79,11 @@ public interface OrderMapper {
     @Update("update orders set finance=1 where orderid=#{id}")
     boolean updateFinance(Integer id);
 
-
+    /**
+     * 根据订单编号查询
+     * @param id
+     * @return
+     */
+    @Select("select * from orders wehre orderid=#{id}")
+    Orders queryID(Integer id);
 }

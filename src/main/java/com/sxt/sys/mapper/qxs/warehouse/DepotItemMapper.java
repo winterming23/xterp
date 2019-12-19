@@ -24,7 +24,7 @@ public interface DepotItemMapper {
      * 查询所有数据包括已删除的数据
      * @return
      */
-    @Select("select i.id id,m.id mid,m.mName mName,m.mType type,i.basicNumber basicNumber," +
+    @Select("select i.id id,m.id mid,m.mName mName,m.mType type,i.basicNumber basicNumber,m.designation designation," +
             " i.unitPrice unitPrice,i.allPrice allPrice,m.mUnit mUnit,d.`name` dName,i.img img,i.deleteFlag flag" +
             " from depotItem i LEFT JOIN materials m ON i.materialId=m.id" +
             " LEFT JOIN depot d on i.depotid=d.id")

@@ -38,11 +38,10 @@ public interface IncomeServiceI {
 
     /**
      * 是否确认收款
-     * @param state 0：未收款；1：已收款 审批字段
-     * @param id
+     * @param income
      * @return
      */
-    boolean confirmation(Integer state, Integer id);
+    boolean confirmation(Income income);
 
     /**
      * 修改收入记录
@@ -53,19 +52,17 @@ public interface IncomeServiceI {
 
     /**
      * 清算尾款
-     * @param balance_payment
-     * @param id
+     * @param income
      * @return
      */
-    boolean liquidationIncome(Double actualPayment, Double balance_payment, Integer id);
+    boolean liquidationIncome(Income income);
 
     /**
      * 标记删除
-     * @param deleteFlag 1：删除; 0：不删除
-     * @param id 条件
+     * @param income
      * @return
      */
-    boolean deleteIncome(Integer deleteFlag, Integer id);
+    boolean deleteIncome(Income income);
 
     /**
      * 结算总收入

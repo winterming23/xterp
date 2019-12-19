@@ -1,6 +1,8 @@
 package com.sxt.sys.mapper.zqw;
 
+import com.sxt.sys.domain.qxs.warehouse.Depothead;
 import com.sxt.sys.domain.zqw.Dispatchedworker;
+import org.apache.ibatis.annotations.Insert;
 
 import java.util.HashMap;
 
@@ -34,4 +36,13 @@ public interface DispatchedworkerMapper {
      * @return
      */
     boolean deleltDw(int id);
+
+    /**
+     * 添加仓库单据主表
+     * @param depothead
+     * @return
+     */
+    @Insert("insert into depothead(id,type,number,createTime,handsPersonId,changeAmount,totalPrice,remark,status,deleteFlag,materialId,amount) values \" +\n" +
+            "            \"(null,#{type},#{number},#{createTime},#{handsPersonId},#{changeAmount},#{totalPrice},#{remark},#{status},#{deleteFlag},#{materialId},#{amount})")
+    boolean inserDepth(Depothead depothead);
 }

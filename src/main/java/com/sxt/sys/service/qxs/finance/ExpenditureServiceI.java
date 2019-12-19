@@ -44,18 +44,17 @@ public interface ExpenditureServiceI {
 
     /**
      * 是否确认付款
-     * @param state 状态；0：未付款；1：已付款；3：取消付款 默认0
+     * @param expenditure 状态；0：未付款；1：已付款；3：取消付款 默认0
      * @return
      */
-    boolean confirmation(Integer state, Integer id);
+    boolean confirmation(Expenditure expenditure);
 
     /**
      * 标记删除
-     * @param deleteFlag ；0：未删除；1：已删除
-     * @param id
+     * @param expenditure ；0：未删除；1：已删除
      * @return
      */
-    boolean deleteExpenditure(Integer deleteFlag, Integer id);
+    boolean deleteExpenditure(Expenditure expenditure);
 
     /**
      * 新增支出记录

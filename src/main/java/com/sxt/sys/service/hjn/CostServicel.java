@@ -1,6 +1,5 @@
 package com.sxt.sys.service.hjn;
 
-
 import com.sxt.sys.domain.hjn.Cost;
 
 import java.util.List;

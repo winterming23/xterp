@@ -46,24 +46,24 @@ public interface ExpenditureMapper {
      * @param expenditure
      * @return
      */
+    @Update("update expenditure set account=#{account}, remark=#{remark},principal=#{principal} where expenditureId=#{expenditureId}")
     boolean updateExpenditure(Expenditure expenditure);
 
     /**
      * 是否确认付款
-     * @param state 状态；0：未付款；1：已付款；3：取消付款 默认0
+     * @param expenditure
      * @return
      */
-    @Update("update expenditure set confirmPayment=#{state} where expenditureId=#{id}")
-    boolean confirmation(Integer state, Integer id);
+    @Update("update expenditure set confirmPayment=#{confirmPayment} where expenditureId=#{expenditureId}")
+    boolean confirmation(Expenditure expenditure);
 
     /**
      * 标记删除
-     * @param deleteFlag ；0：未删除；1：已删除
-     * @param id
+     * @param expenditure
      * @return
      */
-    @Update("update expenditure set deleteFlag=#{deleteFlag} where expenditureId=#{id}")
-    boolean deleteExpenditure(Integer deleteFlag, Integer id);
+    @Update("update expenditure set deleteFlag=#{deleteFlag} where expenditureId=#{expenditureId}")
+    boolean deleteExpenditure(Expenditure expenditure);
 
     /**
      * 结算总支出

@@ -6,10 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sxt.sys.common.Constast;
-import com.sxt.sys.common.DataGridView;
-import com.sxt.sys.common.PinyinUtils;
-import com.sxt.sys.common.ResultObj;
+import com.sxt.sys.common.*;
 import com.sxt.sys.domain.Dept;
 import com.sxt.sys.domain.Role;
 import com.sxt.sys.domain.User;
@@ -178,6 +175,10 @@ public class UserController {
 	@RequestMapping("addUser")
 	public ResultObj addUser(UserVo userVo) {
 		try {
+			if (userVo.getImgpath()!=null&&userVo.getImgpath().endsWith("_temp")){
+				String newName = AppFileUtils.renameFile(userVo.getImgpath());
+				userVo.setImgpath(newName);
+			}
 			userVo.setType(Constast.USER_TYPE_NORMAL);//设置类型
 			userVo.setHiredate(new Date());
 			String salt=IdUtil.simpleUUID().toUpperCase();
@@ -206,6 +207,16 @@ public class UserController {
 	@RequestMapping("updateUser")
 	public ResultObj updateUser(UserVo userVo) {
 		try {
+			//商品图片不是默认图片
+			if (!(userVo.getImgpath()!=null&&userVo.getImgpath().equals(Constast.DEFAULT_IMG))){
+				if (userVo.getImgpath().endsWith("_temp")){
+					String newName = AppFileUtils.renameFile(userVo.getImgpath());
+					userVo.setImgpath(newName);
+					//删除原先的图片
+					String oldPath = userService.getById(userVo.getId()).getImgpath();
+					AppFileUtils.removeFileByPath(oldPath);
+				}
+			}
 			this.userService.updateById(userVo);
 			return ResultObj.UPDATE_SUCCESS;
 		} catch (Exception e) {

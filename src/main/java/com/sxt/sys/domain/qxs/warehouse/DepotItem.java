@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class DepotItem {
-    private Integer id;//主键
+    private Integer id;//主键 /null
     private Integer header;//单据主表id
     private Integer materialId;//材料id/商品id
     private Integer basicNumber;//基础数量

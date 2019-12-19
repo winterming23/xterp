@@ -21,7 +21,7 @@ public interface ProductMapper {
     @Select("select p.id,p.product_name,pm.model_name,p.product_model,pt.type_name,p.product_unit,p.product_stock,p.retail_price,p.min_price,p.cost_price,p.trade_price,p.product_state,p.serial_number,p.createtime,p.status from product as p" +
             " INNER JOIN product_model AS pm ON p.product_model = pm.id" +
             " INNER JOIN product_type as pt ON p.product_type = pt.id" +
-            " where p.delete_Flag = '0' AND p.status=0")
+            " where p.delete_Flag = '0'")
     public List<HashMap> getAllProduct();
 
     /**
@@ -120,4 +120,12 @@ public interface ProductMapper {
      */
     @Update("UPDATE product set `product_state` = 1 where id = #{id}")
     public boolean updateProductStateT(long id);
+
+    /**
+     * 修改产品审核状态
+     * @param id
+     * @return
+     */
+    @Update("update product set status = '1' where id = #{id}")
+    public boolean updateProductStatus(long id);
 }

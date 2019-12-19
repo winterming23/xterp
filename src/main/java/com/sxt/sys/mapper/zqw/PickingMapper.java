@@ -14,7 +14,7 @@ public interface PickingMapper {
      * 查询领料信息
      * @return
      */
-    @Select("select picking.*,userInfo.userName,productionplan.*,product.product_name FROM picking,productionplan,product,userInfo where productionplan.pickingid=picking.productionid and productionplan.personCharge=userinfo.id")
+    @Select("select picking.*,userInfo.userName,productionplan.*,product.product_name FROM picking,productionplan,product,userInfo where productionplan.pickingid=picking.id and productionplan.personCharge=userinfo.id")
     List<HashMap> selePicking();
 
     /**

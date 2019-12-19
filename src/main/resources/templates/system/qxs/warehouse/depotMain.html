@@ -7,17 +7,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>仓库首页</title>
+    <title>仓库主页</title>
     <script src="/resources/csss/jquery-1.8.3.min.js"></script>
     <script src="/resources/csss/jquery.dataTables.min.js"></script>
-
+    <script src="/resources/jss/echarts.js"></script>
     <script src="/resources/layui/layui.js"></script>
     <link rel="stylesheet" href="/resources/layui/css/layui.css" />
     <link rel="stylesheet" href="/resources/csss/H-ui.min.css" />
 
     <style>
         #div{
-            margin-top: 5%;
+            /*margin-top: 5%;*/
+        }
+        #chart{
+            position: absolute;
+            top: 10%;
+            left: 15%;
         }
     </style>
 </head>
@@ -27,6 +32,7 @@
         <li class="layui-this">库房管理</li>
         <li>仓库详情</li>
         <li>出入库管理</li>
+        <li>记录报表</li>
     </ul>
     <samp th:text="${errs}"></samp>
     <div class="layui-tab-content">
@@ -36,13 +42,14 @@
                 <tr class="text-c">
                     <th>物品编号</th>
                     <th>物品名称</th>
+                    <th>物品型号</th>
                     <th>物品类别</th>
                     <th>基础数量</th>
                     <th>物品单价</th>
                     <th>总额</th>
                     <th>计量单位</th>
                     <th>所在仓库</th>
-                    <th>样品图</th>
+                    <!--<th>样品图</th>-->
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
@@ -51,25 +58,26 @@
                 <tr th:each="item:${depotItems}" class="text-c">
                     <td th:text="${item.mid}"></td>
                     <td th:text="${item.mName}"></td>
+                    <td th:text="${item.designation}"></td>
                     <td th:text="${item.type}"></td>
-                    <td th:text="${item.basicNumber}"></td>
+                    <td style="color: red" th:text="${item.basicNumber}"></td>
                     <td th:text="${item.unitPrice}"></td>
                     <td th:text="${item.allPrice}"></td>
                     <td th:text="${item.mUnit}"></td>
                     <td th:text="${item.dName}"></td>
-                    <td>
+                   <!-- <td>
                         <img th:src="|../static/img/${item.img}|" />
-                    </td>
+                    </td>-->
                     <td th:text="${item.flag=='0'?'正常':'已删除'}"></td>
                     <td>
-                        <button type="button" th:onclick="file([[${item.id}]])" class="layui-btn layui-btn-sm" id="test1">
+                       <!-- <button type="button" th:onclick="file([[${item.id}]])" class="layui-btn layui-btn-sm" id="test1">
                             <i class="layui-icon">&#xe67c;</i>上传图片
-                        </button>
+                        </button>-->
                         <div class="layui-btn-group">
                             <button type="button" th:onclick="addMaterials()" class="layui-btn layui-btn-sm">
                                 <i class="layui-icon">&#xe654;</i>新增材料类型
                             </button>
-                            <button type="button" th:onclick="deleteDepot([[${item.id}]],0)" class="layui-btn layui-btn-sm">
+                            <button type="button" th:if="${item.flag=='0'}" th:onclick="deleteDepot([[${item.id}]],0)" class="layui-btn layui-btn-sm">
                                 <i class="layui-icon">&#xe640;</i>删除
                             </button>
                             <button type="button" class="layui-btn layui-btn-sm">
@@ -107,23 +115,88 @@
                         </table>
                     </div>
                 </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">材料类型</h3>
+                        <table class="layui-table">
+                            <thead>
+                                <tr>
+                                    <td th:each="m:${materials}" th:text="${m.MName}"></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td th:each="ls:${materials}" th:text="${ls.designation}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="layui-tab-item">
             <!-- 出入库管理 -->
-            <ul class="layui-timeline">
-                <li class="layui-timeline-item" th:each="head:${depotHeads}">
-                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                    <div class="layui-timeline-content layui-text">
-                        <h3 class="layui-timeline-title">[[${head.operTime}]]</h3>
-                        <p>
-                            layui 2.0 的一切准备工作似乎都已到位。发布之弦，一触即发。
-                            <br>不枉近百个日日夜夜与之为伴。因小而大，因弱而强。
-                            <br>无论它能走多远，抑或如何支撑？至少我曾倾注全心，无怨无悔 <i class="layui-icon"></i>
-                        </p>
-                    </div>
-                </li>
-            </ul>
+           <table id="tab" class="table table-border table-bordered table-hover table-bg table-sort">
+               <thead>
+                    <tr class="text-c">
+                        <th>票据号</th>
+                        <th>类型</th>
+                        <th>操作人</th>
+                        <th>单据创建时间</th>
+                        <th>出入库时间</th>
+                        <th>经手人</th>
+                        <th>物品单价</th>
+                        <th>物品数量</th>
+                        <th>总额</th>
+                        <th>存储天数</th>
+                        <th>审核</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+               </thead>
+               <tbody>
+                    <tr class="text-c" th:each="head : ${depotHeads}" >
+                        <td th:text="${head.number}"></td>
+                        <td th:text="${head.type}"></td>
+                        <td th:text="${head.operPersonName}"></td>
+                        <td th:text="${head.createTime}"></td>
+                        <td th:text="${head.operTime}"></td>
+                        <td th:text="${head.handsPersonId}"></td>
+                        <td th:text="${head.changeAmount}"></td>
+                        <td th:text="${head.amount}"></td>
+                        <td th:text="${head.totalPrice}"></td>
+                        <td th:text="${head.accountDay}"></td>
+                        <td>
+                            <button th:if="${head.status==0}" th:onclick="state([[${head.id}]],1)" class="layui-btn layui-btn-sm">通过</button>
+                            <button th:if="${head.status==0}" th:onclick="state([[${head.id}]],2)" class="layui-btn layui-btn-sm">拒绝</button>
+                            <samp th:if="${head.status==1}">审核通过</samp>
+                        </td>
+                        <td th:text="${head.deleteFlag=='0'?'正常':'已删除'}"></td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <!--<button type="button" class="layui-btn layui-btn-sm">
+                                    <i class="layui-icon">&#xe654;</i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-sm">
+                                    <i class="layui-icon">&#xe642;</i>
+                                </button>-->
+                                <button type="button" th:if="${head.deleteFlag=='0'}" th:onclick="deleteDepot([[${head.id}]],1)" class="layui-btn layui-btn-sm">
+                                    <i class="layui-icon">&#xe640;</i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-sm">
+                                    <i class="layui-icon">&#xe602;</i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+               </tbody>
+           </table>
+        </div>
+        <div class="layui-tab-item">
+            <!-- 报表数据展示 -->
+            <br/>
+            <div id="chart" style="width:900px; height: 600px; "></div>
         </div>
     </div>
 </div>
@@ -134,10 +207,110 @@
     layui.use('element', function(){
         var element = layui.element;
     });
-
     $("#tp").DataTable({
-        aLengthMenu:[3,5,10]
+        aLengthMenu:[5,10]
     });
+    $("#tab").DataTable({
+        aLengthMenu:[5,10]
+    });
+
+    //报表
+    var chart = echarts.init(document.getElementById('chart'));
+    chart.setOption({
+        title:{
+            text:'出入库 对比图'
+        },
+        series : [
+            {
+                name: '出入库 对比图',
+                type: 'pie',
+                // 扇形图半径
+                radius: '95%',
+                data:[
+                    {value:0, name:'出库'},
+                    {value:0, name:'入库'},
+                ]
+            }
+        ],
+        // 阴影
+        itemStyle: {
+            // 阴影的大小
+            shadowBlur: 200,
+            // 设置扇形的颜色
+            //color: '#c23531',
+            // 阴影水平方向上的偏移
+            shadowOffsetX: 0,
+            // 阴影垂直方向上的偏移
+            shadowOffsetY: 0,
+            // 阴影颜色
+            shadowColor: 'rgba(0, 0, 0, 0)'
+        }
+    })
+    // 使用刚指定的配置项和数据显示图表。
+    /*chart.setOption(option);*/
+    chart.showLoading();
+
+    var material = [];//用于存放x轴的值
+    var ck = [];//用于存放出库的数据
+    var rk = [];//用于存放入库的数据
+    /**
+     * 加载记录详情
+     */
+    $.ajax({
+        url:"/depot/queryHead",
+        dataType:"json",
+        type:"post",
+        data:{},
+        success:function (resp) {
+            debugger;
+            if(resp!=null){
+                for(var i=0;i<resp.length;i++){
+                    //获取材料类型的值
+                    material.push(resp[i].materialsName+"-"+resp[i].dtype+' ['+resp[i].am+']');
+                    ck.push(resp[i].am);
+                    /*if("成品出库"==resp[i].dtype || "成品入库"==resp[i].dtype){
+                        ck.push(resp[i].am);
+                    }else if("零件出库"==resp[i].dtype || "零件入库"==resp[i].dtype){
+                        rk.push(resp[i].am);
+                    }*/
+                }
+                //隐藏加载动画
+                chart.hideLoading();
+                //加载数据图表
+                chart.setOption({
+                    /*xAxis:[
+                        {
+                            data:material
+                        }
+                    ],*/
+                    series:[{
+                        type:'pie',
+                        radius:'95%',
+                        data:[
+                            {value:ck[0],name:material[0]},
+                            {value:ck[1],name:material[1]},
+                            {value:ck[2],name:material[2]},
+                            {value:ck[3],name:material[3]},
+                            {value:ck[4],name:material[4]},
+                            {value:ck[5],name:material[5]},
+                            {value:ck[6],name:material[6]},
+                            {value:ck[7],name:material[7]},
+                            {value:ck[8],name:material[8]},
+                            {value:ck[9],name:material[9]},
+                            {value:ck[10],name:material[10]},
+                            {value:ck[11],name:material[11]},
+                            {value:ck[12],name:material[12]},
+                            {value:ck[13],name:material[13]},
+                        ]
+                    }]
+                });
+            }else {
+                alert("图表数据加载失败！");
+                chart.hideLoading();
+            }
+        }
+    });
+
     // layui文件上传
     /*layui.form.on('select(typeFilter)',function (data) {
         if(data.value==1){
@@ -150,7 +323,6 @@
                     url:'',//上传路径
                     done:function (resp) {
                         //上传回调
-
                     },error:function () {
                         //请求异常回调
                     }
@@ -158,7 +330,6 @@
             });
         }
     })*/
-
     //文件上传
     function file(id) {
         layui.use('layer',function () {
@@ -184,7 +355,6 @@
             })
         })
     }
-
     //删除数据
     function deleteDepot(id,a) {
         if(confirm('是否确定删除')){
@@ -197,7 +367,24 @@
                     success:function (resp) {
                         if(resp){
                             alert('数据已删除');
-                            prototype.location.reload();
+                            location.reload();
+                            location.href='/depot/pageDepot';
+                        }else {
+                            alert('数据删除失败...')
+                        }
+                    }
+                });
+            }else if(a==1){
+                //出入库管理
+                $.ajax({
+                    url:'/depot/deleteHead',
+                    dateType:'json',
+                    type:'post',
+                    data:{'id':id},
+                    success:function (resp) {
+                        if(resp){
+                            alert('数据已删除');
+                            location.reload();
                             location.href='/depot/pageDepot';
                         }else {
                             alert('数据删除失败...')
@@ -207,7 +394,6 @@
             }
         }
     }
-
     //新增材料类别
     function addMaterials() {
         layui.use('layer',function () {
@@ -271,5 +457,96 @@
             })
         })
     }
+    //审核
+    function state(id,state) {
+        if(confirm('是否确认审核')){
+            $.ajax({
+               url:'/depot/headState',
+               dataType:'json',
+               type:'post',
+               data:{'id':id,'state':state},
+               success:function (resp) {
+                    if(resp==1){
+                        alert('出库审核通过!');
+                        location.reload();
+                        location.href='/depot/pageDepot';
+                    }else if(resp==2){
+                        alert('入库审核通过！');
+                        location.reload();
+                        location.href='/depot/pageDepot';
+                    }else if(resp==3){
+                        alert('审核通过，新品入库，请添加材料类型');
+                        layui.use('layer',function () {
+                            var layer = layui.layer;
+                            var dom = "<div><table class='layui-table'><thead>" +
+                                "<tr class='text-c'>" +
+                                "<th>名称</th>" +
+                                "<th>类型</th>" +
+                                "<th>计量单位</th>" +
+                                "<th>描述</th>" +
+                                "</tr></thead>" +
+                                "<tbody><tr class='text-c'>" +
+                                "<td><input type='text' name='mName' placeholder='请输入名称' required class='layui-input' autocomplete='off' /></td>" +
+                                "<td><input type='radio' name='mType' required lay-skin='primary' autocomplete='off' value='成品' />成品  " +
+                                "<input type='radio' name='mType' required lay-skin='primary' autocomplete='off' value='零件' checked />零件</td>" +
+                                "<td><input name='mUnit' placeholder='请输入计量单位' type='text' required class='layui-input' autocomplete='off' /></td>" +
+                                "<td><textarea name='remark' required class='layui-textarea' placeholder='请输入'></textarea></td>" +
+                                "</tr></tbody>" +
+                                "</table></div>"
+                            layer.open({
+                                title:'新增材料类别',
+                                type:1,
+                                skin: 'layui-layer-lan ', //样式类名
+                                closeBtn: 1, //显示关闭按钮
+                                anim: 2,
+                                area:['60%','35%'],
+                                resize:true,
+                                //id: '1', //防止重复弹出
+                                shadeClose: true, //开启遮罩关闭
+                                shade:[0.5], //透明度，背景颜色
+                                content: dom,
+                                btn:['确定','取消'],
+                                yes:function () {
+                                    var mName = $("input[name='mName']").val();
+                                    var mType = $("input[name='mType']:checked").val();
+                                    var mUnit = $("input[name='mUnit']").val();
+                                    var remark = $("textarea[name='remark']").val();
+                                    //alert(mName+"=="+mType);
+                                    alert(mName+"="+mType+"="+mUnit+"="+remark)
+                                    if(mName!=null && mName!="" && mUnit!=null && mUnit!="" && remark!=null && remark!=""){
+                                        $.ajax({
+                                            url:'/depot/addMaterials',
+                                            dateType:'json',
+                                            type:'post',
+                                            data:{'mName':mName,'mType':mType,'mUnit':mUnit,'remark':remark},
+                                            success:function (resp) {
+                                                if(resp){
+                                                    debugger;
+                                                    alert('数据添加成功...');
+                                                    location.reload();
+                                                    location.href='/depot/pageDepot';
+                                                }else {
+                                                    alert('数据添加失败...')
+                                                }
+                                            }
+                                        });
+                                    }else {
+                                        alert("请填写数据");
+                                    }
+                                }
+                            })
+                        });
+                    }else if(resp==9){
+                        alert('库存不足，已转至采购');
+                        location.reload();
+                        location.href='/depot/pageDepot';
+                    }else {
+                        alert('审核失败');
+                    }
+               }
+            });
+        }
+    }
+
 </script>
 </html>

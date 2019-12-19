@@ -23,6 +23,7 @@ public class PickingContrller {
     public String selePickadd(HttpServletRequest request){
         List<HashMap> list = pickingServiceI.selePicking();
         request.setAttribute("selePickadd",list);
+        System.out.println(list);
         return "system/zqw/selepicking";
     }
 }

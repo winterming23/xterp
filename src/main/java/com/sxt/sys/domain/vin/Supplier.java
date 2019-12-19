@@ -17,12 +17,12 @@ public class Supplier {
     private String phonenum;//联系电话
     private String email;//电子邮箱
     private String description;//备注
-    private String isystem;//是否系统自带 0==自带 1==非系统
+//    private String isystem;//是否系统自带 0==自带 1==非系统
     private String type;//类型(供应商，客户）
-    private boolean enabled;//启用状态
+    private int enabled;//启用状态
     private Double advanceIn;//预收款
     private Double beginNeedGet;//期初应收
-    private Double getBeginNeedPay;//期初应付
+    private Double beginNeedPay;//期初应付
     private Double allNeedGet;//累计应收
     private Double allNeedPay;//累计应付
     private String fax;//传真
@@ -33,4 +33,5 @@ public class Supplier {
     private String accountNumber;//账号
     private Double taxRate;//税率
     private String delete_flag;//删除标记(默认0)
+    private String status;//审核状态，默认0，0未审核，1已审核
 }

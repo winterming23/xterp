@@ -1,8 +1,12 @@
 package com.sxt.sys.service.zqw;
 
-
+import com.sxt.sys.domain.qxs.warehouse.Materials;
 import com.sxt.sys.domain.zqw.Number;
 import com.sxt.sys.domain.zqw.Picking;
+import com.sxt.sys.domain.zqw.Productionplan;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 物料数量的业务层操作接口
@@ -13,5 +17,29 @@ public interface NumberServiceI {
      * @param number
      * @return
      */
-    Boolean inserNum(Number number, Picking picking);
+    Boolean inserNum(Number number, Picking picking, Productionplan productionplan);
+
+    /**
+     * 查询材料表信息
+     * @return
+     */
+    List<Materials> seleMat();
+
+    /**
+     * 查询领料信息
+     * @return
+     */
+    List<Picking> selepicking();
+
+    /**
+     * 查询生产计划
+     * @return
+     */
+    List<Productionplan> seleProduct();
+
+    /**
+     * 根据根据子表和生产查询id
+     * @return
+     */
+    List<HashMap> selePadd();
 }

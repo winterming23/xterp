@@ -66,13 +66,12 @@ public class IncomeServiceImpl implements IncomeServiceI {
 
     /**
      * 是否确定收款
-     * @param state 0：未收款；1：已收款 审批字段
-     * @param id
+     * @param income
      * @return
      */
     @Override
-    public boolean confirmation(Integer state, Integer id) {
-        return incomeMapper.confirmation(state,id);
+    public boolean confirmation(Income income) {
+        return incomeMapper.confirmation(income);
     }
 
     /**
@@ -87,24 +86,22 @@ public class IncomeServiceImpl implements IncomeServiceI {
 
     /**
      * 清算尾款
-     * @param balance_payment
-     * @param id
+     * @param income
      * @return
      */
     @Override
-    public boolean liquidationIncome(Double actualPayment,Double balance_payment, Integer id) {
-        return incomeMapper.liquidationIncome(actualPayment,balance_payment,id);
+    public boolean liquidationIncome(Income income) {
+        return incomeMapper.liquidationIncome(income);
     }
 
     /**
      * 标记删除
-     * @param deleteFlag 1：删除; 0：不删除
-     * @param id 条件
+     * @param income
      * @return
      */
     @Override
-    public boolean deleteIncome(Integer deleteFlag, Integer id) {
-        return incomeMapper.deleteIncome(deleteFlag,id);
+    public boolean deleteIncome(Income income) {
+        return incomeMapper.deleteIncome(income);
     }
 
     /**

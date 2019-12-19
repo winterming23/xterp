@@ -2,7 +2,7 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sxt.sys.mapper.qxs.finance.ExpenditureMapper">
-    <update id="updateExpenditure" parameterType="Expenditure">
+    <update id="updateExpenditure" parameterType="com.sxt.sys.domain.qxs.finance.Expenditure">
         update expenditure
         <set>
             <if test=" account !=null">

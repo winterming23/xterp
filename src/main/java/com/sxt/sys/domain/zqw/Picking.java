@@ -9,7 +9,6 @@ public class Picking {
   private Date startTime;//出库时间
   private long productionAudit;//物料审核是否通过 0-通过 1-不通过
   private long deletePick;//删除标记
-  private long productionid;//生产编号
 
   @Override
   public String toString() {
@@ -19,7 +18,6 @@ public class Picking {
             ", startTime=" + startTime +
             ", productionAudit=" + productionAudit +
             ", deletePick=" + deletePick +
-            ", productionid=" + productionid +
             '}';
   }
 
@@ -63,23 +61,14 @@ public class Picking {
     this.deletePick = deletePick;
   }
 
-  public long getProductionid() {
-    return productionid;
-  }
-
-  public void setProductionid(long productionid) {
-    this.productionid = productionid;
-  }
-
   public Picking() {
   }
 
-  public Picking(long id, long pickingNo, Date startTime, long productionAudit, long deletePick, long productionid) {
+  public Picking(long id, long pickingNo, Date startTime, long productionAudit, long deletePick) {
     this.id = id;
     this.pickingNo = pickingNo;
     this.startTime = startTime;
     this.productionAudit = productionAudit;
     this.deletePick = deletePick;
-    this.productionid = productionid;
   }
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sxt.sys.mapper.qxs.finance.AccountMapper">
-    <update id="updateAccount" parameterType="Account">
+    <update id="updateAccount" parameterType="com.sxt.sys.domain.qxs.finance.Account">
         update account
         <set>
             <if test="cardNumber != null">

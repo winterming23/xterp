@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,7 +35,7 @@ public interface DepotHeadMapper {
      * @return
      */
     @Select("select * from depotHead where number=#{number} and deleteFlag='1' ")
-    Depothead getOneDepotHead(String number);
+    List<Depothead> getOneDepotHead(String number);
 
     /**
      * 查询被删除的数据
@@ -47,7 +49,7 @@ public interface DepotHeadMapper {
      * @param id
      * @return
      */
-    @Select("select * from depotHead where id=#{id} and deleteFlag='1' ")
+    @Select("select * from depotHead where id=#{id} ")
     Depothead getDepotHeadID(Integer id);
 
     /**
@@ -94,4 +96,21 @@ public interface DepotHeadMapper {
      */
     @Delete("delete from depotHead where number=#{number}")
     boolean deDepotHeadNumber(String number);
+
+    /**
+     * 修改出入库时间 需要审核通过调用
+     * @param date
+     * @return
+     */
+    @Update("update depotHead set operTime=#{date} where id=#{id} and status=1")
+    boolean updateDateTime(Date date, Integer id);
+
+    /**
+     * 报表查询
+     * @return
+     */
+    @Select(" select d.type dtype,d.amount am,m.mname materialsName,m.mtype mtype " +
+            " from depothead d LEFT JOIN materials m on d.materialid=m.id" +
+            " where `status`=1 and deleteFlag='0'")
+    List<HashMap> queryHead();
 }

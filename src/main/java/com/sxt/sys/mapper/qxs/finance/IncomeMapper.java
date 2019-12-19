@@ -43,12 +43,11 @@ public interface IncomeMapper {
 
     /**
      * 是否确认收款
-     * @param state 0：未收款；1：已收款 审批字段
-     * @param id
+     * @param income
      * @return
      */
-    @Update("update income set confirmReceipt=#{state} where incomeId=#{id}")
-    boolean confirmation(Integer state, Integer id);
+    @Update("update income set confirmReceipt=#{confirmReceipt} where incomeId=#{incomeId}")
+    boolean confirmation(Income income);
 
     /**
      * 修改收入记录
@@ -60,21 +59,19 @@ public interface IncomeMapper {
 
     /**
      * 清算尾款
-     * @param balance_payment
-     * @param id
+     * @param income
      * @return
      */
-    @Update("update income set actualPayment=#{actualPayment},balancePayment=#{balance_payment} where incomeId=#{id}")
-    boolean liquidationIncome(Double actualPayment, Double balance_payment, Integer id);
+    @Update("update income set actualPayment=#{actualPayment},balancePayment=#{balancePayment} where incomeId=#{incomeId}")
+    boolean liquidationIncome(Income income);
 
     /**
      * 标记删除
-     * @param deleteFlag 1：删除; 0：不删除
-     * @param id 条件
+     * @param income
      * @return
      */
-    @Update("update income set deleteFlag=#{deleteFlag} where incomeId=#{id}")
-    boolean deleteIncome(Integer deleteFlag, Integer id);
+    @Update("update income set deleteFlag=#{deleteFlag} where incomeId=#{incomeId}")
+    boolean deleteIncome(Income income);
 
     /**
      * 结算总收入

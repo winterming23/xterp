@@ -34,4 +34,9 @@ public class MaterialsServiceImpl implements MaterialsServiceI {
     public boolean addMaterials(Materials materials) {
         return materialsMapper.addMaterials(materials);
     }
+
+    @Override
+    public List<Materials> queryType(String type) {
+        return materialsMapper.queryType(type);
+    }
 }

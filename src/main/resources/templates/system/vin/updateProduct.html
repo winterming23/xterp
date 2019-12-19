@@ -94,25 +94,25 @@
         $("#serial_number").find("option[value="+serialNumber+"]").prop("selected",true);
         form.render();
 
-        debugger;
-        var model_id = $("#select_model option:selected").val();
-        $.ajax({
-            url:"queryByModelName",
-            dateType:"json",
-            type:"post",
-            data:{"model_id":model_id},
-            success:function (resp) {
-                debugger;
-                if(resp!=null){
-                    var typename = resp.type_name;
-                    var typeid = resp.id;
-                    $("#product_type_name").val(typename);
-                    $("#proType").val(typeid);
-                }else {
-                    $("#product_type_name").val("");
-                }
-            }
-        });
+        // debugger;
+        // var model_id = $("#select_model option:selected").val();
+        // $.ajax({
+        //     url:"queryByModelName",
+        //     dateType:"json",
+        //     type:"post",
+        //     data:{"model_id":model_id},
+        //     success:function (resp) {
+        //         debugger;
+        //         if(resp!=null){
+        //             var typename = resp.type_name;
+        //             var typeid = resp.id;
+        //             $("#product_type_name").val(typename);
+        //             $("#proType").val(typeid);
+        //         }else {
+        //             $("#product_type_name").val("");
+        //         }
+        //     }
+        // });
 
         form.on('select(promodels)', function (data) {
             var model_id = $("#select_model option:selected").val();

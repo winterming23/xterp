@@ -97,4 +97,10 @@ public interface ProductServiceI {
      */
     public boolean updateProductStateT(long id);
 
+    /**
+     * 修改产品审核状态
+     * @param id
+     * @return
+     */
+    public boolean updateProductStatus(long id);
 }

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>财务年度报表详情</title>
@@ -36,7 +34,7 @@
                     <td th:text="${fs.deleteFlag==0?'正常':'已删除'}"></td>
                     <td th:text="${fs.remark}"></td>
                     <td >
-                        <button th:if="${fs.deleteFlag==0}" class="layui-btn layui-btn-xs" th:onclick="|fsDelete('${fs.id} ')|" shiro:hasPermission="FinancialSettlement:delete">
+                        <button th:if="${fs.deleteFlag==0}" class="layui-btn layui-btn-xs" th:onclick="|fsDelete('${fs.id} ')|">
                             <i class="layui-icon">&#xe640;</i>删除
                         </button>
                     </td>
@@ -47,7 +45,7 @@
 
     <script>
         $("#ftop").DataTable({
-            aLengthMenu:[3,5,10]
+            aLengthMenu:[5,10]
         });
 
         //删除

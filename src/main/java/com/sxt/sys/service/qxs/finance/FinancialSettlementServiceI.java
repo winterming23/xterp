@@ -32,7 +32,7 @@ public interface FinancialSettlementServiceI {
      * @param id
      * @return
      */
-    FinancialSettlement getOneFs(FinancialSettlement id);
+    FinancialSettlement getOneFs(Integer id);
 
     /**
      * 修改描述
@@ -43,11 +43,10 @@ public interface FinancialSettlementServiceI {
 
     /**
      * 标记删除
-     * @param deleteFlag 0 不删除; 1：删除
-     * @param id
+     * @param financialSettlement
      * @return
      */
-    boolean deleteFinancialSettlement(Integer deleteFlag, Integer id);
+    boolean deleteFinancialSettlement(FinancialSettlement financialSettlement);
 
     /**
      * 新增财务结算记录

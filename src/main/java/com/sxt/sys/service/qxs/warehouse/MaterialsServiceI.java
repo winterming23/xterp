@@ -1,6 +1,5 @@
 package com.sxt.sys.service.qxs.warehouse;
 
-
 import com.sxt.sys.domain.qxs.warehouse.Materials;
 
 import java.util.List;
@@ -31,4 +30,11 @@ public interface MaterialsServiceI {
      * @return
      */
     boolean addMaterials(Materials materials);
+
+    /**
+     * 根据类型查询
+     * @param type
+     * @return
+     */
+    List<Materials> queryType(String type);
 }

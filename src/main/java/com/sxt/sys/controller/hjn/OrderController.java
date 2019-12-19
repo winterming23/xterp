@@ -5,6 +5,7 @@ import com.sxt.sys.service.hjn.DetailedServicel;
 import com.sxt.sys.service.hjn.OrderServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,13 +35,15 @@ public class OrderController {
      */
     @ResponseBody
     @RequestMapping("queryOrdersPage")
-    public Map queryOrdersPage(String orderid, Date createtime){
+    public Map queryOrdersPage(String orderid, Date createtime, Model model){
         //查询采购订单
         List<HashMap<String, Object>> listOrders = orderServiceI.findOrders(orderid,createtime);
         HashMap<Integer, List> map = new HashMap<Integer, List>();
         map.put(1,listOrders);
         return map;
     }
+
+
 
 
 }

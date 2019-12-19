@@ -83,4 +83,9 @@ public class ProductServiceImpl implements ProductServiceI {
     public boolean updateProductStateT(long id) {
         return productMapper.updateProductStateT(id);
     }
+
+    @Override
+    public boolean updateProductStatus(long id) {
+        return productMapper.updateProductStatus(id);
+    }
 }

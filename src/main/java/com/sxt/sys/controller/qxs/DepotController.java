@@ -61,7 +61,7 @@ public class DepotController {
         List<Materials> materials = materialsServiceI.queryAllMaterials();
         model.addAttribute("materials",materials);
         //查询所有单据
-        List<Depothead> depotHeads = depotHeadServiceI.queryNotDeleteDepotHead();
+        List<Depothead> depotHeads = depotHeadServiceI.queryAllDepotHead();
         model.addAttribute("depotHeads",depotHeads);
         return "system/qxs/warehouse/depotMain";
     }
@@ -96,7 +96,7 @@ public class DepotController {
         if(b){
             return "redirect:/depot/pageDepot";
         }
-        return "system/error/404";
+        return "error/404";
     }
 
     /**
@@ -121,4 +121,37 @@ public class DepotController {
         return materialsServiceI.addMaterials(materials);
     }
 
+    /**
+     * 单据主表审核
+     * @param id
+     * @param state
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("headState")
+    public int stateHead(Integer id,Integer state){
+        int i = depotHeadServiceI.depotHeadExamin(state, id);
+        return i;
+    }
+
+    /**
+     * 单据主表 标记删除
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("deleteHead")
+    public boolean deleteHead(Integer id){
+        return depotHeadServiceI.deleteDepotHead("1",id);
+    }
+
+    /**
+     * 报表查询
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("queryHead")
+    public List queryHead(){
+        return depotHeadServiceI.queryHead();
+    }
 }

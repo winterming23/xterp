@@ -1,6 +1,5 @@
 package com.sxt.sys.service.qxs.warehouse;
 
-
 import com.sxt.sys.domain.qxs.warehouse.DepotItem;
 
 import java.util.HashMap;

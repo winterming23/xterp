@@ -75,4 +75,10 @@ public interface ProductionplanServiceI {
      * @return
      */
     List<HashMap> selepropick(int pickingid);
+
+    /**
+     * 查询生产和领料的数据
+     * @return
+     */
+    List<HashMap> seleProckll();
 }

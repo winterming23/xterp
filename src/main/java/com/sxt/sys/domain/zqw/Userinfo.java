@@ -13,8 +13,8 @@ public class Userinfo {
   private String email;
   private String phone;
   private String address;
-  private java.sql.Timestamp birthday;
-  private java.sql.Timestamp hireDate;
+  private Timestamp birthday;
+  private Timestamp hireDate;
   private long deptNo;
   private long mar;
   private double sal;

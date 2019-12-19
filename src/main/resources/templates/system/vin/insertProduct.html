@@ -95,19 +95,7 @@
     layui.use(['form', 'layer'], function(){
         var form = layui.form;
         var layer = layui.layer;
-        /**
-         * 根据产品型号获取产品类别
-         */
-        // form.on('select(promodels)', function (data) {
-        //     //触发内容
-        //     layer.msg('响应点击事件');
-        //
-        //                 });
         form.on('select(promodels)', function (data) {
-       // $("#select_model").change(function(){
-       //     layer.msg('响应点击事件');
-       //      debugger;
-       //      layer.msg('响应点击事件');
             var model_id = $("#select_model option:selected").val();
             alert(model_id);
             $.ajax({

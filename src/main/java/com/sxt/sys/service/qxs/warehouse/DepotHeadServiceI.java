@@ -1,8 +1,8 @@
 package com.sxt.sys.service.qxs.warehouse;
 
-
 import com.sxt.sys.domain.qxs.warehouse.Depothead;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,7 +27,7 @@ public interface DepotHeadServiceI {
      * @param number
      * @return
      */
-    Depothead getOneDepotHead(String number);
+    List<Depothead> getOneDepotHead(String number);
 
     /**
      * 查询被删除的数据
@@ -63,5 +63,11 @@ public interface DepotHeadServiceI {
      * @return
      */
     boolean deleteDepotHead(String deleteFlag, Integer id);
+
+    /**
+     * 报表查询
+     * @return
+     */
+    List<HashMap> queryHead();
 
 }

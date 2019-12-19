@@ -90,7 +90,11 @@ public class FinanceController {
     @ResponseBody
     public boolean deleteFlagFs(Integer flag,Integer id){
         System.err.println(id);
-        return financialSettlementServiceI.deleteFinancialSettlement(flag,id);
+        FinancialSettlement financialSettlement = new FinancialSettlement();
+        financialSettlement.setDeleteFlag(flag);
+        financialSettlement.setId(id);
+        System.err.println(financialSettlement);
+        return financialSettlementServiceI.deleteFinancialSettlement(financialSettlement);
     }
 
     /**
@@ -120,9 +124,17 @@ public class FinanceController {
     public boolean affirm(Integer confirm_receipt,Integer id,String type){
         System.err.println(confirm_receipt+"=="+id+"=="+type);
         if("支出".equals(type)){
-            return expenditureServiceI.confirmation(confirm_receipt, id);
+            Expenditure expenditure = new Expenditure();
+            expenditure.setConfirmPayment(confirm_receipt);
+            expenditure.setExpenditureId(id);
+            System.err.println(expenditure);
+            return expenditureServiceI.confirmation(expenditure);
         }else if("收入".equals(type)){
-            return incomeServiceI.confirmation(confirm_receipt,id);
+            Income income = new Income();
+            income.setConfirmReceipt(confirm_receipt);
+            income.setIncomeId(id);
+            System.err.println(income);
+            return incomeServiceI.confirmation(income);
         }
         return false;
     }
@@ -139,9 +151,17 @@ public class FinanceController {
     public boolean expurgate(Integer flag,Integer id,String type){
         System.err.println(flag+"=="+id+"=="+type);
         if("支出".equals(type)){
-            return expenditureServiceI.deleteExpenditure(flag,id);
+            Expenditure expenditure = new Expenditure();
+            expenditure.setExpenditureId(id);
+            expenditure.setDeleteFlag(flag);
+            System.err.println(expenditure);
+            return expenditureServiceI.deleteExpenditure(expenditure);
         }else if("收入".equals(type)){
-            return incomeServiceI.deleteIncome(flag,id);
+            Income income = new Income();
+            income.setIncomeId(id);
+            income.setDeleteFlag(flag);
+            System.err.println(income);
+            return incomeServiceI.deleteIncome(income);
         }
         return false;
     }
@@ -217,17 +237,14 @@ public class FinanceController {
     @ResponseBody
     @RequestMapping("updateExpenditure")
     public boolean updateExpenditure(Expenditure expenditure,Double number){
-        boolean b = false;
+        //boolean b = false;
         System.err.println(expenditure);
         if(number>0){
             expenditure.setActualPayment(expenditure.getActualPayment()+number);
             expenditure.setBalancePayment(expenditure.getBalancePayment()-number);
-            b = expenditureServiceI.liquidationExpenditure(expenditure);
+            expenditureServiceI.liquidationExpenditure(expenditure);
         }
-        if(b){
-            return expenditureServiceI.updateExpenditure(expenditure);
-        }
-        return false;
+        return expenditureServiceI.updateExpenditure(expenditure);
     }
 
     /**
@@ -247,12 +264,9 @@ public class FinanceController {
             income.setActualPayment(income.getActualPayment()+number);
             //设置清算后的尾款
             income.setBalancePayment(income.getBalancePayment()-number);
-            b = incomeServiceI.liquidationIncome(income.getActualPayment(), income.getBalancePayment(), income.getIncomeId());
+            incomeServiceI.liquidationIncome(income);
         }
-        if(b){
-            return incomeServiceI.updateIncome(income);
-        }
-        return false;
+        return incomeServiceI.updateIncome(income);
     }
 
     /**

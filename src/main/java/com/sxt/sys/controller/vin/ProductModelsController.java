@@ -33,7 +33,7 @@ public class ProductModelsController {
         for (HashMap pro : productModels){
             System.out.println(pro);
         }
-        return  "system/vin/productModels";
+        return  "vin/productModels";
     }
 
     /**
@@ -60,12 +60,13 @@ public class ProductModelsController {
      * @return
      */
     @RequestMapping("deleteProductModels")
+    @ResponseBody
     public String deleteProductModels(Long id){
         System.out.println("============================================================================================");
         System.out.println(id);
         boolean deleteProduct = productModelsServiceI.deleteProductModels(id);
         if(deleteProduct){
-            return "redirect:getAllProductModels";
+            return "true";
         }else {
             return "";
         }
@@ -85,7 +86,7 @@ public class ProductModelsController {
         System.out.println(product_model);
         boolean updateProduct = productModelsServiceI.updateProductModels(product_model);
         if (updateProduct){
-            return "getAllProductModels";
+            return "true";
         }else {
             return "";
         }
@@ -98,7 +99,7 @@ public class ProductModelsController {
         for (Product_type list : product_typess){
             System.out.println(list);
         }
-        return "system/vin/insertProductModels";
+        return "vin/insertProductModels";
     }
 
     @RequestMapping("deleteProductModelss")
@@ -122,9 +123,19 @@ public class ProductModelsController {
         System.out.println(proStaid);
         boolean flag = productModelsServiceI.updateProductModelsStatus(proStaid);
         if (flag){
-            return "system/vin/productModels";
+            return "vin/productModels";
         }else {
             return "";
         }
+    }
+
+    @RequestMapping("queryByModelId")
+    public String queryByModelId(Long id, Model model){
+        System.out.println(id);
+        Product_model productModel = productModelsServiceI.queryByModelId(id);
+        List<Product_type> productTypes = productModelsServiceI.queryType();
+        model.addAttribute("productTypes",productTypes);
+        model.addAttribute("productModel",productModel);
+        return "vin/updateProductModels";
     }
 }

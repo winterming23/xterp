@@ -1,5 +1,6 @@
 package com.sxt.sys.mapper.vin;
 
+
 import com.sxt.sys.domain.vin.Supplier;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -35,8 +36,8 @@ public interface SupplierMapper {
      * @param supplier
      * @return
      */
-    @Insert("INSERT INTO `supplier` (supplier,contacts,phoneNum,email,description,type,enabled,AdvanceIn,BeginNeedGet,BeginNeedPay,AllNeedGet,AllNeedPay,fax,telephone,address,taxNum,bankName,accountNumber,taxRate,delete_Flag,status)" +
-            " VALUES (#{supplier}, #{contacts}, #{phoneNum},#{email}, #{description}, '供应商',1, #{AdvanceIn}, #{BeginNeedGet}, #{BeginNeedPay}, #{AllNeedGet}, #{AllNeedPay}, #{fax}, #{telephone}, #{address}, #{taxNum}, #{bankName}, #{accountNumber}, #{taxRate}, '0','0')")
+    @Insert("INSERT INTO `supplier` (supplier,contacts,phonenum,email,type,enabled,advanceIn,beginNeedGet,beginNeedPay,allNeedGet,allNeedPay,fax,telephone,address,taxNum,bankName,accountNumber,taxRate,delete_Flag,status)" +
+            " VALUES (#{supplier}, #{contacts}, #{phonenum},#{email}, '供应商',1, #{advanceIn}, #{beginNeedGet}, #{beginNeedPay}, #{allNeedGet}, #{allNeedPay}, #{fax}, #{telephone}, #{address}, #{taxNum}, #{bankName}, #{accountNumber}, #{taxRate}, '0','0')")
     public boolean insertSupplierG(Supplier supplier);
 
     /**
@@ -44,8 +45,8 @@ public interface SupplierMapper {
      * @param supplier
      * @return
      */
-    @Insert("INSERT INTO `supplier` (supplier,contacts,phoneNum,email,description,type,enabled,AdvanceIn,BeginNeedGet,BeginNeedPay,AllNeedGet,AllNeedPay,fax,telephone,address,taxNum,bankName,accountNumber,taxRate,delete_Flag,status)" +
-            " VALUES (#{supplier}, #{contacts}, #{phoneNum},#{email}, #{description}, '供应商',1, #{AdvanceIn}, #{BeginNeedGet}, #{BeginNeedPay}, #{AllNeedGet}, #{AllNeedPay}, #{fax}, #{telephone}, #{address}, #{taxNum}, #{bankName}, #{accountNumber}, #{taxRate}, '0','0')")
+    @Insert("INSERT INTO `supplier` (supplier,contacts,phonenum,email,type,enabled,advanceIn,beginNeedGet,beginNeedPay,allNeedGet,allNeedPay,fax,telephone,address,taxNum,bankName,accountNumber,taxRate,delete_Flag,status)" +
+            " VALUES (#{supplier}, #{contacts}, #{phonenum},#{email}, '客户',1, #{advanceIn}, #{beginNeedGet}, #{beginNeedPay}, #{allNeedGet}, #{allNeedPay}, #{fax}, #{telephone}, #{address}, #{taxNum}, #{bankName}, #{accountNumber}, #{taxRate}, '0','0')")
     public boolean insertSupplierK(Supplier supplier);
 
     /**
@@ -53,8 +54,8 @@ public interface SupplierMapper {
      * @param supplier
      * @return
      */
-    @Update("UPDATE supplier SET supplier=#{supplier},contacts=#{contacts},phoneNum= #{phoneNum},email=#{email},description=#{description},AdvanceIn=#{AdvanceIn}," +
-            " BeginNeedGet=#{BeginNeedGet},BeginNeedPay=#{BeginNeedPay},AllNeedGet=#{AllNeedGet},AllNeedPay=#{AllNeedPay},fax=#{fax},telephone=#{telephone},address= #{address}," +
+    @Update("UPDATE supplier SET supplier=#{supplier},contacts=#{contacts},phonenum= #{phonenum},email=#{email},advanceIn=#{advanceIn}," +
+            " beginNeedGet=#{beginNeedGet},beginNeedPay=#{beginNeedPay},allNeedGet=#{allNeedGet},allNeedPay=#{allNeedPay},fax=#{fax},telephone=#{telephone},address= #{address}," +
             " taxNum=#{taxNum},bankName=#{bankName},accountNumber=#{accountNumber},taxRate=#{taxRate} where id=#{id}")
     public boolean updateSupplier(Supplier supplier);
 
@@ -72,7 +73,7 @@ public interface SupplierMapper {
      * @return
      */
     @Select("select * from supplier where id = #{id}")
-    public List<Supplier> queryBySupplierId(long id);
+    public Supplier queryBySupplierId(long id);
 
     /**
      * 修改供应商状态为启用

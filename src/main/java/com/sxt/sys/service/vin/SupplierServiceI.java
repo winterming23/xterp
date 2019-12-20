@@ -1,5 +1,7 @@
 package com.sxt.sys.service.vin;
 
+
+
 import com.sxt.sys.domain.vin.Supplier;
 
 import java.util.List;
@@ -53,11 +55,11 @@ public interface SupplierServiceI {
     public boolean updateSupplierStatus(long id);
 
     /**
-     * 根据供应商id查询
+     * 根据id查询
      * @param id
      * @return
      */
-    public List<Supplier> queryBySupplierId(long id);
+    public Supplier queryBySupplierId(long id);
 
     /**
      * 修改供应商状态为启用

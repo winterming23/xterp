@@ -75,6 +75,16 @@ public class WorkAttendanceServiceImpl implements WorkAttendanceServiceI {
         String timeDifference = DateUtils.timeDifference(startTime, endTime);
         Date date = sdf.parse(timeDifference);
         allHour = new Time(date.getTime());
+        Date parse = sdf.parse("08:30:00");
+        Time hour = new Time(parse.getTime());
+        //总时长 小于8小时30分钟状态改为1 工时不足
+        //总时长 小于 设定时长 返回true 大于时返回false 工时不足
+        if(allHour.before(parse)){
+            workAttendanceMapper.updateWorkAttendanceState(1,id);
+        }else{
+            // 总时长大于设定时长 全勤
+            workAttendanceMapper.updateWorkAttendanceState(2,id);
+        }
         return workAttendanceMapper.updateWorkAttendanceDate(startTime,endTime,allHour,id);
     }
 
@@ -87,5 +97,16 @@ public class WorkAttendanceServiceImpl implements WorkAttendanceServiceI {
     @Override
     public List<HashMap> getEmployeeAttendance(int userId) {
         return workAttendanceMapper.getEmployeeAttendance(userId);
+    }
+
+    /**
+     * 查询单条员工考勤数据
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public WorkAttendance findWorkAttendance(int id) {
+        return workAttendanceMapper.findWorkAttendance(id);
     }
 }

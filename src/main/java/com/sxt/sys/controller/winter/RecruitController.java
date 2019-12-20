@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+
 
 /**
  * @Author Winter
@@ -27,7 +29,7 @@ public class RecruitController {
      */
     @RequestMapping("/addRecruit")
     public String addRecruit(){
-        return "system/winter/recruit/saveRecruit";
+        return "updateRecruit";
     }
     /**
      * 添加招聘数据
@@ -35,13 +37,10 @@ public class RecruitController {
      * @return
      */
     @RequestMapping("/saveRecruit")
-    public String saveRecruit(Recruit recruit){
+    @ResponseBody
+    public boolean saveRecruit(Recruit recruit){
         boolean flag = recruitService.saveRecruit(recruit);
-        if (flag){
-            return "forward:/getRecruit";
-        }else{
-            return "false";
-        }
+        return flag;
     }
 
     /**
@@ -50,13 +49,10 @@ public class RecruitController {
      * @return
      */
     @RequestMapping("/updateRecruit")
-    public String updateRecruit(Recruit recruit){
+    @ResponseBody
+    public boolean updateRecruit(Recruit recruit){
         boolean flag = recruitService.updateRecruit(recruit);
-        if (flag){
-            return "/getRecruit";
-        }else {
-            return "false";
-        }
+        return flag;
     }
 
     /**
@@ -66,13 +62,10 @@ public class RecruitController {
      * @return
      */
     @RequestMapping("/deleteRecruit")
-    public String deleteRecruit(int deleteFlag, int recruitId){
+    @ResponseBody
+    public boolean deleteRecruit(int deleteFlag, int recruitId){
         boolean flag = recruitService.deleteRecruit(deleteFlag, recruitId);
-        if (flag){
-            return "/getRecruit";
-        }else{
-            return "false";
-        }
+        return flag;
     }
 
     /**
@@ -88,38 +81,14 @@ public class RecruitController {
     }
 
     /**
-     * 查看所有已删除数据
-     * @param model
-     * @return
-     */
-    @RequestMapping("/getAllDeleteRecruit")
-    public String getAllDeleteRecruit(Model model){
-        List<Recruit> allDeleteRecruit = recruitService.getAllDeleteRecruit();
-        model.addAttribute("deleteRecruit",allDeleteRecruit);
-        return "";
-    }
-
-    /**
-     * 查询所有招聘信息
-     * @param model
-     * @return
-     */
-    @RequestMapping("getAllRecruit")
-    public String getAllRecruit(Model model){
-        List<Recruit> allRecruit = recruitService.getAllRecruit();
-        model.addAttribute("allRecruit",allRecruit);
-        return "";
-    }
-
-    /**
      * 根据编号查询单条招聘信息
      * @param recruitId
      * @return
      */
     @RequestMapping("/findRecruit")
-    public String findRecruitOne(int recruitId, Model model){
+    public String findRecruitOne(int recruitId,Model model){
         Recruit recruitOne = recruitService.findRecruitOne(recruitId);
         model.addAttribute("recruit",recruitOne);
-        return "";
+        return "system/winter/recruit/updateRecruit";
     }
 }

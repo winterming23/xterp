@@ -2,31 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sxt.sys.mapper.winter.SaleMapper">
-    <!-- 多对一 多个考勤对一个用户  一对多标签 <collection ofType="com.sxt.sys.domain.winter.WordAttendance" autoMapping="true">-->
-    <!--<resultMap id="saleToUser" type="com.sxt.sys.domain.winter.Sale" autoMapping="true">
-        <id property="id" column="id"></id>
-        <result property="userId" column="userId"></result>
-        <result property="clientId" column="clientId"></result>
-        <result property="productId" column="productId"></result>
-        <result property="depotId" column="depotId"></result>
-        <result property="depotHeadId" column="depotHeadId"></result>
-        <association property="userId" javaType="com.sxt.sys.domain.zqw.Userinfo" autoMapping="true">
-            <id property="id" column="id"></id>
-            <result property="userName" column="userName"></result>
-        </association>
-        <association property="clientId" javaType="com.sxt.sys.domain.vin.Supplier" autoMapping="true">
-            <id property="id" column="id"></id>
-        </association>
-        <association property="productId" javaType="com.sxt.sys.domain.vin.Product" autoMapping="true">
-            <id property="id" column="id"></id>
-        </association>
-        <association property="depotId" javaType="com.sxt.sys.domain.qxs.warehouse.Depot" autoMapping="true">
-            <id property="id" column="id"></id>
-        </association>
-        <association property="depotHeadId" javaType="com.sxt.sys.domain.qxs.warehouse.Depothead" autoMapping="true">
-            <id property="id" column="id"></id>
-        </association>
-    </resultMap>-->
     <!--添加销售信息-->
     <insert id="saveSale" parameterType="com.sxt.sys.domain.winter.Sale">
         insert into sale values(#{id},#{userId},#{clientId},#{productId},#{depotId},#{state},#{deleteFlag})

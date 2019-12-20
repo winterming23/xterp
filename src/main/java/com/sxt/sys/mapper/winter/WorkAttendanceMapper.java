@@ -43,7 +43,7 @@ public interface WorkAttendanceMapper {
      * @param id
      * @return
      */
-    boolean updateWorkStartTime(@Param("startTime") Time startTime, int id);
+    boolean updateWorkStartTime(@Param("startTime") Time startTime,@Param("id") int id);
     /**
      * 修改下班时间
      * @param endTime 结束时间

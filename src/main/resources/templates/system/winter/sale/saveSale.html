@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/resources/csss/jquery-1.8.3.min.js"></script>
+    <script src="/resources/csss/jquery.dataTables.min.js"></script>
+    <script src="/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" />
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css" />
+</head>
+<body>
+<form>
+    客户：
+    <select id="clientId">
+        <option>=====请选择=====</option>
+    </select>
+    <br/><br/>
+    单据日期：
+    <input type="text" class="layui-input" name="createTime" id="createTime"/>
+    <br/><br/>
+    单据编号：
+    <input type="hidden" name="depotHeadId" value="0"/>
+    <input type="text" name="depotHeadNumber" id="depotHeadNumber" readonly="readonly">
+    <br/><br/>
+    销售人员：<!--当前登录用户 th:value="${user.userName}"-->
+    <input type="hidden" name="userId" value="1"/>
+    <input type="text" name="userName" id="userName" readonly="readonly"/>
+    <br/><br/>
+    仓库名称：
+    <select id="depotId">
+        <option>=====请选择=====</option>
+    </select>
+    <br/><br/>
+    产品名称：
+    <select id="productId">
+        <option>=====请选择=====</option>
+    </select>
+    <br/><br/>
+    所需数量：
+    <input type="text" name="saleNumber" id="saleNumber" required="required"/>
+    <br/><br/>
+    库存：
+    <input type="text" name="basicNumber" id="basicNumber" readonly="readonly"/>
+    <br/><br/>
+    单价：
+    <input type="text" name="unitPrice" id="unitPrice" readonly="readonly"/>
+    <br/><br/>
+    总金额：
+    <input type="text" name="money" id="money" readonly="readonly"/>
+    <br/><br/>
+    实际付款金额：
+    <input type="text" name="reality" id="reality"/>
+    <br/><br/>
+    提成：<!--总金额的2%-->
+    <input type="text" name="commission" id="commission" readonly="readonly"/>
+    <br/><br/>
+    <input type="submit" value="保存" />
+</form>
+<script type="text/javascript">
+    //生成日期 yyyy-MM-dd HH:mm:ss
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#createTime', //指定元素
+            type: 'datetime'//时间选择器类型 可以选择年月日时分秒
+        });
+    });
+
+    //生成唯一的标识ID
+    function uuid() {
+        var s = [];
+        var hexDigits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (var i = 0; i < 15; i++) {//15位
+            s[i] = hexDigits.substr(Math.floor(Math.random() * hexDigits.length), 1);
+        }
+        s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+        //s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+        //s[8] = s[13] = s[18] = s[23] = "-";//去掉-
+        var uuid = s.join("");
+        return uuid;
+    }
+    var UIDs = uuid(); //自定义ID
+    $("#depotHeadNumber").val(UIDs);
+
+    //计算  总金额 = 单价*数量 提成
+    var saleNumber = $("#saleNumber").val();
+    var unitPrice = $("#unitPrice").val();
+    var totalMoney = parseFloat(unitPrice) * parseInt(saleNumber);
+    var money = $("#money").val(totalMoney);
+    // 提成 = 总金额*2%
+    var pushMoney = parseFloat(money)*0.02;
+    var commission = $("#commission").val(pushMoney);
+
+
+    $(function () {
+        //查询客户
+        layui.use('layer',function () {
+            var layer = layui.layer;
+            layer.open({
+
+            })
+        })
+        //查询产品
+
+        //查询单据子表数据
+
+        //查询仓库
+        
+    })
+</script>
+</body>
+</html>

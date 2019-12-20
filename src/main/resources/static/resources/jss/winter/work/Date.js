@@ -1,17 +1,37 @@
-//获取时分秒 Hour Minute Second
-function  hourMinuteSecond() {
-    var mydate = new Date();
-    /*mydate.getYear(); //获取当前年份(2位)
-    mydate.getFullYear(); //获取完整的年份(4位,1970-????)
-    mydate.getMonth(); //获取当前月份(0-11,0代表1月)
-    mydate.getDate(); //获取当前日(1-31)
-    mydate.getDay(); //获取当前星期X(0-6,0代表星期天)
-    mydate.getTime(); //获取当前时间(从1970.1.1开始的毫秒数)
-    mydate.getHours(); //获取当前小时数(0-23)
-    mydate.getMinutes(); //获取当前分钟数(0-59)
-    mydate.getSeconds(); //获取当前秒数(0-59)
-    mydate.getMilliseconds(); //获取当前毫秒数(0-999)
-    mydate.toLocaleDateString(); //获取当前日期
-    var mytime=mydate.toLocaleTimeString(); //获取当前时间
-    mydate.toLocaleString( ); //获取日期与时间*/
+//将后台获取的类型转换 年月日
+function yearToDate(date) {
+    currentTime();
+    //调用时
+    var year = new Date(date).Format("yyyy-MM-dd");
+    return year;
+}
+//将后台获取的类型转换 时分秒
+function hourMinuteSecond(date) {
+    currentTime();
+    var hour = new Date(date).Format("HH:mm:ss");
+    return hour;
+}
+//获取当前星期几
+function  week() {
+    var date = new Date();
+    return date.getDate();
+}
+
+function currentTime(){
+    //日期格式化
+    Date.prototype.Format = function(fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if(/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
 }

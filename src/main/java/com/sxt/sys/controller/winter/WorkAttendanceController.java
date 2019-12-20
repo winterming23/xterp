@@ -9,13 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.sql.Time;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author Winter
@@ -29,19 +34,19 @@ public class WorkAttendanceController {
     private WorkAttendanceServiceI workAttendanceService;
 
     /**
-     * 修改考勤数据
-     * @param workAttendance
+     * 修改上班时间
+     * @param startTime
+     * @param id
      * @return
      */
-    public String updateWorkAttendance(WorkAttendance workAttendance){
-        boolean flag = workAttendanceService.updateWorkAttendance(workAttendance);
-        if (flag){
-            return "forward:/getWork";
-        }else{
-            return "false";
-        }
+    @RequestMapping("/updateWorkStartTime")
+    @ResponseBody
+    public boolean updateWorkStartTime(Time startTime, int id){
+        System.out.println("startTime："+startTime);
+        System.out.println("id"+id);
+        boolean flag = workAttendanceService.updateWorkStartTime(startTime, id);
+        return flag;
     }
-
     /**
      * 修改考勤时间
      * @param startTime 开始时间
@@ -50,8 +55,11 @@ public class WorkAttendanceController {
      * @param id 编号
      * @return
      */
-    public String updateWorkAttendanceDate(Time startTime, Time endTime, Time allHour, int id) throws ParseException{
-        return null;
+    @RequestMapping("/updateWorkAttendanceDate")
+    @ResponseBody
+    public boolean updateWorkAttendanceDate(Time startTime, Time endTime, Time allHour, int id) throws ParseException{
+        boolean flag = workAttendanceService.updateWorkAttendanceDate(startTime,endTime,allHour,id);
+        return flag;
     }
 
     /**
@@ -65,7 +73,7 @@ public class WorkAttendanceController {
     public String getEmployeeAttendance( Model model){
         List<HashMap> employeeAttendance = workAttendanceService.getEmployeeAttendance(1);
         model.addAttribute("employeeAttendance",employeeAttendance);
-        return "system/winter/work/workDay";
+        return "system/winter/work/workApply";
     }
 
     /**
@@ -84,7 +92,7 @@ public class WorkAttendanceController {
      * @return
      */
     @RequestMapping("/work")
-    public List<HashMap> getWorkAttendance(Model model, HttpServletResponse response){
+    public List<HashMap> getWorkAttendance(Model model,HttpServletResponse response){
         List<HashMap> employeeAttendance = workAttendanceService.getEmployeeAttendance(1);
         model.addAttribute("employeeAttendance",employeeAttendance);
         String result = JSON.toJSONString(employeeAttendance);
@@ -102,5 +110,20 @@ public class WorkAttendanceController {
         out.println(param);
         out.flush();
         out.close();
+    }
+
+    /**
+     * 查询新增加的数据
+     * @param request
+     * @return
+     */
+    @RequestMapping("/findWork")
+    public String findWorkAttendance(HttpServletRequest request){
+        //获取新增的编号
+        //int workId = (int)request.getAttribute("workId");
+        WorkAttendance workAttendance = workAttendanceService.findWorkAttendance(4);
+        System.out.println("======"+workAttendance);
+        request.setAttribute("workUser",workAttendance);
+        return "forward:/workDay";
     }
 }

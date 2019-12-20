@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sxt.sys.mapper.winter.WorkAttendanceMapper">
+    <!-- 添加考勤 -->
+    <insert id="saveWorkAttendance" useGeneratedKeys="true"  keyProperty="id"  parameterType="com.sxt.sys.domain.winter.WorkAttendance">
+      insert into workAttendance values(#{id},#{userId},#{attendanceDate},#{week},#{startTime},#{endTime},#{allHour},#{state},0,0)
+    </insert>
+    <!--修改考勤-->
+    <update id="updateWorkAttendance" parameterType="com.sxt.sys.domain.winter.WorkAttendance">
+      update workAttendance set userId = #{userId},attendanceDate = #{attendanceDate},week = #{week},startTime = #{startTime},endTime = #{endTime},allHour = #{allHour},state = #{state},workState = #{workState} where id = #{id}
+    </update>
+    <!--修改考勤状态-->
+    <update id="updateWorkAttendanceState" parameterType="com.sxt.sys.domain.winter.WorkAttendance">
+      update workAttendance set state = #{state} where id = #{id}
+    </update>
+    <!-- 修改上班时间 -->
+    <update id="updateWorkStartTime" parameterType="com.sxt.sys.domain.winter.WorkAttendance">
+        update workattendance set startTime = #{startTime},workState = 1 where id = #{id}
+    </update>
+    <!--修改考勤时间-->
+    <update id="updateWorkAttendanceDate" parameterType="com.sxt.sys.domain.winter.WorkAttendance">
+      update workAttendance set endTime = #{endTime},allHour = #{allHour},workState = 2 where id = #{id}
+    </update>
+    <!--查看该员工的考勤信息-->
+    <select id="getEmployeeAttendance" resultType="hashmap">
+        select w.id,u.name,w.attendanceDate,w.`week`,w.startTime,w.endTime,w.allHour,w.state from workAttendance w
+        inner join sys_user u on u.id = w.userId
+        where userId = 1 order by attendanceDate desc
+    </select>
+
+    <!-- 查询单条员工记录 -->
+    <select id="findWorkAttendance" resultType="com.sxt.sys.domain.winter.WorkAttendance">
+        select * from workattendance where id = #{id}
+    </select>
+</mapper>

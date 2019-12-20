@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改培训信息</title>
+
+    <script src="/resources/jss/jquery-2.1.1.js"></script>
+    <script src="/resources/layui/layui.js"></script>x
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"/>
+</head>
+<body>
+<div class="layui-form-item">
+    <input type="hidden" id="recruitId" name="recruitId" th:value="${recruit.recruitId}">
+    <label class="layui-form-label">标题</label>
+    <div class="layui-input-inline">
+        <input type="text" id="title" name="title" th:value="${recruit.title}" required lay-verify="required"
+               placeholder="请输入标题" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">内容描述</label>
+    <div class="layui-input-inline">
+        <input type="text" id="content" name="content" th:value="${recruit.content}" required lay-verify="required"
+               placeholder="请输入描述" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">职位</label>
+    <div class="layui-input-inline">
+        <input type="text" id="position" name="position" th:value="${recruit.position}" required lay-verify="required"
+               placeholder="请输入招聘职位" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">工资金额</label>
+    <div class="layui-input-inline">
+        <input type="text" id="salary" name="salary" th:value="${recruit.salary}" required lay-verify="required"
+               placeholder="工资金额如：500-6000" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">联系电话</label>
+    <div class="layui-input-inline">
+        <input type="text" id="phone" name="phone" th:value="${recruit.phone}" required lay-verify="required"
+               placeholder="联系电话" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">联系地址</label>
+    <div class="layui-input-inline">
+        <input type="text" id="address" name="address" th:value="${recruit.address}" required lay-verify="required"
+               placeholder="联系地址" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <button onclick="recruitUpdate()" type="button" class="layui-btn layui-btn-fluid">修改</button>
+</div>
+<script type="text/javascript">
+    function recruitUpdate(){
+        var recruitId = $("#recruitId").val();
+        var title = $("#title").val();
+        var content = $("#content").val();
+        var position = $("#position").val();
+        var salary = $("#salary").val();
+        var phone = $("#phone").val();
+        var address = $("#address").val();
+        $.ajax({
+            url: "/updateRecruit",
+            dateType: "json",
+            type: "post",
+            data: {
+                'recruitId': recruitId,
+                'title': title,
+                'content': content,
+                'position': position,
+                'salary': salary,
+                'phone': phone,
+                'address': address,
+                'deleteFlag': 0
+            },
+            success: function (resp) {
+                if (resp) {
+                    //alert("修改成功")
+                } else {
+                    //alert("修改失败")
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -14,7 +14,8 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/erp?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=UTC
+      # serverTimezone=UTC 世界统一时间  GMT格林尼治所在地标准时间 CTT（Asia&Shanghai）亚洲时间
+      url: jdbc:mysql://127.0.0.1:3306/erp?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=CTT
       username: root
       password: root
       max-active: 20

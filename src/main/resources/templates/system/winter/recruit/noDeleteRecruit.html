@@ -15,14 +15,14 @@
            class="table table-border table-bordered table-hover table-bg table-sort">
         <thead>
         <tr class="text-c">
-            <th>编号</th>
-            <th>标题</th>
-            <th>内容描述</th>
-            <th>职位</th>
-            <th>工资金额</th>
-            <th>联系电话</th>
-            <th>联系地址</th>
-            <th>操作</th>
+            <th width="100">编号</th>
+            <th width="100">标题</th>
+            <th width="100">内容描述</th>
+            <th width="100">职位</th>
+            <th width="100">工资金额</th>
+            <th width="100">联系电话</th>
+            <th width="100">联系地址</th>
+            <th width="100">操作</th>
         </tr>
         </thead>
         <tbody>
@@ -34,7 +34,17 @@
             <td th:text="${recruit.salary}"></td>
             <td th:text="${recruit.phone}"></td>
             <td th:text="${recruit.address}"></td>
-            <td><a href="addRecruit">添加</a></td>
+            <td>
+                <button type="button" th:onclick="updateDelete([[${recruit.recruitId}]])" class="layui-btn layui-btn-sm">
+                    <i class="layui-icon">&#xe642;</i>编辑
+                </button><!--th:onclick="|recordDelete(${recruit.id})|"-->
+                <button  type="button" th:onclick="recruitDelete([[${recruit.recruitId}]])" class="layui-btn layui-btn-sm">
+                    <i class="layui-icon">&#xe640;</i>删除
+                </button>
+                <button onclick="add()" type="button" class="layui-btn layui-btn-sm">
+                    <i class="layui-icon">&#xe654;</i>添加
+                </button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -44,6 +54,160 @@
     $("#ftop").DataTable({
         aLengthMenu: [3, 5, 10]
     });
+    //添加招聘信息
+    function add() {
+        var str = "<form class='layui-form' action='saveRecruit' method='post'>" +
+            "    <div class='layui-form-item'>" +
+            "    <input type='hidden' id='recruitId' name='recruitId' value='0'>" +
+            "        <label class='layui-form-label'>标题</label>" +
+            "        <div class='layui-input-inline'>" +
+            "            <input type='text' id='title' name='title' required  lay-verify='required' placeholder='请输入标题' autocomplete='off' class='layui-input'>" +
+            "        </div>" +
+            "    </div>" +
+            "    <div class='layui-form-item'>" +
+            "        <label class='layui-form-label'>内容描述</label>" +
+            "        <div class='layui-input-inline'>" +
+            "            <input type='text' id='content' name='content' required lay-verify='required'placeholder='请输入描述' autocomplete='off' class='layui-input'>" +
+            "        </div>" +
+            "    </div>" +
+            "    <div class='layui-form-item'>" +
+            "        <label class='layui-form-label'>职位</label>" +
+            "        <div class='layui-input-inline'>" +
+            "            <input type='text' id='position' name='position' required lay-verify='required' placeholder='请输入招聘职位' autocomplete='off' class='layui-input\'>" +
+            "        </div>" +
+            "    </div>" +
+            "    <div class=\"layui-form-item\">" +
+            "        <label class=\"layui-form-label\">工资金额</label>" +
+            "        <div class=\"layui-input-inline\">" +
+            "            <input type=\"text\" id=\"salary\" name=\"salary\" required lay-verify=\"required\" placeholder=\"工资金额如：500-6000\" autocomplete=\"off\" class=\"layui-input\">" +
+            "        </div>\n" +
+            "    </div>\n" +
+            "    <div class=\"layui-form-item\">\n" +
+            "        <label class=\"layui-form-label\">联系电话</label>\n" +
+            "        <div class=\"layui-input-inline\">\n" +
+            "            <input type=\"text\" id=\"phone\" name=\"phone\" required lay-verify=\"required\" placeholder=\"联系电话\" autocomplete=\"off\" class=\"layui-input\">\n" +
+            "        </div>\n" +
+            "    </div>\n" +
+            "    <div class=\"layui-form-item\">\n" +
+            "        <label class=\"layui-form-label\">联系地址</label>\n" +
+            "        <div class=\"layui-input-inline\">\n" +
+            "            <input type=\"text\" id=\"address\" name=\"address\" required lay-verify=\"required\" placeholder=\"联系地址\" autocomplete=\"off\" class=\"layui-input\">\n" +
+            "        </div>\n" +
+            "    </div>\n" +
+            "</form>"
+        //location.href='/addRecruit';
+        layui.use('layer',function () {
+            var layer = layui.layer;
+            layer.open({
+                title:'添加记录',
+                type:1,
+                skin: 'layui-layer-lan ', //样式类名
+                closeBtn: 1, //显示关闭按钮
+                anim: 2,
+                area:['40%','60%'],
+                resize:true,
+                id: '1', //防止重复弹出
+                shadeClose: true, //开启遮罩关闭
+                shade:[0.5], //透明度，背景颜色
+                content: str,
+                offset:'auto',
+                btn:['确认','取消'],
+                yes:function () {
+                    var recruitId = $("#recruitId").val();
+                    var title = $("#title").val();
+                    var content = $("#content").val();
+                    var position = $("#position").val();
+                    var salary = $("#salary").val();
+                    var phone = $("#phone").val();
+                    var address = $("#address").val();
+                    $.ajax({
+                        url:"saveRecruit",
+                        dateType:"json",
+                        type:"post",
+                        data:{
+                            'recruitId':recruitId,
+                            'title':title,
+                            'content':content,
+                            'position':position,
+                            'salary':salary,
+                            'phone':phone,
+                            'address':address,
+                            'deleteFlag':0
+                        },
+                        async:false,
+                        success:function (resp) {
+                            if (resp){
+                                alert("添加成功")
+                                window.location.href="/getRecruit"
+                            }else {
+                                alert("添加失败")
+                            }
+                        }
+                    });
+                }
+            })
+        })
+    }
+
+    //修改招聘信息
+    function updateDelete(id){
+        layui.use('layer',function () {
+            var layer = layui.layer;
+            layer.open({
+                title:'修改招聘记录',
+                type:2,
+                //skin: 'layui-layer-lan ', //样式类名
+                closeBtn: 1, //显示关闭按钮
+                anim: 2,
+                area:['40%','100%'],
+                resize:true,
+                id: '1', //防止重复弹出
+                shadeClose: true, //开启遮罩关闭
+                shade:[0.5], //透明度，背景颜色
+                content: ['/findRecruit?recruitId='+id],
+                //offset:'left',
+                btn:['取消'],
+                yes:function () {
+                    window.location.href="/getRecruit"
+                }
+            });
+        })
+    }
+
+    //删除招聘信息
+    function recruitDelete(id) {
+        var ids = id;
+        layui.use('layer',function () {
+            var layer = layui.layer; //独立版的layer无需执行这一句
+            layer.open({
+                title:'警告',
+                type:0,
+                closeBtn: 1,
+                id: '1', //防止重复弹出
+                shadeClose: true, //开启遮罩关闭
+                content:'是否确定删除',
+                btn:['确定','取消'],
+                yes:function (index, layero) {
+                    $.ajax({
+                        url:'/deleteRecruit',
+                        type:'post',
+                        dataType:'json',
+                        data:{
+                            'deleteFlag':1,
+                            'recruitId':ids
+                        },
+                        success:function (resp) {
+                            if(resp){
+                                //alert("数据已删除")
+                                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                                location.href='/getRecruit';
+                            }
+                        }
+                    })
+                }
+            });
+        });
+    };
 </script>
 </body>
 </html>

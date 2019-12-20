@@ -53,7 +53,7 @@ public interface DepotHeadServiceI {
      * @param depothead 1:已审核 0:未审核 2：不通过 默认 0 其他数值为待审核
      * @return
      */
-    int depotHeadExamin(Depothead depothead);
+    int depotHeadExamin(Depothead depothead,Integer user);
 
     /**
      * 标记删除

@@ -4,7 +4,8 @@
  @create: 2019-12-11 11:54
 -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
 <head>
     <meta charset="UTF-8">
     <title>仓库主页</title>
@@ -168,6 +169,9 @@
                             <button th:if="${head.status==0}" th:onclick="state([[${head.id}]],1)" class="layui-btn layui-btn-sm">通过</button>
                             <button th:if="${head.status==0}" th:onclick="state([[${head.id}]],2)" class="layui-btn layui-btn-sm">拒绝</button>
                             <samp th:if="${head.status==1}">审核通过</samp>
+                            <samp th:if="${head.status==2}">已拒绝</samp>
+                            <samp th:if="${head.status==3}">库存不足，已转销售</samp>
+                            <samp th:if="${head.status==4}">库存不足，已转采购</samp>
                         </td>
                         <td th:text="${head.deleteFlag=='0'?'正常':'已删除'}"></td>
                         <td>
@@ -298,6 +302,13 @@
                             {value:ck[11],name:material[11]},
                             {value:ck[12],name:material[12]},
                             {value:ck[13],name:material[13]},
+                            {value:ck[14],name:material[14]},
+                            {value:ck[15],name:material[15]},
+                            {value:ck[16],name:material[16]},
+                            {value:ck[17],name:material[17]},
+                            {value:ck[18],name:material[18]},
+                            {value:ck[19],name:material[19]},
+                            {value:ck[20],name:material[20]},
                         ]
                     }]
                 });

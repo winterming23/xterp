@@ -130,8 +130,9 @@ public class DepotController {
      */
     @ResponseBody
     @RequestMapping("headState")
-    public int stateHead(Integer id,Integer state){
-        int i = depotHeadServiceI.depotHeadExamin(new Depothead(state,id,null));
+    public int stateHead(Integer id,Integer state,HttpServletRequest request){
+        int userId =  (int)request.getSession().getAttribute("userId");
+        int i = depotHeadServiceI.depotHeadExamin(new Depothead(state,id,null),userId);
         return i;
     }
 

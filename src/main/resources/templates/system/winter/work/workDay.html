@@ -108,7 +108,7 @@
             //上班签到
             var startTime = hourMinuteSecond(new Date());
             console.log(startTime);
-            var workId = parseInt("4");
+            var workId = $("#workId").val();
             $("#signIn").click(function () {
                 debugger;
                 $.ajax({
@@ -157,7 +157,7 @@
 <div id="main" style="width:80%">
     <h2 class="top_title"><a href="#">打卡考勤</a></h2>
     <div class="button">
-        <!--<input type="hidden" id="workId" name="id" th:value="${workUser.id}"/>-->
+        <input type="hidden" id="workId" name="id" th:value="${workUser.id}"/>
         <!--单个查询修改状态-->
         <div th:if="${workUser.workState == 0}">
             <button class="layui-btn" id="signIn">上班签到</button>

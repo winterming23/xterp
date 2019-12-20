@@ -65,13 +65,17 @@ public class WorkAttendanceController {
     /**
      * 查看该员工的考勤信息
      * 表格的 userId
-     * @param
+     * @param request
      * @param model
      * @return
      */
     @RequestMapping("/employeeAttendance")
-    public String getEmployeeAttendance( Model model){
-        List<HashMap> employeeAttendance = workAttendanceService.getEmployeeAttendance(1);
+    public String getEmployeeAttendance( Model model,HttpServletRequest request){
+        //获取用户编号
+        Object id = request.getSession().getAttribute("userId");
+        int userId = (int)id;
+        logger.info("获取的用户编号：",userId);
+        List<HashMap> employeeAttendance = workAttendanceService.getEmployeeAttendance(userId);
         model.addAttribute("employeeAttendance",employeeAttendance);
         return "system/winter/work/workApply";
     }
@@ -92,8 +96,12 @@ public class WorkAttendanceController {
      * @return
      */
     @RequestMapping("/work")
-    public List<HashMap> getWorkAttendance(Model model,HttpServletResponse response){
-        List<HashMap> employeeAttendance = workAttendanceService.getEmployeeAttendance(1);
+    public List<HashMap> getWorkAttendance(Model model,HttpServletRequest request,HttpServletResponse response){
+        //获取用户编号
+        Object id = request.getSession().getAttribute("userId");
+        int userId = (int)id;
+        logger.info("获取的用户编号：",userId);
+        List<HashMap> employeeAttendance = workAttendanceService.getEmployeeAttendance(userId);
         model.addAttribute("employeeAttendance",employeeAttendance);
         String result = JSON.toJSONString(employeeAttendance);
         try {
@@ -119,11 +127,23 @@ public class WorkAttendanceController {
      */
     @RequestMapping("/findWork")
     public String findWorkAttendance(HttpServletRequest request){
-        //获取新增的编号
-        //int workId = (int)request.getAttribute("workId");
-        WorkAttendance workAttendance = workAttendanceService.findWorkAttendance(4);
-        System.out.println("======"+workAttendance);
-        request.setAttribute("workUser",workAttendance);
+        //获取用户编号
+        Object ids = request.getSession().getAttribute("userId");
+        int userId = (int)ids;
+        logger.info("获取的用户编号：",userId);
+        int workNull = workAttendanceService.findWorkNull(userId);
+        if(workNull != 1){
+            //获取新增的编号
+            Object workId = request.getSession().getAttribute("workId");
+            int id = (int)workId;
+            logger.info("获取的自增编号：",id);
+            WorkAttendance workAttendance = workAttendanceService.findWorkAttendance(id);
+            request.setAttribute("workUser",workAttendance);
+        }else{
+            WorkAttendance workAttendance = workAttendanceService.findWorkAttendance(1);
+            request.setAttribute("workUser",workAttendance);
+        }
+
         return "forward:/workDay";
     }
 }

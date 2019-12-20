@@ -109,4 +109,14 @@ public class WorkAttendanceServiceImpl implements WorkAttendanceServiceI {
     public WorkAttendance findWorkAttendance(int id) {
         return workAttendanceMapper.findWorkAttendance(id);
     }
+
+    /**
+     * 查询该员工当天是否已签到
+     * @param userId
+     * @return
+     */
+    @Override
+    public int findWorkNull(int userId){
+        return workAttendanceMapper.findWorkNull(userId);
+    }
 }

@@ -58,4 +58,11 @@ public interface WorkAttendanceServiceI {
      * @return
      */
     WorkAttendance findWorkAttendance(int id);
+
+    /**
+     * 查询该员工当天是否已签到
+     * @param userId
+     * @return
+     */
+    int findWorkNull(int userId);
 }

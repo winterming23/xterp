@@ -1,0 +1,50 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>考勤申请</title>
+    <script src="/resources/csss/jquery-1.8.3.min.js"></script>
+    <script src="/resources/csss/jquery.dataTables.min.js"></script>
+    <script src="/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" />
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css" />
+</head>
+<body>
+<table style="width: 100%;height: 100%" id="ftop"
+       class="table table-border table-bordered table-hover table-bg table-sort">
+    <thead>
+    <tr class="text-c">
+        <th>编号</th>
+        <th>用户名称</th>
+        <th>考勤日期</th>
+        <th>星期几</th>
+        <th>上班时间</th>
+        <th>下班时间</th>
+        <th>总时间</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="work,workStat : ${employeeAttendance}">
+        <td th:text="${workStat.count}")></td>
+        <td th:text="${work.name}")></td>
+        <td th:text="${work.attendanceDate}")></td>
+        <td th:text="${work.week}"></td>
+        <td th:text="${work.startTime}"></td>
+        <td th:text="${work.endTime}"></td>
+        <td th:text="${work.allHour}"></td>
+        <td th:switch="${work.state}">
+            <p th:case="1">工时不足</p>
+            <p th:case="2">全勤</p>
+        </td>
+        <td><a href="addRecruit" class="layui-btn">考勤申请</a></td>
+    </tr>
+    </tbody>
+</table>
+<script type="text/javascript" th:inline="none">
+    $("#ftop").DataTable({
+        aLengthMenu: [3, 5, 10]
+    });
+</script>
+</body>
+</html>

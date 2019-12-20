@@ -17,6 +17,7 @@
 </head>
 <body class="loginBody">
 	<form class="layui-form">
+		<input type="hidden" id="week" name="week"/>
 		<div class="login_face"><img src="/resources/images/face.jpg" class="userAvatar"></div>
 		<div class="layui-form-item input-item">
 			<label for="loginname">用户名</label>
@@ -64,6 +65,13 @@
         $('#loginCode').click(function () {
             createCode('#loginCode');
         });
+		//获取周几
+        var mydate=new Date();
+        var myddy=mydate.getDay();//获取存储当前日期
+        var weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+        //console.log("今天是：" + weekday[myddy]);
+		var week = $("#week").val(weekday[myddy]);
+		console.log(week)
 
     });
     // 生成验证码

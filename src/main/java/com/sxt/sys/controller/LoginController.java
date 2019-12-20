@@ -5,7 +5,9 @@ import com.sxt.sys.common.ActiverUser;
 import com.sxt.sys.common.ResultObj;
 import com.sxt.sys.common.WebUtils;
 import com.sxt.sys.domain.Loginfo;
+import com.sxt.sys.domain.winter.WorkAttendance;
 import com.sxt.sys.service.LoginfoService;
+import com.sxt.sys.service.winter.WorkAttendanceServiceI;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -36,6 +38,9 @@ public class LoginController {
 	
 	@Autowired
 	private LoginfoService loginfoService;
+
+	@Autowired
+	private WorkAttendanceServiceI workAttendanceService;
 	
 	@RequestMapping("login")
 	public ResultObj login(String loginname,String pwd ,HttpServletRequest request) {
@@ -54,6 +59,17 @@ public class LoginController {
 			entity.setLogintime(new Date());
 			loginfoService.save(entity);
 			System.out.println("mima-------------------------->"+pwd);
+			//判断是否今天已添加 查询员工 该日期是否已存在 0不存在 1已存在
+			int workNull = workAttendanceService.findWorkNull(activerUser.getUser().getId());
+			//获取星期几
+			String week = request.getParameter("week");
+			WorkAttendance workAttendance = new WorkAttendance(null,activerUser.getUser().getId(),new Date(),week,null,null,null,null,0,0);
+			if(workNull != 1){
+				//添加一条考勤数据
+				workAttendanceService.saveWorkAttendance(workAttendance);
+			}
+			//添加之后存入request对象
+			request.getSession().setAttribute("workId",workAttendance.getId());
 			return ResultObj.LOGIN_SUCCESS;
 		} catch (AuthenticationException e) {
 			e.printStackTrace();

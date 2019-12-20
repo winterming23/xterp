@@ -33,4 +33,9 @@
     <select id="findWorkAttendance" resultType="com.sxt.sys.domain.winter.WorkAttendance">
         select * from workattendance where id = #{id}
     </select>
+
+    <!-- 查询该员工当天考勤是否已存在 -->
+    <select id="findWorkNull" resultType="int">
+        SELECT count(*) FROM workattendance WHERE DATE_FORMAT(attendanceDate, '%Y%m%d') = DATE_FORMAT(now(), '%Y%m%d') and userId = #{userId}
+    </select>
 </mapper>

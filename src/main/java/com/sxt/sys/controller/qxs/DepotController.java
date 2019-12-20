@@ -1,6 +1,7 @@
 package com.sxt.sys.controller.qxs;
 
 import com.sxt.sys.domain.qxs.warehouse.Depot;
+import com.sxt.sys.domain.qxs.warehouse.DepotItem;
 import com.sxt.sys.domain.qxs.warehouse.Depothead;
 import com.sxt.sys.domain.qxs.warehouse.Materials;
 import com.sxt.sys.service.qxs.warehouse.DepotHeadServiceI;
@@ -77,7 +78,7 @@ public class DepotController {
         System.err.println(id);
         if(file.isEmpty()){
             model.addAttribute("errs","文件上传失败");
-           return "redirect:/depot/pageDepot";
+            return "redirect:/depot/pageDepot";
         }
         //获取文件名
         String img = file.getOriginalFilename();
@@ -107,7 +108,7 @@ public class DepotController {
     @ResponseBody
     @RequestMapping("deleteItem")
     public boolean deleteItem(Integer id){
-        return depotItemServiceI.deleteFlagDepotItem("1",id);
+        return depotItemServiceI.deleteFlagDepotItem(new DepotItem("1",id));
     }
 
     /**
@@ -130,7 +131,7 @@ public class DepotController {
     @ResponseBody
     @RequestMapping("headState")
     public int stateHead(Integer id,Integer state){
-        int i = depotHeadServiceI.depotHeadExamin(state, id);
+        int i = depotHeadServiceI.depotHeadExamin(new Depothead(state,id,null));
         return i;
     }
 
@@ -142,7 +143,7 @@ public class DepotController {
     @ResponseBody
     @RequestMapping("deleteHead")
     public boolean deleteHead(Integer id){
-        return depotHeadServiceI.deleteDepotHead("1",id);
+        return depotHeadServiceI.deleteDepotHead(new Depothead(null,id,"1"));
     }
 
     /**

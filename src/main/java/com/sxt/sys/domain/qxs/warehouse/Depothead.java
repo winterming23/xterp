@@ -31,4 +31,15 @@ public class Depothead {
     private String deleteFlag;//标记删除 1 删除 0 未删除 默认 0
     private Integer materialId;//材料id/商品id
     private Integer amount;//数量
+
+    public Depothead(Integer id){
+        this.id=id;
+        this.createTime=new Date();
+    }
+
+    public Depothead(Integer status,Integer id,String deleteFlag){
+        this.status=status;
+        this.id=id;
+        this.deleteFlag=deleteFlag;
+    }
 }

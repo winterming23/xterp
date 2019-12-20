@@ -49,18 +49,18 @@ public interface DepotServiceI {
 
     /**
      * 仓库默认设置
-     * @param isDefault 0 默认 1 不默认；默认为1
+     * @param depot.isDefault 0 默认 1 不默认；默认为1
      * @return
      */
-    boolean defaultDepot(Integer isDefault, Integer id);
+    boolean defaultDepot(Depot depot);
 
     /**
      * 标记删除
-     * @param deleteFlag 0 未删除；1 已删除 默认 0
-     * @param id 删除条件
+     * @param depot.deleteFlag 0 未删除；1 已删除 默认 0
+     * @param depot.id 删除条件
      * @return
      */
-    boolean deleteDepot(String deleteFlag, Integer id);
+    boolean deleteDepot(Depot depot);
 
     /**
      * 新增仓库

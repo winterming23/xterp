@@ -42,7 +42,7 @@
                 <tr class="text-c">
                     <th>物品编号</th>
                     <th>物品名称</th>
-                    <th>物品型号</th>
+                    <th width="400px">物品型号</th>
                     <th>物品类别</th>
                     <th>基础数量</th>
                     <th>物品单价</th>
@@ -69,7 +69,7 @@
                         <img th:src="|../static/img/${item.img}|" />
                     </td>-->
                     <td th:text="${item.flag=='0'?'正常':'已删除'}"></td>
-                    <td>
+                    <td width="180px">
                        <!-- <button type="button" th:onclick="file([[${item.id}]])" class="layui-btn layui-btn-sm" id="test1">
                             <i class="layui-icon">&#xe67c;</i>上传图片
                         </button>-->
@@ -79,9 +79,6 @@
                             </button>
                             <button type="button" th:if="${item.flag=='0'}" th:onclick="deleteDepot([[${item.id}]],0)" class="layui-btn layui-btn-sm">
                                 <i class="layui-icon">&#xe640;</i>删除
-                            </button>
-                            <button type="button" class="layui-btn layui-btn-sm">
-                                <i class="layui-icon">&#xe602;</i>
                             </button>
                         </div>
                     </td>
@@ -184,9 +181,9 @@
                                 <button type="button" th:if="${head.deleteFlag=='0'}" th:onclick="deleteDepot([[${head.id}]],1)" class="layui-btn layui-btn-sm">
                                     <i class="layui-icon">&#xe640;</i>
                                 </button>
-                                <button type="button" class="layui-btn layui-btn-sm">
+                                <!--<button type="button" class="layui-btn layui-btn-sm">
                                     <i class="layui-icon">&#xe602;</i>
-                                </button>
+                                </button>-->
                             </div>
                         </td>
                     </tr>

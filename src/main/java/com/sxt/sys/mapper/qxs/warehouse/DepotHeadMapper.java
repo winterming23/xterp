@@ -74,20 +74,19 @@ public interface DepotHeadMapper {
 
     /**
      * 审批
-     * @param status 1:已审核 0:未审核 2：不通过 默认 0 其他数值为待审核
+     * @param depothead 1:已审核 0:未审核 2：不通过 默认 0 其他数值为待审核
      * @return
      */
     @Update("update depotHead set status=#{status} where id=#{id}")
-    boolean depotHeadExamin(Integer status, Integer id);
+    boolean depotHeadExamin(Depothead depothead);
 
     /**
      * 标记删除
-     * @param deleteFlag 1 删除 0 未删除 默认 0
-     * @param id 条件
+     * @param depothead 1 删除 0 未删除 默认 0
      * @return
      */
     @Update("update depotHead set deleteFlag=#{deleteFlag} where id=#{id}")
-    boolean deleteDepotHead(String deleteFlag, Integer id);
+    boolean deleteDepotHead(Depothead depothead);
 
     /**
      * 子表数据加入失败，执行
@@ -99,11 +98,11 @@ public interface DepotHeadMapper {
 
     /**
      * 修改出入库时间 需要审核通过调用
-     * @param date
+     * @param depothead
      * @return
      */
     @Update("update depotHead set operTime=#{date} where id=#{id} and status=1")
-    boolean updateDateTime(Date date, Integer id);
+    boolean updateDateTime(Depothead depothead);
 
     /**
      * 报表查询

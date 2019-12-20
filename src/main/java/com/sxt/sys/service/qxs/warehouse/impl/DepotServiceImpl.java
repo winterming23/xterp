@@ -79,24 +79,24 @@ public class DepotServiceImpl implements DepotServiceI {
 
     /**
      * 修改仓库的默认状态
-     * @param isDefault 0 默认 1 不默认；默认为1
-     * @param id
+     * @param depot.isDefault 0 默认 1 不默认；默认为1
+     * @param depot.id
      * @return
      */
     @Override
-    public boolean defaultDepot(Integer isDefault, Integer id) {
-        return depotMapper.defaultDepot(isDefault,id);
+    public boolean defaultDepot(Depot depot) {
+        return depotMapper.defaultDepot(depot);
     }
 
     /**
      * 标记删除
-     * @param deleteFlag 0 未删除；1 已删除 默认 0
-     * @param id 删除条件
+     * @param depot.deleteFlag 0 未删除；1 已删除 默认 0
+     * @param depot.id 删除条件
      * @return
      */
     @Override
-    public boolean deleteDepot(String deleteFlag, Integer id) {
-        return depotMapper.deleteDepot(deleteFlag,id);
+    public boolean deleteDepot(Depot depot) {
+        return depotMapper.deleteDepot(depot);
     }
 
     /**

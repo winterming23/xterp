@@ -92,11 +92,12 @@ public class DepotItemServiceImpl implements DepotItemServiceI {
      * 标记删除
      * @param flag 1：删除，0：不删除
      * @param id 条件
+     * @param depotItem
      * @return
      */
     @Override
-    public boolean deleteFlagDepotItem(String flag, Integer id) {
-        return depotItemMapper.deleteFlagDepotItem(flag, id);
+    public boolean deleteFlagDepotItem(DepotItem depotItem) {
+        return depotItemMapper.deleteFlagDepotItem(depotItem);
     }
 
     /**
@@ -114,12 +115,13 @@ public class DepotItemServiceImpl implements DepotItemServiceI {
      * 修改数量
      * @param amount
      * @param materialID
+     * @param depotItem
      * @return
      */
     @Override
-    public boolean updateAmount(Integer amount, Integer materialID) {
+    public boolean updateAmount(DepotItem depotItem) {
 
-        return depotItemMapper.updateAmount(amount, materialID);
+        return depotItemMapper.updateAmount(depotItem);
     }
 
     @Override

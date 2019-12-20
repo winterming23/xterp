@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+>
 <head>
 	<meta charset="utf-8">
 	<title>创库管理后台首页</title>
@@ -49,7 +50,7 @@
 		<!-- 左侧导航 -->
 		<div class="layui-side layui-bg-black">
 			<div class="user-photo">
-				<a class="img" title="我的头像" ><img src="/file/showImageByPath?path=${session.user.imgpath}" title="/file/showImageByPath?path=${session.user.imgpath }" class="userAvatar">
+				<a class="img" title="我的头像" ><img src="/file/showImageByPath?path=${session.user.imgpath}" th:title="${session.user.imgpath }" class="userAvatar">
 
 				</a>
 				<p>你好！<span class="userName" th:text="${session.user.name}"></span>, 欢迎登录</p>

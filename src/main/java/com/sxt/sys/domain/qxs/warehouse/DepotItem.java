@@ -38,4 +38,13 @@ public class DepotItem {
         //this.mType = mType;
         this.deleteFlag = deleteFlag;
     }
+
+    public DepotItem(Integer basicNumber,Integer materialId){
+        this.basicNumber=basicNumber;
+        this.materialId=materialId;
+    }
+    public DepotItem(String deleteFlag,Integer id){
+        this.deleteFlag=deleteFlag;
+        this.id=id;
+    }
 }

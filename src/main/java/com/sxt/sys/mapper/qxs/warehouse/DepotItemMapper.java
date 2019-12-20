@@ -13,6 +13,7 @@ import java.util.List;
  */
 public interface DepotItemMapper {
 
+
     /**
      * 查询所有未删除的单据子表
      * @return
@@ -73,12 +74,11 @@ public interface DepotItemMapper {
 
     /**
      *  标记删除
-     * @param flag 1：删除，0：不删除
-     * @param id   条件
+     * @param depotItem 1：删除，0：不删除
      * @return
      */
-    @Update("update depotItem set deleteFlag=#{flag} where id=#{id}")
-    boolean deleteFlagDepotItem(String flag, Integer id);
+    @Update("update depotItem set deleteFlag=#{deleteFlag} where id=#{id}")
+    boolean deleteFlagDepotItem(DepotItem depotItem);
 
     /**
      * 查询物品是否存在
@@ -93,10 +93,11 @@ public interface DepotItemMapper {
      * 修改数量
      * @param amount
      * @param materialID
+     * @param depotItem
      * @return
      */
-    @Update("update depotItem set basicNumber=#{amount} where materialId=#{materialID}")
-    boolean updateAmount(Integer amount, Integer materialID);
+    @Update("update depotItem set basicNumber=#{basicNumber} where materialId=#{materialId}")
+    boolean updateAmount(DepotItem depotItem);
 
     /**
      * 上传图片
@@ -105,5 +106,5 @@ public interface DepotItemMapper {
      * @return
      */
     @Update("update depotItem set img=#{img} where id=#{id}")
-    boolean updateImg(String img, Integer id);
+    boolean updateImg(String img,Integer id);
 }

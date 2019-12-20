@@ -84,7 +84,11 @@ public class SaleServiceImpl implements SaleServiceI {
                 ApplyFor applyFor = new ApplyFor(null,"生产计划申请",sale.getProductId(),number,"生产申请：缺少成品",0,sale.getUserId(),null,0);
                 applyForMappers.saveApplyFor(applyFor);
             }
-            depotItemMappers.updateAmount(amount,depotItems.getId());
+            DepotItem item = new DepotItem();
+            item.setBasicNumber(amount);
+            item.setId(depotItems.getId());
+            depotItemMappers.updateAmount(item);
+
         }
         return saleMapper.saveSale(sale);
     }

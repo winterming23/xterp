@@ -21,4 +21,10 @@ public class Depot {
     private Integer principal;//仓库负责人,用户id
     private Integer deleteFlag;//标记删除 0 未删除；1 已删除 默认 0
     private Integer isDefault;//是否默认，0 默认 1 不默认；默认为1
+
+    public Depot(Integer deleteFlag,Integer isDefault,Integer id){
+        this.id=id;
+        this.deleteFlag=deleteFlag;
+        this.isDefault=isDefault;
+    }
 }

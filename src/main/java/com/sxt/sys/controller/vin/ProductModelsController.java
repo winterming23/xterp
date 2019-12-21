@@ -33,7 +33,7 @@ public class ProductModelsController {
         for (HashMap pro : productModels){
             System.out.println(pro);
         }
-        return  "vin/productModels";
+        return  "system/vin/productModels";
     }
 
     /**
@@ -99,7 +99,7 @@ public class ProductModelsController {
         for (Product_type list : product_typess){
             System.out.println(list);
         }
-        return "vin/insertProductModels";
+        return "system/vin/insertProductModels";
     }
 
     @RequestMapping("deleteProductModelss")
@@ -123,7 +123,7 @@ public class ProductModelsController {
         System.out.println(proStaid);
         boolean flag = productModelsServiceI.updateProductModelsStatus(proStaid);
         if (flag){
-            return "vin/productModels";
+            return "system/vin/productModels";
         }else {
             return "";
         }
@@ -136,6 +136,6 @@ public class ProductModelsController {
         List<Product_type> productTypes = productModelsServiceI.queryType();
         model.addAttribute("productTypes",productTypes);
         model.addAttribute("productModel",productModel);
-        return "vin/updateProductModels";
+        return "system/vin/updateProductModels";
     }
 }

@@ -30,7 +30,7 @@ public class SupplierController {
         for (Supplier supplier : suppliers){
            System.out.println(supplier);
         }
-        return  "vin/supplier/supplierG";
+        return  "system/vin/supplier/supplierG";
     }
 
     /**
@@ -45,7 +45,7 @@ public class SupplierController {
         for (Supplier supplier : suppliers){
             System.out.println(supplier);
         }
-        return  "vin/supplier/supplierK";
+        return  "system/vin/supplier/supplierK";
     }
 
     /**
@@ -133,7 +133,7 @@ public class SupplierController {
         Supplier supplierG = supplierServiceIl.queryBySupplierId(id);
         System.out.println(supplierG);
         model.addAttribute("supplierG",supplierG);
-        return "vin/supplier/updateSupplierG";
+        return "system/vin/supplier/updateSupplierG";
     }
 
     /**
@@ -147,7 +147,7 @@ public class SupplierController {
         Supplier supplierK = supplierServiceIl.queryBySupplierId(id);
         model.addAttribute("supplierK",supplierK);
         System.out.println(supplierK);
-        return "vin/supplier/updateSupplierK";
+        return "system/vin/supplier/updateSupplierK";
     }
 
     /**
@@ -225,12 +225,12 @@ public class SupplierController {
 
     @RequestMapping("insertG")
     public String insertG(){
-        return "vin/supplier/insertSupplierG";
+        return "system/vin/supplier/insertSupplierG";
     }
 
     @RequestMapping("insertK")
     public String insertK(){
-        return "vin/supplier/insertSupplierK";
+        return "system/vin/supplier/insertSupplierK";
     }
 
     /**

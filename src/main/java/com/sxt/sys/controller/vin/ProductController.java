@@ -32,7 +32,7 @@ public class ProductController {
         for (HashMap pro : listproducthash){
             System.out.println(pro);
         }
-        return  "vin/product";
+        return  "system/vin/product";
     }
 
     /**
@@ -47,7 +47,7 @@ public class ProductController {
         for (Product_model models : product_models){
             System.out.println(models);
         }
-        return "vin/product";
+        return "system/vin/product";
     }
 
     /**
@@ -65,7 +65,7 @@ public class ProductController {
         if (product!=null){
             System.out.println(product);
         }
-        return "vin/updateProduct";
+        return "system/vin/updateProduct";
     }
 
     /**
@@ -81,7 +81,7 @@ public class ProductController {
         for (Product_model list : product_models){
             System.out.println(list);
         }
-        return "vin/insertProduct";
+        return "system/vin/insertProduct";
     }
 
     @RequestMapping("queryByModelName")
@@ -106,7 +106,7 @@ public class ProductController {
         System.out.println(product);
         boolean insertProduct = productServiceI.insertProduct(product);
         if (insertProduct){
-            return "vin/insertProduct";
+            return "system/vin/insertProduct";
         }else {
             return "";
         }
@@ -210,7 +210,7 @@ public class ProductController {
         System.out.println(proStaid);
         boolean flag = productServiceI.updateProductStatus(proStaid);
         if (flag){
-            return "vin/product";
+            return "system/vin/product";
         }else {
             return "";
         }

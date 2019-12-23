@@ -132,7 +132,7 @@ public class WorkAttendanceController {
         int userId = (int)ids;
         logger.info("获取的用户编号：",userId);
         int workNull = workAttendanceService.findWorkNull(userId);
-        if(workNull != 1){
+        if(workNull > 0){
             //获取新增的编号
             Object workId = request.getSession().getAttribute("workId");
             int id = (int)workId;

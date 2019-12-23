@@ -25,10 +25,10 @@ public class ApplicationServiceImpl implements ApplicationServiceI {
      * @param proposer
      * @return
      */
-    @Override
+   /* @Override
     public List<Application> getAllApplicationProposer(int proposer) {
         return applicationMapper.getAllApplicationProposer(proposer);
-    }
+    }*/
 
     /**
      * 根据审核人
@@ -37,9 +37,19 @@ public class ApplicationServiceImpl implements ApplicationServiceI {
      * @param auditor
      * @return
      */
-    @Override
+    /*@Override
     public List<Application> getAllApplicationAuditor(int auditor) {
         return applicationMapper.getAllApplicationAuditor(auditor);
+    }*/
+
+    /**
+     * 查询所有
+     *
+     * @return
+     */
+    @Override
+    public List<Application> getAllApplication() {
+        return applicationMapper.getAllApplication();
     }
 
     /**

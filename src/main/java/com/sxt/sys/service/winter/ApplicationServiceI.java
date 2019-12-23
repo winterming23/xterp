@@ -15,18 +15,24 @@ public interface ApplicationServiceI {
     /**
      * 根据申请人
      * 查询考勤申请数据
-     * @param proposer
+     * @param
      * @return
      */
-    List<Application> getAllApplicationProposer(int proposer);
+    /*List<Application> getAllApplicationProposer(int proposer);*/
 
     /**
      * 根据审核人
      * 查询所有的考勤申请数据
-     * @param auditor
+     * @param
      * @return
      */
-    List<Application> getAllApplicationAuditor(int auditor);
+    /*List<Application> getAllApplicationAuditor(int auditor);*/
+
+    /**
+     * 查询所有
+     * @return
+     */
+    List<Application> getAllApplication();
 
     /**
      * 修改考勤审核时间

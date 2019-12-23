@@ -1,4 +1,4 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>考勤申请</title>
@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/resources/csss/H-ui.min.css" />
 </head>
 <body>
-<table style="width: 100%;height: 100%" id="ftop"
+<table style="width: 100%;" id="ftop"
        class="table table-border table-bordered table-hover table-bg table-sort">
     <thead>
     <tr class="text-c">
@@ -37,14 +37,72 @@
             <p th:case="1">工时不足</p>
             <p th:case="2">全勤</p>
         </td>
-        <td><a href="addRecruit" class="layui-btn">考勤申请</a></td>
+        <td><a th:onclick="addWorkApply([[${work.id}]],[[${session.userId}]])" id="apply" class="layui-btn">考勤申请</a></td>
     </tr>
     </tbody>
 </table>
-<script type="text/javascript" th:inline="none">
+<script type="text/javascript">
     $("#ftop").DataTable({
         aLengthMenu: [3, 5, 10]
     });
+    function addWorkApply(id,proposer){
+        var str = "<form class=\"layui-form\" action=\"saveApplication\" method=\"post\">\n" +
+            "    <div class='layui-form-item'>\n" +
+            "        <label class='layui-form-label'>申请原因</label>\n" +
+            "        <div class='layui-input-inline'>\n" +
+            "            <input type='text' id='cause' name='cause' required lay-verify='required' placeholder='请输入申请原因'\n" +
+            "            <input type='hidden' id='workId' name='workId'" +
+            "                   autocomplete='off' class='layui-input'>\n" +
+            "        </div>\n" +
+            "    </div>\n" +
+            "</form>";
+        layui.use('layer',function () {
+            var layer = layui.layer;
+            layer.open({
+                title:'考勤申请',
+                type:0,
+                closeBtn: 1,
+                id: '1', //防止重复弹出
+                shadeClose: true, //开启遮罩关闭
+                content:str,
+                btn:['确定','取消'],
+                yes:function () {
+                    debugger;
+                    alert(id)
+                    alert(proposer)
+                    var workId = id;
+                    var cause = $("#cause").val();
+                    var applicationTime = new Date();
+                    var auditTime = new Date();
+                    $.ajax({
+                        url: "/saveApplication",
+                        dateType: "json",
+                        type: "post",
+                        data: {
+                            id:0,
+                            workId:workId,
+                            cause:cause,
+                            proposer:proposer,
+                            applicationTime:applicationTime,
+                            approval:null,
+                            auditor:null,
+                            auditTime:auditTime,
+                            deleteFlag: 0
+                        },
+                        async: false,
+                        success: function (resp) {
+                            if (resp) {
+                                alert("添加成功")
+                                window.location.href = "/employeeAttendance"
+                            } else {
+                                alert("添加失败")
+                            }
+                        }
+                    });
+                }
+            })
+        })
+    }
 </script>
 </body>
 </html>

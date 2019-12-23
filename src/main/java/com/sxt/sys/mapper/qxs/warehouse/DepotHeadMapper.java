@@ -112,4 +112,12 @@ public interface DepotHeadMapper {
             " from depothead d LEFT JOIN materials m on d.materialid=m.id" +
             " where `status`=1 and deleteFlag='0'")
     List<HashMap> queryHead();
+
+    /**
+     * 审核通过后添加仓库管理员姓名
+     * @param depothead
+     * @return
+     */
+    @Update("update depotHead set operPersonName=#{operPersonName} where id=#{id}")
+    boolean updateDepotName(Depothead depothead);
 }

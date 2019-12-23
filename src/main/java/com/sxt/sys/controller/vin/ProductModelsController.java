@@ -60,12 +60,13 @@ public class ProductModelsController {
      * @return
      */
     @RequestMapping("deleteProductModels")
+    @ResponseBody
     public String deleteProductModels(Long id){
         System.out.println("============================================================================================");
         System.out.println(id);
         boolean deleteProduct = productModelsServiceI.deleteProductModels(id);
         if(deleteProduct){
-            return "redirect:getAllProductModels";
+            return "true";
         }else {
             return "";
         }
@@ -85,7 +86,7 @@ public class ProductModelsController {
         System.out.println(product_model);
         boolean updateProduct = productModelsServiceI.updateProductModels(product_model);
         if (updateProduct){
-            return "getAllProductModels";
+            return "true";
         }else {
             return "";
         }
@@ -126,5 +127,15 @@ public class ProductModelsController {
         }else {
             return "";
         }
+    }
+
+    @RequestMapping("queryByModelId")
+    public String queryByModelId(Long id, Model model){
+        System.out.println(id);
+        Product_model productModel = productModelsServiceI.queryByModelId(id);
+        List<Product_type> productTypes = productModelsServiceI.queryType();
+        model.addAttribute("productTypes",productTypes);
+        model.addAttribute("productModel",productModel);
+        return "system/vin/updateProductModels";
     }
 }

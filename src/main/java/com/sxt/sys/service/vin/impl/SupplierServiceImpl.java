@@ -1,5 +1,6 @@
 package com.sxt.sys.service.vin.impl;
 
+
 import com.sxt.sys.domain.vin.Supplier;
 import com.sxt.sys.mapper.vin.SupplierMapper;
 import com.sxt.sys.service.vin.SupplierServiceI;
@@ -50,7 +51,7 @@ public class SupplierServiceImpl implements SupplierServiceI {
     }
 
     @Override
-    public List<Supplier> queryBySupplierId(long id) {
+    public Supplier queryBySupplierId(long id) {
         return supplierMapper.queryBySupplierId(id);
     }
 

@@ -84,4 +84,5 @@ public interface DepotMapper {
     @Insert("insert into depot values(null,#{name},#{address},#{truckage},#{type},#{sort}," +
             "#{remark},#{principal},0,1)")
     boolean addDepot(Depot depot);
+
 }

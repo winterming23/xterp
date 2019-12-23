@@ -5,7 +5,7 @@
 * @create: 2019-12-11 11:54
 -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="UTF-8">
     <title>财务详情页面</title>
@@ -62,10 +62,10 @@
                                 <samp th:if="${ex.confirmPayment==1}">已付款</samp>
                             </td>
                             <td>
-                                <button th:onclick="toChange([[${ex.expenditureId}]],0)" type="button" class="layui-btn layui-btn-sm">
+                                <button shiro:hasPermission="expenditure:update" th:onclick="toChange([[${ex.expenditureId}]],0)" type="button" class="layui-btn layui-btn-sm">
                                     <i class="layui-icon">&#xe642;</i>编辑
                                 </button>
-                                <button th:if="${ex.deleteFlag==0}" th:onclick="|expurgate('${ex.expenditureId} ',0)|" type="button" class="layui-btn layui-btn-sm">
+                                <button shiro:hasPermission="expenditure:delete" th:if="${ex.deleteFlag==0}" th:onclick="|expurgate('${ex.expenditureId} ',0)|" type="button" class="layui-btn layui-btn-sm">
                                     <i class="layui-icon">&#xe640;</i>删除
                                 </button>
                                 <!--<button type="button" class="layui-btn layui-btn-sm">
@@ -117,10 +117,10 @@
                             <samp th:if="${in.confirmReceipt==1}">已收款</samp>
                         </td>
                         <td>
-                            <button th:onclick="toChange([[${in.incomeId}]],1)" type="button" class="layui-btn layui-btn-sm">
+                            <button shiro:hasPermission="income:update" th:onclick="toChange([[${in.incomeId}]],1)" type="button" class="layui-btn layui-btn-sm">
                                 <i class="layui-icon">&#xe642;</i>编辑
                             </button>
-                            <button th:if="${in.deleteFlag==0}" th:onclick="|expurgate('${in.incomeId} ',1)|" type="button" class="layui-btn layui-btn-sm">
+                            <button shiro:hasPermission="income:delete" th:if="${in.deleteFlag==0}" th:onclick="|expurgate('${in.incomeId} ',1)|" type="button" class="layui-btn layui-btn-sm">
                                 <i class="layui-icon">&#xe640;</i>删除
                             </button>
                             <!--<button type="button" class="layui-btn layui-btn-sm">
@@ -130,7 +130,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <button onclick="add(1)" type="button" class="layui-btn layui-btn-fluid">添加记录</button>
+                <button onclick="add(1)" shiro:hasPermission="tong:create"   type="button" class="layui-btn layui-btn-fluid">添加记录</button>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 package com.sxt.sys.mapper.vin;
 
+
 import com.sxt.sys.domain.vin.Product_model;
 import com.sxt.sys.domain.vin.Product_type;
 import org.apache.ibatis.annotations.Insert;
@@ -33,8 +34,8 @@ public interface ProductModelsMapper {
      * @param product_model
      * @return
      */
-    @Update("UPDATE product_model SET brand=#{brand},model_name=#{model_name},motherboard =#{motherboard},cpu=#{cpu},memories=#{memories},video_card=#{video_card},disks=#{disks},ssd=#{ssd},size=#{size},color=#{color},weight=#{weight},#{model_type}" +
-            " WHERE id = 4")
+    @Update("UPDATE product_model SET brand=#{brand},model_name=#{model_name},motherboard =#{motherboard},cpu=#{cpu},memories=#{memories},video_card=#{video_card},disks=#{disks},ssd=#{ssd},size=#{size},color=#{color},weight=#{weight},model_type=#{model_type}" +
+            " WHERE id = #{id}")
     public boolean updateProductModels(Product_model product_model);
 
     /**
@@ -59,4 +60,12 @@ public interface ProductModelsMapper {
      */
     @Update("update product_model set status = '1' where id = #{id}")
     public boolean updateProductModelsStatus(long id);
+
+    /**
+     * 根据id 查询产品型号信息
+     * @param id
+     * @return
+     */
+    @Select("select * from product_model where id = ${id}")
+    public Product_model queryByModelId(long id);
 }

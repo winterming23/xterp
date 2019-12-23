@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>修改供应商信息</title>
+    <script src="/resources/csss/jquery-1.8.3.min.js"></script>
+    <script src="/resources/csss/jquery.dataTables.min.js"></script>
+    <script src="/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css">
+</head>
+<body>
+<form class="layui-form"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">供应商名称：</label>
+        <div class="layui-input-block">
+            <input type="text" name="supplier" id="supplier" placeholder="请输入供应商名称" autocomplete="off" th:value="${supplierG.supplier}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系人：</label>
+        <div class="layui-input-block">
+            <input type="text" name="contacts" id="contacts" placeholder="请输入联系人名称" autocomplete="off" th:value="${supplierG.contacts}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系电话：</label>
+        <div class="layui-input-block">
+            <input type="text" name="phonenum" id="phonenum" placeholder="请输入联系电话" autocomplete="off" th:value="${supplierG.phonenum}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮箱：</label>
+        <div class="layui-input-block">
+            <input type="text" name="email" id="email" placeholder="请输入电子邮箱" autocomplete="off" th:value="${supplierG.email}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">预收款：</label>
+        <div class="layui-input-block">
+            <input type="text" name="advanceIn" id="advanceIn" placeholder="请输入预收款账额" autocomplete="off" th:value="${supplierG.advanceIn}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">期初应收：</label>
+        <div class="layui-input-block">
+            <input type="text" name="beginNeedGet" id="beginNeedGet" placeholder="期初应收" autocomplete="off" th:value="${supplierG.beginNeedGet}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">期初应付：</label>
+        <div class="layui-input-block">
+            <input type="text" name="beginNeedPay" id="beginNeedPay" placeholder="期初应付" autocomplete="off" th:value="${supplierG.beginNeedPay}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">累计应收：</label>
+        <div class="layui-input-block">
+            <input type="text" name="allNeedGet" id="allNeedGet" placeholder="累计应收" autocomplete="off" th:value="${supplierG.allNeedGet}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">累计应付：</label>
+        <div class="layui-input-block">
+            <input type="text" name="allNeedPay" id="allNeedPay" placeholder="累计应付" autocomplete="off" th:value="${supplierG.allNeedPay}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">传真：</label>
+        <div class="layui-input-block">
+            <input type="text" name="fax" id="fax" placeholder="请输入传真号" autocomplete="off" th:value="${supplierG.fax}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机号码：</label>
+        <div class="layui-input-block">
+            <input type="text" name="telephone" id="telephone" placeholder="请输入手机号码" autocomplete="off" th:value="${supplierG.telephone}" class="layui-input" required="required">
+        </div>
+    </div>    <div class="layui-form-item">
+        <label class="layui-form-label">地址：</label>
+        <div class="layui-input-block">
+            <input type="text" name="address" id="address" placeholder="请输入地址" autocomplete="off" th:value="${supplierG.address}" class="layui-input" required="required">
+        </div>
+    </div>    <div class="layui-form-item">
+        <label class="layui-form-label">纳税人识别号：</label>
+        <div class="layui-input-block">
+            <input type="text" name="taxNum" id="taxNum" placeholder="请输入纳税人识别号" autocomplete="off" th:value="${supplierG.taxNum}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">开户行：</label>
+        <div class="layui-input-block">
+            <input type="text" name="bankName" id="bankName" placeholder="请输入开户行名称" autocomplete="off" th:value="${supplierG.bankName}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">账号：</label>
+        <div class="layui-input-block">
+            <input type="text" name="accountNumber" id="accountNumber" placeholder="请输入开户行账号" autocomplete="off" th:value="${supplierG.accountNumber}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">税率：</label>
+        <div class="layui-input-block">
+            <input type="text" name="taxRate" id="taxRate" placeholder="请输入税率" autocomplete="off" th:value="${supplierG.taxRate}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="*" id="sub">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<!--<script src="layui.js"></script>-->
+<script>
+    layui.use(['form', 'layer'], function(){
+        var form = layui.form;
+        var layer = layui.layer;
+    });
+        $("#sub").click(function () {
+            debugger;
+            var id = [[${supplierG.id}]];
+            var supplier = $("#supplier").val();
+            var contacts = $("#contacts").val();
+            var phonenum = $("#phonenum").val();
+            var email = $("#email").val();
+            var advanceIn = $("#advanceIn").val();
+            var beginNeedGet = $("#beginNeedGet").val();
+            var beginNeedPay = $("#beginNeedPay").val();
+            var allNeedGet = $("#allNeedGet").val();
+            var allNeedPay = $("#allNeedPay").val();
+            var fax = $("#fax").val();
+            var telephone = $("#telephone").val();
+            var address = $("#address").val();
+            var taxNum = $("#taxNum").val();
+            var bankName = $("#bankName").val();
+            var accountNumber = $("#accountNumber").val();
+            var taxRate = $("#taxRate").val();
+            $.ajax({
+                url:"updateSupplier",
+                dateType:"json",
+                type:"post",
+                data:{
+                    "id":id,
+                    "supplier":supplier,
+                    "contacts":contacts,
+                    "phonenum":phonenum,
+                    "email":email,
+                    "advanceIn":advanceIn,
+                    "beginNeedGet":beginNeedGet,
+                    "beginNeedPay":beginNeedPay,
+                    "allNeedGet":allNeedGet,
+                    "allNeedPay":allNeedPay,
+                    "fax":fax,
+                    "telephone":telephone,
+                    "address":address,
+                    "taxNum":taxNum,
+                    "bankName":bankName,
+                    "accountNumber":accountNumber,
+                    "taxRate":taxRate
+                },
+                success:function (resp) {
+                    debugger;
+                    if (resp!=null){
+                        layer.msg("修改供应商信息成功");
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }else {
+                        layer.msg("添加失败")
+                    }
+                }
+            });
+        });
+        //各种基于事件的操作，下面会有进一步介绍
+</script>
+</body>
+</html>

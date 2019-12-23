@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/resources/csss/jquery-1.8.3.min.js"></script>
+    <script src="/resources/csss/jquery.dataTables.min.js"></script>
+    <script src="/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css">
+
+    <style type="text/css">
+        .s1 {
+            background-color: #f5f5f5;
+        }
+
+    </style>
+</head>
+<body>
+<table id="tbo"
+       class="table table-border table-bordered table-hover table-bg table-sort">
+    <thead>
+    <tr>
+        <th colspan="20" height="15px" style="color: #F4F4F4">
+            <button class="layui-btn layui-btn-sm" id="btnInsert" th:onclick="insert()">增加</button>
+            <button class="layui-btn layui-btn-sm" id="btnDelete">删除</button>
+            <button class="layui-btn layui-btn-sm" id="btnOpen">启用</button>
+            <button class="layui-btn layui-btn-sm" id="btnClose">禁用</button>
+        </th>
+    </tr>
+    <tr class="text-c">
+        <th width="20px"><input type="checkbox" id="checkAll" name="checkAll"></th>
+        <th width="100">供应商</th>
+        <th width="70">联系人</th>
+        <th width="100">联系电话</th>
+        <th width="100">邮箱</th>
+        <th width="100">预收款</th>
+        <th width="100">期初应收</th>
+        <th width="100">期初应付</th>
+        <th width="100">累计应收</th>
+        <th width="100">累计应付</th>
+        <th width="100">传真</th>
+        <th width="100">手机号码</th>
+        <th width="100">地址</th>
+        <th width="100">纳税人识别号</th>
+        <th width="70">开户行</th>
+        <th width="100">账号</th>
+        <th width="100">税率</th>
+        <th width="50">启用状态</th>
+        <th width="50">审核状态</th>
+        <th width="100">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="supplier:${suppliers}" height="40px" class="text-c" id="tr1">
+        <td><input type="checkbox" name="ckb" class="supid" th:value="${supplier.id}"></td>
+        <td th:text="${supplier.supplier}"></td>
+        <td th:text="${supplier.contacts}"></td>
+        <td th:text="${supplier.phonenum}"></td>
+        <td th:text="${supplier.email}"></td>
+        <td th:text="${supplier.advanceIn}"></td>
+        <td th:text="${supplier.beginNeedGet}"></td>
+        <td th:text="${supplier.beginNeedPay}"></td>
+        <td th:text="${supplier.allNeedGet}"></td>
+        <td th:text="${supplier.allNeedPay}"></td>
+        <td th:text="${supplier.fax}"></td>
+        <td th:text="${supplier.telephone}"></td>
+        <td th:text="${supplier.address}"></td>
+        <td th:text="${supplier.taxNum}"></td>
+        <td th:text="${supplier.bankName}"></td>
+        <td th:text="${supplier.accountNumber}"></td>
+        <td th:text="${supplier.taxRate}"></td>
+        <td th:text="${supplier.enabled==0?'禁用':'启用'}"></td>
+        <td>
+            <button th:if="${supplier.status=='0'}" class="layui-btn layui-btn-primary" th:onclick="updateStatus([[${supplier.id}]])">未审核</button>
+            <span th:if="${supplier.status=='1'}">已审核</span>
+        </td>
+        <td>
+            <a th:onclick="deleteG([[${supplier.id}]])">删除</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a th:onclick="update([[${supplier.id}]])">修改</a>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+
+    $(function () {
+        var selectObj = [];
+        $('#tbo').DataTable({
+            "aLengthMenu": [4, 6], //每页显示数
+        });
+
+    });
+    $().ready(function () {
+
+        $("tbody tr").click(function() {
+            $(this).addClass("s1").siblings().removeClass("s1");
+        });
+        $("#btnDelete").click(function () {//删除多条
+             debugger;
+            var checkids = [];
+            var data = [];
+            $("input[name='ckb']:checked").each(function (i) {
+                checkids[i] = $(this).val();
+            });
+            if (checkids.length <= 0) {
+                alert("请选择一条需要被删除的数据")
+            } else {
+                $("#tbo").find(":checkbox:checked").each(function () {
+                    var supid = $(this).parents().children().children(".supid").val();
+                     alert(supid);
+                    data.push(supid);
+                    $.ajax({
+                        url: "deleteSuppliersG",
+                        dateType: "json",
+                        type: "post",
+                        data: {"supid": supid},
+                        success: function (resp) {
+                            debugger;
+                            if (resp != null || resp != "") {
+                                alert("成功");
+                                location.href = "getAllSupplierG";
+                            } else {
+                                alert("失败")
+                            }
+                        }
+                    });
+                });
+            }
+        });
+        $("#btnOpen").click(function () {
+             debugger;
+            var checkids = [];
+            var data = [];
+            $("input[name='ckb']:checked").each(function (i) {
+                checkids[i] = $(this).val();
+            });
+            if (checkids.length <= 0) {
+                alert("请选择需要启用的数据")
+            } else {
+                $("#tbo").find(":checkbox:checked").each(function () {
+                    var supid = $(this).parents().children().children(".supid").val();
+                     alert(supid);
+                    data.push(supid);
+                    $.ajax({
+                        url: "updateSupplierStateT",
+                        dateType: "json",
+                        type: "post",
+                        data: {"supid": supid},
+                        success: function (resp) {
+                            debugger;
+                            if (resp != null || resp != "") {
+                                alert("启用成功");
+                                location.href = "getAllSupplierG";
+                            } else {
+                                alert("启用失败")
+                            }
+                        }
+                    });
+                });
+            }
+        });
+        $("#btnClose").click(function () {
+             debugger;
+            var checkids = [];
+            var data = [];
+            $("input[name='ckb']:checked").each(function (i) {
+                checkids[i] = $(this).val();
+            });
+            if (checkids.length <= 0) {
+                alert("请选择需要禁用的数据")
+            } else {
+                $("#tbo").find(":checkbox:checked").each(function () {
+                    var supid = $(this).parents().children().children(".supid").val();
+                     alert(supid);
+                    data.push(supid);
+                    $.ajax({
+                        url: "updateSupplierStateF",
+                        dateType: "json",
+                        type: "post",
+                        data: {"supid": supid},
+                        success: function (resp) {
+                            debugger;
+                            if (resp != null || resp != "") {
+                                alert("禁用成功");
+                                location.href = "getAllSupplierG";
+                            } else {
+                                alert("禁用失败")
+                            }
+                        }
+                    });
+                });
+            }
+        });
+        //全选全不选
+        $("#checkAll").click(function () {
+            if ($(this).is(':checked')) {
+                $("input[name='ckb']").each(function () {
+                    $(this).prop("checked", true);
+                });
+            } else {
+                $('input[name="ckb"]').each(function () {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+    });//ready结束
+
+    function insert() {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.ready(function () {
+                var index = layer.load(2);
+                layer.open({
+                    title: '新增产品信息',
+                    type: 2,
+                    area: ['30%', '75%'],
+                    content: 'insertG',
+                    shadeClose: true, //开启遮罩关闭
+                    btn: ['确认', '取消'],
+                    end: function () {
+                        location.reload();
+                    }
+                });
+                layer.close(index);
+            });
+        });
+    }
+
+    function deleteG(id) {
+        var id = id;
+        if(confirm('是否确定删除!')){
+            $.ajax({
+                url:'deleteSupplierG',
+                dataType:'text',
+                type:'post',
+                data:{'id':id},
+                success:function (resp) {
+                    debugger;
+                    if(resp!=null){
+                        alert('删除成功');
+                        location.reload();
+                        location.href='getAllSupplierG';
+                    }else {
+                        alert('删除失败... ');
+                    }
+                }
+            });
+        }
+    }
+
+    function update(id) {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.ready(function () {
+                var index = layer.load(2);
+                layer.open({
+                    title: '修改供应商信息',
+                    type: 2,
+                    area: ['30%', '75%'],
+                    content: 'queryBySupplierGId?id=' + id,
+                    shadeClose: true, //开启遮罩关闭
+                    btn: ['确认', '取消'],
+                    end: function () {
+                        location.reload();
+                    }
+                });
+                layer.close(index);
+            });
+        });
+    }
+    function updateStatus(id) {
+        debugger;
+        var supStaid = id;
+        if(confirm('是否确定通过审核!')){
+            $.ajax({
+                url:'updateSupplierStatus',
+                dataType:'text',
+                type:'post',
+                data:{'supStaid':supStaid},
+                success:function (resp) {
+                    debugger;
+                    if(resp!=null){
+                        alert('审核通过');
+                        location.reload();
+                        location.href='getAllSupplierG';
+                    }else {
+                        alert('审核失败... ');
+                    }
+                }
+            });
+        }
+    }
+    // function deleteCurrentRow(obj){
+    //         var tr=obj.parentNode.parentNode;
+    //         var tbody=tr.parentNode;
+    //         tbody.removeChild(tr);
+    //         //只剩行首时删除表格
+    //         if(tbody.rows.length==0) {
+    //                 tbody.parentNode.removeChild(tbody);
+    //             }
+    //     }
+    $("#tbo tbody tr").mousedown(function () {
+        $('#tbo  tr').each(function () {
+            $(this).css("background-color", "");
+        });
+        $(this).css("background-color", "##F5F5F5");
+    });
+
+
+</script>
+</body>
+</html>

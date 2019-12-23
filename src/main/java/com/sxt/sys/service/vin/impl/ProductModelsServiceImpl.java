@@ -1,5 +1,6 @@
 package com.sxt.sys.service.vin.impl;
 
+
 import com.sxt.sys.domain.vin.Product_model;
 import com.sxt.sys.domain.vin.Product_type;
 import com.sxt.sys.mapper.vin.ProductModelsMapper;
@@ -46,4 +47,11 @@ public class ProductModelsServiceImpl implements ProductModelsServiceI {
     public boolean updateProductModelsStatus(long id) {
         return productModelsMapper.updateProductModelsStatus(id);
     }
+
+    @Override
+    public Product_model queryByModelId(long id) {
+        return productModelsMapper.queryByModelId(id);
+    }
+
+
 }

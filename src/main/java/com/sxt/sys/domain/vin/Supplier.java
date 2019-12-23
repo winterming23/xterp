@@ -16,7 +16,6 @@ public class Supplier {
     private String contacts;//联系人
     private String phonenum;//联系电话
     private String email;//电子邮箱
-    private String description;//备注
 //    private String isystem;//是否系统自带 0==自带 1==非系统
     private String type;//类型(供应商，客户）
     private int enabled;//启用状态

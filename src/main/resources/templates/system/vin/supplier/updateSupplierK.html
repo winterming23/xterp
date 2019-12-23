@@ -10,14 +10,12 @@
     <link rel="stylesheet" href="/resources/csss/H-ui.min.css">
 </head>
 <body>
-
-
 <form class="layui-form"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
 
     <div class="layui-form-item">
-        <label class="layui-form-label">供应商名称：</label>
+        <label class="layui-form-label">客户名称：</label>
         <div class="layui-input-block">
-            <input type="text" name="supplier" id="supplier" placeholder="请输入供应商名称" autocomplete="off" th:value="${supplierK.supplier}" class="layui-input" required="required">
+            <input type="text" name="supplier" id="supplier" placeholder="请输入客户名称" autocomplete="off" th:value="${supplierK.supplier}" class="layui-input" required="required">
         </div>
     </div>
     <div class="layui-form-item">
@@ -29,7 +27,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">联系电话：</label>
         <div class="layui-input-block">
-            <input type="text" name="phonenum" id="phonenum" placeholder="请输入联系人名称" autocomplete="off" th:value="${supplierK.phonenum}" class="layui-input" required="required">
+            <input type="text" name="phonenum" id="phonenum" placeholder="请输入联系电话" autocomplete="off" th:value="${supplierK.phonenum}" class="layui-input" required="required">
         </div>
     </div>
     <div class="layui-form-item">
@@ -114,70 +112,68 @@
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
-    <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
 </form>
 <!--<script src="layui.js"></script>-->
 <script>
     layui.use(['form', 'layer'], function(){
         var form = layui.form;
         var layer = layui.layer;
-
-        $("#sub").click(function () {
-            debugger;
-            var id = [[${suppliers.id}]];
-            var supplier = $("#supplier").val();
-            var contacts = $("#contacts").val();
-            var phonenum = $("#phonenum").val();
-            var email = $("#email").val();
-            var advanceIn = $("#advanceIn").val();
-            var beginNeedGet = $("#beginNeedGet").val();
-            var beginNeedPay = $("#beginNeedPay").val();
-            var allNeedGet = $("#allNeedGet").val();
-            var allNeedPay = $("#allNeedPay").val();
-            var fax = $("#fax").val();
-            var telephone = $("#telephone").val();
-            var address = $("#address").val();
-            var taxNum = $("#taxNum").val();
-            var bankName = $("#bankName").val();
-            var accountNumber = $("#accountNumber").val();
-            var taxRate = $("#taxRate").val();
-            $.ajax({
-                url:"updateSupplier",
-                dateType:"json",
-                type:"post",
-                data:{
-                    "id":id,
-                    "supplier":supplier,
-                    "contacts":contacts,
-                    "phonenum":phonenum,
-                    "email":email,
-                    "advanceIn":advanceIn,
-                    "beginNeedGet":beginNeedGet,
-                    "beginNeedPay":beginNeedPay,
-                    "allNeedGet":allNeedGet,
-                    "allNeedPay":allNeedPay,
-                    "fax":fax,
-                    "telephone":telephone,
-                    "address":address,
-                    "taxNum":taxNum,
-                    "bankName":bankName,
-                    "accountNumber":accountNumber,
-                    "taxRate":taxRate
-                },
-                success:function (resp) {
-                    debugger;
-                    if (resp!=null){
-                        layer.msg("修改客户信息成功，待审核");
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
-                    }else {
-                        layer.msg("添加失败")
-                    }
-                }
-            });
-        });
-        //各种基于事件的操作，下面会有进一步介绍
     });
+    $("#sub").click(function () {
+        debugger;
+        var id = [[${supplierK.id}]];
+        var supplier = $("#supplier").val();
+        var contacts = $("#contacts").val();
+        var phonenum = $("#phonenum").val();
+        var email = $("#email").val();
+        var advanceIn = $("#advanceIn").val();
+        var beginNeedGet = $("#beginNeedGet").val();
+        var beginNeedPay = $("#beginNeedPay").val();
+        var allNeedGet = $("#allNeedGet").val();
+        var allNeedPay = $("#allNeedPay").val();
+        var fax = $("#fax").val();
+        var telephone = $("#telephone").val();
+        var address = $("#address").val();
+        var taxNum = $("#taxNum").val();
+        var bankName = $("#bankName").val();
+        var accountNumber = $("#accountNumber").val();
+        var taxRate = $("#taxRate").val();
+        $.ajax({
+            url:"updateSupplier",
+            dateType:"json",
+            type:"post",
+            data:{
+                "id":id,
+                "supplier":supplier,
+                "contacts":contacts,
+                "phonenum":phonenum,
+                "email":email,
+                "advanceIn":advanceIn,
+                "beginNeedGet":beginNeedGet,
+                "beginNeedPay":beginNeedPay,
+                "allNeedGet":allNeedGet,
+                "allNeedPay":allNeedPay,
+                "fax":fax,
+                "telephone":telephone,
+                "address":address,
+                "taxNum":taxNum,
+                "bankName":bankName,
+                "accountNumber":accountNumber,
+                "taxRate":taxRate
+            },
+            success:function (resp) {
+                debugger;
+                if (resp!=null){
+                    layer.msg("修改客户信息成功");
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                }else {
+                    layer.msg("修改失败")
+                }
+            }
+        });
+    });
+    //各种基于事件的操作，下面会有进一步介绍
 </script>
 </body>
 </html>

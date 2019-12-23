@@ -1,6 +1,5 @@
 package com.sxt.sys.service.vin.impl;
 
-import com.sxt.sys.domain.qxs.warehouse.Depothead;
 import com.sxt.sys.domain.vin.Product;
 import com.sxt.sys.domain.vin.Product_model;
 import com.sxt.sys.domain.vin.Product_type;
@@ -57,11 +56,6 @@ public class ProductServiceImpl implements ProductServiceI {
     @Override
     public Product_model getProductModelById(long id) {
         return productMapper.getProductModelById(id);
-    }
-
-    @Override
-    public List<Depothead> getProductStock() {
-        return productMapper.getProductStock();
     }
 
     @Override

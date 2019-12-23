@@ -207,7 +207,7 @@ public class SupplierController {
     }
 
     /**
-     * 修改产品信息
+     * 修改客户/供应商信息
      * @param supplier
      * @return
      */

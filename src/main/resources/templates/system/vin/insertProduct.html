@@ -39,12 +39,6 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">产品库存：</label>
-        <div class="layui-input-block">
-            <input type="text" name="product_stock" id="product_stock" placeholder="请输入" autocomplete="off" class="layui-input" required="required">
-        </div>
-    </div>
-    <div class="layui-form-item">
         <label class="layui-form-label">产品单位：</label>
         <div class="layui-input-block">
             <input type="text" name="product_unit" id="product_unit" placeholder="请输入" autocomplete="off" class="layui-input" required="required">
@@ -124,7 +118,6 @@
             var product_model = $("#select_model option:selected").val();
             var product_type = $("#proType").val();
             var product_unit = $("#product_unit").val();
-            var product_stock = $("#product_stock").val();
             var retail_price = $("#retail_price").val();
             var min_price = $("#min_price").val();
             var cost_price = $("#cost_price").val();
@@ -139,7 +132,6 @@
                     "product_model":product_model,
                     "product_type":product_type,
                     "product_unit":product_unit,
-                    "product_stock":product_stock,
                     "retail_price":retail_price,
                     "min_price":min_price,
                     "cost_price":cost_price,

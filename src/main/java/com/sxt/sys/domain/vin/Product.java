@@ -18,7 +18,6 @@ public class Product {
     private long product_model;//产品型号
     private long product_type;//产品类别
     private String product_unit;//产品单位
-    private int product_stock;//产品库存
     private Double retail_price;//零售价
     private Double min_price;//最低售价
     private Double cost_price;//预计成本价格

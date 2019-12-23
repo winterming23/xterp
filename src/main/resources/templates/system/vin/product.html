@@ -35,7 +35,6 @@
         <th width="100">产品型号</th>
         <th width="100">产品类型</th>
         <th width="100">单位</th>
-        <th width="100">库存</th>
         <th width="100">零售价</th>
         <th width="100">最低售价</th>
         <th width="100">成本价格</th>
@@ -55,8 +54,6 @@
         <td th:text="${product.model_name}"></td>
         <td th:text="${product.type_name}"></td>
         <td th:text="${product.product_unit}"></td>
-        <td><a href="#" style="color: #0000FF;text-decoration: underline"
-               title="查看出入库明细">[[${product.product_stock}]]</a></td>
         <td th:text="${product.retail_price}"></td>
         <td th:text="${product.min_price}"></td>
         <td th:text="${product.cost_price}"></td>

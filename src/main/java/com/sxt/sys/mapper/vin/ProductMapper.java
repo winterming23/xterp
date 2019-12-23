@@ -19,7 +19,7 @@ public interface ProductMapper {
      * 查询所有产品
      * @return List<Product>
      */
-    @Select("select p.id,p.product_name,pm.model_name,p.product_model,pt.type_name,p.product_unit,p.product_stock,p.retail_price,p.min_price,p.cost_price,p.trade_price,p.product_state,p.serial_number,p.createtime,p.status from product as p" +
+    @Select("select p.id,p.product_name,pm.model_name,p.product_model,pt.type_name,p.product_unit,p.retail_price,p.min_price,p.cost_price,p.trade_price,p.product_state,p.serial_number,p.createtime,p.status from product as p" +
             " INNER JOIN product_model AS pm ON p.product_model = pm.id" +
             " INNER JOIN product_type as pt ON p.product_type = pt.id" +
             " where p.delete_Flag = '0'")
@@ -43,7 +43,7 @@ public interface ProductMapper {
      * 根据产品id查询
      * @return Product
      */
-    @Select("select * from product where delete_Flag = '0' AND id = #{id}")
+    @Select("select * from product where id = #{id}")
     public Product getProductById(long id);
 
     /**
@@ -51,8 +51,8 @@ public interface ProductMapper {
      * @param product
      * @return boolean
      */
-    @Insert("INSERT INTO product (product_name,product_model,product_type,product_unit,product_stock,retail_price,min_price,cost_price,trade_price,product_state,serial_number,delete_Flag,createtime,`status`) " +
-            " VALUES(#{product_name},#{product_model},#{product_type},#{product_unit},#{product_stock},#{retail_price},#{min_price},#{cost_price},#{trade_price},0,#{serial_number},'0',now(),DEFAULT);")
+    @Insert("INSERT INTO product (product_name,product_model,product_type,product_unit,retail_price,min_price,cost_price,trade_price,product_state,serial_number,delete_Flag,createtime,`status`) " +
+            " VALUES(#{product_name},#{product_model},#{product_type},#{product_unit},#{retail_price},#{min_price},#{cost_price},#{trade_price},0,#{serial_number},'0',now(),DEFAULT);")
     public boolean insertProduct(Product product);
 
     /**
@@ -80,16 +80,6 @@ public interface ProductMapper {
     public Product_model getProductModelById(long id);
 
     /**
-     * 查询产品库存信息
-     * @return List<Depothead>
-     */
-    @Select("SELECT dh.Id,dh.Type,dt.BasicNumber,dh.OperTime from `depothead` AS dh " +
-            " INNER JOIN `depotitem` AS dt ON dh.Id = dt.HeaderId" +
-            " INNER JOIN `depot` AS d ON dt.DepotId = d.id" +
-            " WHERE dt.MaterialId = #{id} AND dh.delete_Flag = 0")
-    public List<Depothead> getProductStock();
-
-    /**
      * 根据产品型号获取产品类型
      * @return Product_type
      */
@@ -103,7 +93,7 @@ public interface ProductMapper {
      */
     @Select("SELECT pt.type_name,pt.id from product as p" +
             " INNER JOIN product_type as pt ON p.product_type = pt.id" +
-            " where p.id = 25 and p.delete_Flag ='0'")
+            " where p.id = #{id} and p.delete_Flag ='0'")
     public Product queryByProductType(long product_type);
 
     /**

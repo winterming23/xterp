@@ -67,12 +67,6 @@ public interface ProductServiceI {
     public Product_model getProductModelById(long id);
 
     /**
-     * 查询产品库存信息
-     * @return List<Depothead>
-     */
-    public List<Depothead> getProductStock();
-
-    /**
      * 根据产品型号获取产品类型
      * @return Product_type
      */

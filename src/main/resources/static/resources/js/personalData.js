@@ -4,7 +4,8 @@ var form;
 //var areaData = address;
 layui.config({
 	base : "/js/"
-}).use(['form','layer','jquery','laydate'],function(){
+}).use(['form','layer','jquery','laydate','upload'],function(){
+    var upload = layui.upload;
 	var layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laydate = layui.laydate;
 		$ = layui.jquery;
@@ -44,6 +45,21 @@ layui.config({
 		}
 	})
 
+    //文件上传
+    upload.render({
+        elem: '.thumbBox',
+        url: '/file/uploadFile',
+        acceptMime:'image/*',
+        field:'mf',
+        method : "post",
+        done: function(res, index, upload){
+            var path=res.path;
+            $('.thumbImg').attr('src','/file/showImageByPath?path='+path);
+            $('.thumbBox').css("background","#fff");
+            //给隐藏域赋值
+            $("#imgpath").val(path);
+        }
+    });
 
 		
 		//自定义验证规则

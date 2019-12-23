@@ -138,6 +138,7 @@ public class UserController {
      */
     @RequestMapping("updateUserss")
 	public String updateUser(User user){
+
         String salt=IdUtil.simpleUUID().toUpperCase();
         user.setSalt(salt);//设置盐
         user.setPwd(new Md5Hash(user.getPwd(), salt, 2).toString());//设置密码

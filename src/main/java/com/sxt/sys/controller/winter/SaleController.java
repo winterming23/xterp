@@ -46,6 +46,6 @@ public class SaleController {
     @RequestMapping("/addSale")
     public String saveSaleAndDepotHead(Sale sale, Depothead depothead, DepotItem depotItem) throws ParseException {
 
-        return null;
+        return "system/winter/sale/saveSale";
     }
 }

@@ -10,53 +10,95 @@
     <link rel="stylesheet" href="/resources/csss/H-ui.min.css" />
 </head>
 <body>
-<form>
-    客户：
-    <select id="clientId">
-        <option>=====请选择=====</option>
-    </select>
-    <br/><br/>
-    单据日期：
-    <input type="text" class="layui-input" name="createTime" id="createTime"/>
-    <br/><br/>
-    单据编号：
-    <input type="hidden" name="depotHeadId" value="0"/>
-    <input type="text" name="depotHeadNumber" id="depotHeadNumber" readonly="readonly">
-    <br/><br/>
-    销售人员：<!--当前登录用户 th:value="${user.userName}"-->
-    <input type="hidden" name="userId" value="1"/>
-    <input type="text" name="userName" id="userName" readonly="readonly"/>
-    <br/><br/>
-    仓库名称：
-    <select id="depotId">
-        <option>=====请选择=====</option>
-    </select>
-    <br/><br/>
-    产品名称：
-    <select id="productId">
-        <option>=====请选择=====</option>
-    </select>
-    <br/><br/>
-    所需数量：
-    <input type="text" name="saleNumber" id="saleNumber" required="required"/>
-    <br/><br/>
-    库存：
-    <input type="text" name="basicNumber" id="basicNumber" readonly="readonly"/>
-    <br/><br/>
-    单价：
-    <input type="text" name="unitPrice" id="unitPrice" readonly="readonly"/>
-    <br/><br/>
-    总金额：
-    <input type="text" name="money" id="money" readonly="readonly"/>
-    <br/><br/>
-    实际付款金额：
-    <input type="text" name="reality" id="reality"/>
-    <br/><br/>
-    提成：<!--总金额的2%-->
-    <input type="text" name="commission" id="commission" readonly="readonly"/>
-    <br/><br/>
-    <input type="submit" value="保存" />
-</form>
+<div>
+    <form>
+        <table class="layui-table">
+           <!-- <colgroup>
+                <col width="150">
+                <col width="200">
+                <col>
+            </colgroup>-->
+            <thead>
+            <tr class="text-c">
+                <th>客户</th>
+                <th>单据日期</th>
+                <th>单据编号</th>
+                <th>销售人员</th>
+                <th>仓库名称</th>
+                <th>产品名称</th>
+                <th>所需数量</th>
+                <th>库存</th>
+                <th>单价</th>
+                <th>总金额</th>
+                <th>实际付款金额</th>
+                <th>提成</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr class="text-c">
+                    <td>
+                        <!-- 客户： -->
+                        <select lay-verify="select" id="clientId">
+                            <option>=====请选择=====</option>
+                        </select>
+                    </td>
+                    <td>
+                        <!--单据日期： -->
+                        <input type="text" placeholder="请选择" class="layui-input"  name="createTime" id="createTime"/>
+                    </td>
+                    <td>
+                        <!--单据编号： -->
+                        <input type="hidden" name="depotHeadId" value="0"/>
+                        <input type="text" placeholder="请输入" class="layui-input"  name="depotHeadNumber" id="depotHeadNumber" readonly="readonly">
+                    </td>
+                    <td>
+                        <!--销售人员： --><!--当前登录用户 th:value="${user.userName}"-->
+                        <input type="hidden" name="userId" value="1"/>
+                        <input type="text" placeholder="请输入" class="layui-input"  name="userName" id="userName" readonly="readonly"/>
+                    </td>
+                    <td>
+                        <!--仓库名称： -->
+                        <select id="depotId">
+                            <option>=====请选择=====</option>
+                        </select>
+                    </td>
+                    <td>
+                        <!--产品名称： -->
+                        <select id="productId">
+                            <option>=====请选择=====</option>
+                        </select>
+                    </td>
+                    <td>
+                        <!-- 所需数量： -->
+                        <input type="text" name="saleNumber" placeholder="请输入" class="layui-input"  id="saleNumber" required="required"/>
+                    </td>
+                    <td>
+                        <!-- 库存：-->
+                        <input type="text" name="basicNumber" placeholder="请输入" class="layui-input"  id="basicNumber" readonly="readonly"/>
+                    </td>
+                    <td>
+                        <!--单价： -->
+                        <input type="text" name="unitPrice" placeholder="请输入" class="layui-input"  id="unitPrice" readonly="readonly"/>
+                    </td>
+                    <td>
+                        <!--总金额： -->
+                        <input type="text" name="money" placeholder="请输入" class="layui-input"  id="money" readonly="readonly"/>
+                    </td>
+                    <td>
+                        <!--实际付款金额： -->
+                        <input type="text" name="reality" placeholder="请输入" class="layui-input"  id="reality"/>
+                    </td>
+                    <td>
+                        <!--提成： --><!--总金额的2%-->
+                        <input type="text" name="commission" id="commission" placeholder="请输入" class="layui-input" readonly="readonly"/>
+                    </td>
+                    <td><input class="layui-btn" type="submit" value="保存" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
 <script type="text/javascript">
     //生成日期 yyyy-MM-dd HH:mm:ss
     layui.use('laydate', function () {
@@ -94,7 +136,7 @@
     var commission = $("#commission").val(pushMoney);
 
 
-    $(function () {
+   /* $(function () {
         //查询客户
         layui.use('layer',function () {
             var layer = layui.layer;
@@ -108,7 +150,7 @@
 
         //查询仓库
         
-    })
+    })*/
 </script>
 </body>
 </html>

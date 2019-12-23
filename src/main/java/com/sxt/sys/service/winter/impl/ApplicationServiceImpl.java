@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public class ApplicationServiceImpl implements ApplicationServiceI {
      * @return
      */
     @Override
-    public List<Application> getAllApplication() {
+    public List<HashMap> getAllApplication() {
         return applicationMapper.getAllApplication();
     }
 
@@ -60,8 +61,8 @@ public class ApplicationServiceImpl implements ApplicationServiceI {
      * @return
      */
     @Override
-    public boolean updateApplicationAuditTime(Date auditTime, int id) {
-        return applicationMapper.updateApplicationAuditTime(auditTime,id);
+    public boolean updateApplicationAuditTime(Date auditTime,int auditor, int id) {
+        return applicationMapper.updateApplicationAuditTime(auditTime,auditor,id);
     }
 
     /**

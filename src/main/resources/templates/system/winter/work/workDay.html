@@ -72,11 +72,12 @@
                             for (var key in obj) {
                                 var list = obj[key];
                                 var attendanceDate = yearToDate(list.attendanceDate);
-                                var startTime = hourMinuteSecond(list.startTime);
+                                var startTime = list.startTime;
                                 var start = attendanceDate + " " + startTime;
-                                var endTime = hourMinuteSecond(list.endTime);
+                                var endTime = list.endTime;
                                 var end = attendanceDate + " " + endTime;
                                 var id = list.id;
+                                console.log("开始时间："+list.startTime)
                                 console.log("开始时间："+startTime)
                                 events.push({
                                     title: '上班签到',
@@ -175,7 +176,7 @@
             如果当天忘记打卡，需第二天向领导进行申诉申请，并说明原因</p>
         <input type="hidden" name="userId" id="userId" value="1"/><!--th:value="${user.id}"-->
     </div>
-    <div id='calendar' style="width:60%"></div>
+    <div id='calendar' style="width:80%"></div>
 </div>
 </body>
 </html>

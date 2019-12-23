@@ -131,19 +131,12 @@ public class WorkAttendanceController {
         Object ids = request.getSession().getAttribute("userId");
         int userId = (int)ids;
         logger.info("获取的用户编号：",userId);
-        int workNull = workAttendanceService.findWorkNull(userId);
-        if(workNull > 0){
-            //获取新增的编号
-            Object workId = request.getSession().getAttribute("workId");
-            int id = (int)workId;
-            logger.info("获取的自增编号：",id);
-            WorkAttendance workAttendance = workAttendanceService.findWorkAttendance(id);
-            request.setAttribute("workUser",workAttendance);
-        }else{
-            WorkAttendance workAttendance = workAttendanceService.findWorkAttendance(1);
-            request.setAttribute("workUser",workAttendance);
-        }
-
+        //获取新增的编号
+        Object workId = request.getSession().getAttribute("workId");
+        int id = (int)workId;
+        logger.info("获取的自增编号：",id);
+        WorkAttendance workAttendance = workAttendanceService.findWorkAttendance(id);
+        request.setAttribute("workUser",workAttendance);
         return "forward:/workDay";
     }
 }

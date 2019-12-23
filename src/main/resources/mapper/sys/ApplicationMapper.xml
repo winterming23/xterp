@@ -12,12 +12,14 @@
     </select>-->
 
     <!-- 查询所有信息 -->
-    <select id="getAllApplication" resultType="com.sxt.sys.domain.winter.Application">
-        select * from application order by id desc
+    <select id="getAllApplication" resultType="hashmap">
+        select a.id,workId,cause,u.name userName,applicationTime,ifnull(approval,0) approval,ifnull(auditor,0) auditor,u.name auditorName,ifnull(auditTime,'2019-12-01') auditTime
+from application a
+inner join sys_user u on u.id = proposer  order by a.id desc
     </select>
-    <!-- 修改审批时间 -->
+    <!-- 修改审批时间 审批人 -->
     <update id="updateApplicationAuditTime" parameterType="com.sxt.sys.domain.winter.Application">
-        update application set auditTime = #{auditTime} where id = #{id}
+        update application set auditTime = #{auditTime},auditor = #{auditor} where id = #{id}
     </update>
     <!-- 修改审批状态 -->
     <update id="updateApplicationApproval" parameterType="com.sxt.sys.domain.winter.Application">

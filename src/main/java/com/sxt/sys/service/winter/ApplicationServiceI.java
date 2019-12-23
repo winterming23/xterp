@@ -4,6 +4,7 @@ package com.sxt.sys.service.winter;
 import com.sxt.sys.domain.winter.Application;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface ApplicationServiceI {
      * 查询所有
      * @return
      */
-    List<Application> getAllApplication();
+    List<HashMap> getAllApplication();
 
     /**
      * 修改考勤审核时间
@@ -40,7 +41,7 @@ public interface ApplicationServiceI {
      * @param id
      * @return
      */
-    boolean updateApplicationAuditTime(Date auditTime, int id);
+    boolean updateApplicationAuditTime(Date auditTime,int auditor, int id);
 
     /**
      * 修改申请审核状态

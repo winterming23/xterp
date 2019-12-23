@@ -4,6 +4,7 @@ import com.sxt.sys.domain.winter.Application;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public interface ApplicationMapper {
      * 查询所有
      * @return
      */
-    List<Application> getAllApplication();
+    List<HashMap> getAllApplication();
 
     /**
      * 修改考勤审核时间
@@ -41,6 +42,7 @@ public interface ApplicationMapper {
      * @return
      */
     boolean updateApplicationAuditTime(@Param("auditTime") Date auditTime,
+                                       @Param("auditor") int auditor,
                                        @Param("id") int id);
 
     /**

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -137,16 +139,28 @@ public class UserController {
      * @return
      */
     @RequestMapping("updateUserss")
-	public String updateUser(User user){
+	public String updateUser(User user,HttpServletRequest request){
+		//商品图片不是默认图片
+		if (!(user.getImgpath()!=null&&user.getImgpath().equals(Constast.DEFAULT_IMG))){
+			if (user.getImgpath().endsWith("_temp")){
+				String newName = AppFileUtils.renameFile(user.getImgpath());
+				user.setImgpath(newName);
+				//删除原先的图片
+				String oldPath = userService.getById(user.getId()).getImgpath();
+				AppFileUtils.removeFileByPath(oldPath);
+			}
+		}
 
         String salt=IdUtil.simpleUUID().toUpperCase();
         user.setSalt(salt);//设置盐
         user.setPwd(new Md5Hash(user.getPwd(), salt, 2).toString());//设置密码
         boolean b = this.userService.updateById(user);
+		HttpSession session=request.getSession();
       /*  int i = userService.updateUser(user);*/
         if (b==true){
             System.out.println(user.getPwd());
             System.out.println("==================更新成功");
+			session.setAttribute("user",user);
         }
         /* this.userService.updateById(user);*/
 

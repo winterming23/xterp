@@ -50,6 +50,9 @@ mybatis-plus:
     banner: true
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: false
+
+
 
     # mybatis 配置
 mybatis:

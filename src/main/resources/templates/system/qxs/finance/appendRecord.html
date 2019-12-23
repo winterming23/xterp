@@ -37,14 +37,14 @@
                     </thead>
                     <tbody>
                         <tr th:each=" ready:${readys[1]}">
-                            <td th:text="${ready.id}"></td>
-                            <td th:text="${ready.sName}"></td>
-                            <td th:text="${ready.accoun}"></td>
-                            <td th:text="${ready.pid}"></td>
-                            <td th:text="${ready.total}"></td>
-                            <td th:text="${ready.amount}"></td>
-                            <td th:text="${ready.costType}"></td>
-                            <td th:text="${ready.costPrice}"></td>
+                            <td th:text="${ready.id==null?'null':ready.id}"></td>
+                            <td th:text="${ready.sName==null?'null':ready.sName}"></td>
+                            <td th:text="${ready.accoun==null?'null':ready.accoun}"></td>
+                            <td th:text="${ready.pid==null?'null':ready.pid}"></td>
+                            <td th:text="${ready.total==null?'null':ready.total}"></td>
+                            <td th:text="${ready.amount==null?'null':ready.amount}"></td>
+                            <td th:text="${ready.costType==null?'null':ready.costType}"></td>
+                            <td th:text="${ready.costPrice==null?'null':ready.costPrice}"></td>
                             <td >
                                 <button th:onclick="add([[${ready.accoun}]],[[${ready.total}]],[[${ready.amount}]],[[${ready.id}]],0)"
                                         class="layui-btn layui-btn-sm">
@@ -76,14 +76,14 @@
                     </thead>
                     <tbody>
                     <tr th:each=" r:${readys[2]}">
-                        <td th:text="${r.saleId}"></td>
-                        <td th:text="${r.userId}"></td>
-                        <td th:text="${r.suId}"></td>
-                        <td th:text="${r.suName}"></td>
-                        <td th:text="${r.account}"></td>
-                        <td th:text="${r.money}"></td>
-                        <td th:text="${r.reality}"></td>
-                        <td th:text="${r.commission}"></td>
+                        <td th:text="${r.saleId==null?'null':r.saleId}"></td>
+                        <td th:text="${r.userId==null?'null':r.userId}"></td>
+                        <td th:text="${r.suId==null?'null':r.suId}"></td>
+                        <td th:text="${r.suName==null?'null':r.suName}"></td>
+                        <td th:text="${r.account==null?'null':r.account}"></td>
+                        <td th:text="${r.money==null?'null':r.money}"></td>
+                        <td th:text="${r.reality==null?'null':r.reality}"></td>
+                        <td th:text="${r.commission==null?'null':r.commission}"></td>
                         <td>
                             <button th:onclick="add([[${r.suId}]],[[${r.money}]],[[${r.reality}]],[[${r.saleId}]],1)"
                                     class="layui-btn layui-btn-sm">

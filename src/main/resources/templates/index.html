@@ -39,7 +39,7 @@
 						<a href="javascript:;"><img src="/resources/images/face.jpg" class="layui-nav-img userAvatar" width="35" height="35"><cite class="adminName" th:text="${session.user.name}"></cite></a>
 						<dl class="layui-nav-child">
 							<dd><a href="javascript:;" data-url="/sys/personalData"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a></dd>
-							<dd><a href="javascript:;" data-url="resources/page/user/changePwd.html" ><i class="seraph icon-xiugai" data-icon="icon-xiugai"></i><cite>修改密码</cite></a></dd>
+							<!--<dd><a href="javascript:;" data-url="resources/page/user/changePwd.html" ><i class="seraph icon-xiugai" data-icon="icon-xiugai"></i><cite>修改密码</cite></a></dd>-->
 							<!--<dd pc><a href="javascript:;" class="changeSkin"><i class="layui-icon">&#xe61b;</i><cite>更换皮肤</cite></a></dd>-->
 							<dd id="tc"><a href="javascript:;" ><i class="seraph icon-tuichu"></i><cite >退出</cite></a></dd>
 						</dl>
@@ -50,7 +50,7 @@
 		<!-- 左侧导航 -->
 		<div class="layui-side layui-bg-black">
 			<div class="user-photo">
-				<a class="img" title="我的头像" ><img src="/file/showImageByPath?path=${session.user.imgpath}" th:title="${session.user.imgpath }" class="userAvatar">
+				<a class="img" title="我的头像" ><img th:src="|/file/showImageByPath?path=${session.user.imgpath}|" th:title="|/file/showImageByPath?path=${session.user.imgpath }|" class="userAvatar">
 
 				</a>
 				<p>你好！<span class="userName" th:text="${session.user.name}"></span>, 欢迎登录</p>

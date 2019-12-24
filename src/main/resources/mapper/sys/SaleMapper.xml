@@ -25,9 +25,9 @@
 
     <!-- 未删除标记销售信息 --><!--resultMap="saleToUser"-->
     <select id="getAllNoDeleteSale" resultType="hashmap">
-         select u.userName,su.supplier,p.product_name,de.name deName,d.number depotName,s.number saleNumber,
+         select s.id saleId,u.name userName,su.supplier,p.product_name productName,de.name deName,d.number depotName,s.number saleNumber,
         s.discounts,s.money,s.reality,s.commission,s.state from sale s
-        inner join userinfo u on s.userId = u.id
+        inner join sys_user u on s.userId = u.id
         inner join supplier su on s.clientId = su.id
         inner join product p on s.productId = p.id
 		inner join depot de on s.depotId = de.id
@@ -38,9 +38,9 @@
 
     <!-- 查询已删除标记销售信息 --><!--resultMap="saleToUser"-->
     <select id="getAllDeleteSale" resultType="hashmap">
-         select u.userName,su.supplier,p.product_name,de.name deName,d.number depotName,s.number saleNumber,
+         select s.id saleId,u.name userName,su.supplier,p.product_name productName,de.name deName,d.number depotName,s.number saleNumber,
         s.discounts,s.money,s.reality,s.commission,s.state from sale s
-        inner join userinfo u on s.userId = u.id
+        inner join sys_user u on s.userId = u.id
         inner join supplier su on s.clientId = su.id
         inner join product p on s.productId = p.id
 		inner join depot de on s.depotId = de.id

@@ -43,4 +43,12 @@ public interface SaleServiceI {
      * @return
      */
     boolean saveSaleAndDepotHead(Sale sale, Depothead depothead, DepotItem depotItem) throws ParseException;
+
+    /**
+     * 修改销售状态
+     * @param state
+     * @param id
+     * @return
+     */
+    boolean updateSaleState(int state, int id);
 }

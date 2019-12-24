@@ -92,4 +92,16 @@ public class SaleServiceImpl implements SaleServiceI {
         }
         return saleMapper.saveSale(sale);
     }
+
+    /**
+     * 修改销售状态
+     *
+     * @param state
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean updateSaleState(int state, int id) {
+        return saleMapper.updateSaleState(state,id);
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
 import java.util.HashMap;
@@ -47,5 +48,30 @@ public class SaleController {
     public String saveSaleAndDepotHead(Sale sale, Depothead depothead, DepotItem depotItem) throws ParseException {
 
         return "system/winter/sale/saveSale";
+    }
+
+
+    /**
+     * 删除销售信息
+     * @return
+     */
+    @RequestMapping("/deleteSale")
+    @ResponseBody
+    public boolean deleteSale(int deleteFlag,int id){
+        boolean flag = saleService.deleteSale(deleteFlag, id);
+        return flag;
+    }
+
+    /**
+     * 修改状态
+     * @param state
+     * @param id
+     * @return
+     */
+    @RequestMapping("/updateSaleState")
+    @ResponseBody
+    public boolean updateSaleState(int state,int id){
+        boolean flag = saleService.updateSaleState(state,id);
+        return flag;
     }
 }

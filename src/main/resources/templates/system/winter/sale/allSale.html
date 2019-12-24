@@ -17,8 +17,6 @@
         <tr >
             <th colspan="16" height="15px" style="color: #F4F4F4">
                 <button class="layui-btn layui-btn-sm" id="btnInsert" >增加</button>
-                <button class="layui-btn layui-btn-sm" id="btnDelete">删除</button>
-                <button class="layui-btn layui-btn-sm" id="btnOut">导出</button>
             </th>
         </tr>
         <tr class="text-c">
@@ -33,6 +31,7 @@
             <th>总金额</th>
             <th>实付金额</th>
             <th>提成</th>
+            <th>状态</th>
             <th>操作</th>
         </tr>
         </thead>
@@ -41,7 +40,7 @@
             <td th:text="${saleStat.count}"></td>
             <td th:text="${sale.userName}"></td>
             <td th:text="${sale.supplier}"></td>
-            <td th:text="${sale.product_name}"></td>
+            <td th:text="${sale.productName}"></td>
             <td th:text="${sale.deName}"></td>
             <td th:text="${sale.depotName}"></td>
             <td th:text="${sale.saleNumber}"></td>
@@ -49,7 +48,30 @@
             <td th:text="${sale.money}"></td>
             <td th:text="${sale.reality}"></td>
             <td th:text="${sale.commission}"></td>
-            <td></td>
+            <td th:if="${sale.state==0}">
+                <font color="red">未提交</font>
+            </td>
+            <td th:if="${sale.state==1}">
+                <font color="yellow">审批中</font>
+            </td>
+            <td th:if="${sale.state==2}">
+                <font color="#00bfff">销售出货</font>
+            </td>
+            <td th:if="${sale.state==3}">
+                <font color="gray">销售退货</font>
+            </td>
+            <td th:if="${sale.state==0}">
+                <button type="button" class="layui-btn layui-btn-danger" th:onclick="stateSale([[${sale.saleId}]],1)">提交申请</button>
+                <button type="button" class="layui-btn" >编辑</button>
+                <button type="button" class="layui-btn layui-btn-danger" th:onclick="deleteSale([[${sale.saleId}]])">删除</button>
+            </td>
+            <td th:if="${sale.state==1}">
+                <button type="button" class="layui-btn layui-btn-normal" th:onclick="stateSale([[${sale.saleId}]],2)">审核</button>
+            </td>
+            <td th:if="${sale.state==2}">
+                <button type="button" class="layui-btn">编辑</button>
+                <button type="button" class="layui-btn layui-btn-danger" th:onclick="deleteSale([[${sale.saleId}]])">删除</button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -82,6 +104,72 @@
         })
     })
 
+   function deleteSale(id){
+       //删除销售信息
+       layui.use('layer',function () {
+           var layer = layui.layer;
+           layer.open({
+               title:'警告',
+               type:0,
+               closeBtn: 1,
+               id: '1', //防止重复弹出
+               shadeClose: true, //开启遮罩关闭
+               content:'是否确定删除',
+               btn:['确定','取消'],
+               yes:function (index, layero) {
+                   $.ajax({
+                       url:'/deleteSale',
+                       type:'post',
+                       dataType:'json',
+                       data:{
+                           'deleteFlag':1,
+                           'id':id
+                       },
+                       success:function (resp) {
+                           if(resp){
+                               //alert("数据已删除")
+                               layer.close(index); //如果设定了yes回调，需进行手工关闭
+                               location.href='/allSale';
+                           }
+                       }
+                   })
+               }
+           });
+       })
+   }
+
+   //提交审核
+    function stateSale(id,state){
+        layui.use('layer',function () {
+            var layer = layui.layer; //独立版的layer无需执行这一句
+            layer.open({
+                title:'申请',
+                type:0,
+                closeBtn: 1,
+                id: '1', //防止重复弹出
+                shadeClose: true, //开启遮罩关闭
+                content:'是否确认提交审核',
+                btn:['确定','取消'],
+                yes:function (index, layero) {
+                    $.ajax({
+                        url:'/updateSaleState',
+                        type:'post',
+                        dataType:'json',
+                        data:{
+                            'id':id,
+                            'state':state
+                        },
+                        success:function (resp) {
+                            if(resp){
+                                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                                location.href='/allSale';
+                            }
+                        }
+                    })
+                }
+            });
+        });
+    }
 </script>
 </body>
 </html>

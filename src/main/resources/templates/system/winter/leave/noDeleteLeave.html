@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>请假</title>
-    <link rel="stylesheet" href="/resources/csss/H-ui.min.css">
-    <link href="/resources/layui/css/layui.css" />
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/resources/csss/H-ui.min.css"/>
     <script src="/resources/csss/jquery-1.8.3.min.js"></script>
-    <script src=/resources/csss/jquery.dataTables.min.js"></script>
+    <script src="/resources/csss/jquery.dataTables.min.js"></script>
+    <script src="/resources/layui/layui.js"></script>
 </head>
 <body>
 <div id="fsWin" style="width: 95%;">
     <table style="width: 100%;height: 100%" id="ftop"
            class="table table-border table-bordered table-hover table-bg table-sort">
         <thead>
+        <tr >
+            <th colspan="16" height="15px" style="color: #F4F4F4">
+                <button class="layui-btn layui-btn-sm" id="btnInsert" >增加</button>
+            </th>
+        </tr>
         <tr class="text-c">
             <th width="100">编号</th>
             <th width="100">用户姓名</th>
@@ -20,20 +26,42 @@
             <th width="100">开始时间</th>
             <th width="100">结束时间</th>
             <th width="100">总时长</th>
-            <th width="100">审核</th>
+            <th width="100">审核状态</th>
             <th width="100">操作</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="leave,leaveStat : ${noDeleteLeave}">
             <td th:text="${leaveStat.count}"></td>
-            <td th:text="${leave.userId}"></td>
+            <td th:text="${leave.userName}"></td>
             <td th:text="${leave.reason}"></td>
             <td th:text="${leave.startTime}"></td>
             <td th:text="${leave.endTime}"></td>
             <td th:text="${leave.allHour}"></td>
-            <td th:text="${leave.verifyStatus}"></td>
-            <td></td>
+            <td th:if="${leave.verifyStatus==0}">
+                <font color="red">未提交</font>
+            </td>
+            <td th:if="${leave.verifyStatus==1}">
+                <font color="yellow">审批中</font>
+            </td>
+            <td th:if="${leave.verifyStatus==2}">
+                <font color="#00bfff">审批完成</font>
+            </td>
+            <td th:if="${leave.verifyStatus==3}">
+                <font color="gray">已放弃</font>
+            </td>
+            <td th:if="${leave.verifyStatus==0}">
+                <button type="button" class="layui-btn layui-btn-danger" th:onclick="applicationLeave([[${leave.leaveId}]],1)">提交申请</button>
+                <button type="button" class="layui-btn" th:onclick="leaveUpdate([[${leave.leaveId}]])">编辑</button>
+                <button type="button" class="layui-btn layui-btn-danger" th:onclick="leaveDelete([[${leave.leaveId}]])">删除</button>
+            </td>
+            <td th:if="${leave.verifyStatus==1}">
+                <button type="button" class="layui-btn layui-btn-normal" th:onclick="applicationLeave([[${leave.leaveId}]],2)">审核</button>
+            </td>
+            <td th:if="${leave.verifyStatus==2}">
+                <button type="button" class="layui-btn" th:onclick="leaveUpdate([[${leave.leaveId}]])">编辑</button>
+                <button type="button" class="layui-btn layui-btn-danger" th:onclick="leaveDelete([[${leave.leaveId}]])">删除</button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -43,6 +71,123 @@
     $("#ftop").DataTable({
         aLengthMenu: [3, 5, 10]
     });
+    $("#btnInsert").click(function () {
+        //使用layui展示客户与仓库信息
+        layui.use('layer',function () {
+            var layer = layui.layer;
+            layer.open({
+                title:'请假单',
+                type:2,
+                skin: 'layui-layer-lan ', //样式类名
+                closeBtn: 1, //显示关闭按钮
+                anim: 2,
+                area:['60%','70%'],
+                resize:true,
+                id: '1', //防止重复弹出
+                shadeClose: true, //开启遮罩关闭
+                shade:[0.5], //透明度，背景颜色
+                content: ['/getSaveLeave'],
+                //offset:'auto',
+                btn:['确认','取消'],
+                yes:function () {
+                    window.location.href="/getLeave"
+                }
+            })
+        })
+    })
+
+    //修改请假信息
+    function leaveUpdate(id){
+        layui.use('layer',function () {
+            var layer = layui.layer;
+            layer.open({
+                title:'修改请假单',
+                type:2,
+                //skin: 'layui-layer-lan ', //样式类名
+                closeBtn: 1, //显示关闭按钮
+                anim: 2,
+                area:['40%','100%'],
+                resize:true,
+                id: '1', //防止重复弹出
+                shadeClose: true, //开启遮罩关闭
+                shade:[0.5], //透明度，背景颜色
+                content: ['/findLeave?leaveId='+id],
+                //offset:'left',
+                btn:['确认','取消'],
+                yes:function () {
+                    window.location.href="/getLeave"
+                }
+            });
+        })
+    }
+
+    //提交申请单
+    function applicationLeave(leaveId,verifyStatus){
+        layui.use('layer',function () {
+            var layer = layui.layer; //独立版的layer无需执行这一句
+            layer.open({
+                title:'申请',
+                type:0,
+                closeBtn: 1,
+                id: '1', //防止重复弹出
+                shadeClose: true, //开启遮罩关闭
+                content:'是否确认申请',
+                btn:['确定','取消'],
+                yes:function (index, layero) {
+                    $.ajax({
+                        url:'/updateLeaveStatus',
+                        type:'post',
+                        dataType:'json',
+                        data:{
+                            'leaveId':leaveId,
+                            'verifyStatus':verifyStatus
+                        },
+                        success:function (resp) {
+                            if(resp){
+                                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                                location.href='/getLeave';
+                            }
+                        }
+                    })
+                }
+            });
+        });
+    }
+
+    //删除请假单
+    function leaveDelete(id) {
+        var ids = id;
+        layui.use('layer',function () {
+                var layer = layui.layer; //独立版的layer无需执行这一句
+                layer.open({
+                    title:'警告',
+                    type:0,
+                    closeBtn: 1,
+                    id: '1', //防止重复弹出
+                    shadeClose: true, //开启遮罩关闭
+                    content:'是否确定删除',
+                    btn:['确定','取消'],
+                    yes:function (index, layero) {
+                        $.ajax({
+                            url:'/deleteLeave',
+                            type:'post',
+                            dataType:'json',
+                            data:{
+                                'deleteFlag':1,
+                                'leaveId':ids
+                            },
+                            success:function (resp) {
+                                if(resp){
+                                    //alert("数据已删除")
+                                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                                    location.href='/getLeave';
+                                }
+                            }
+                        })
+                    }
+                });
+        });
+    };
 </script>
 </body>
 </html>

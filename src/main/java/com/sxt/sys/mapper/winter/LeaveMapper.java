@@ -3,6 +3,7 @@ package com.sxt.sys.mapper.winter;
 import com.sxt.sys.domain.winter.Leave;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public interface LeaveMapper {
      * 未被删除的请假数据
      * @return
      */
-    List<Leave> getAllNoDeleteLeave();
+    List<HashMap> getAllNoDeleteLeave();
 
     /**
      * 已被删除的请假数据

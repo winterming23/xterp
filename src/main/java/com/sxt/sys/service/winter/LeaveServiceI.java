@@ -3,6 +3,7 @@ package com.sxt.sys.service.winter;
 
 import com.sxt.sys.domain.winter.Leave;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -46,7 +47,7 @@ public interface LeaveServiceI {
      * 未被删除的请假数据
      * @return
      */
-    List<Leave> getAllNoDeleteLeave();
+    List<HashMap> getAllNoDeleteLeave();
 
     /**
      * 已被删除的请假数据

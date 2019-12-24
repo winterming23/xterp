@@ -7,7 +7,7 @@
     <insert id="saveLeave" parameterType="com.sxt.sys.domain.winter.Leave">
       insert into `leave` values
       (#{leaveId},#{userId},#{reason},
-      #{startTime},#{endTime},#{allHour},#{verifyStatus})
+      #{startTime},#{endTime},#{allHour},#{verifyStatus},#{deleteFlag})
     </insert>
     <!-- 修改请假数据 -->
     <update id="updateLeave" parameterType="com.sxt.sys.domain.winter.Leave">
@@ -31,8 +31,10 @@
         update `leave` set deleteFlag = #{deleteFlag} where leaveId = #{leaveId}
     </delete>
     <!-- 未删除的请假数据 -->
-    <select id="getAllNoDeleteLeave" resultType="com.sxt.sys.domain.winter.Leave">
-        select * from `leave` where deleteFlag = 0 order by leaveId desc
+    <select id="getAllNoDeleteLeave" resultType="hashmap">
+        select leaveId,u.name userName,reason,startTime,endTime,allHour,ifnull(verifyStatus,0) verifyStatus,deleteFlag from `leave` l inner join sys_user u
+on u.id = l.userId
+where deleteFlag = 0 order by leaveId desc
     </select>
     <!-- 已删除的请假数据 -->
     <select id="getAllDeleteLeave" resultType="com.sxt.sys.domain.winter.Leave">

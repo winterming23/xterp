@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,14 +25,11 @@ public class LeaveController {
      * @param leave
      * @return
      */
-    @RequestMapping("/saveLeave")
-    public String saveLeave(Leave leave){
+    @RequestMapping("/addLeave")
+    @ResponseBody
+    public boolean saveLeave(Leave leave){
         boolean flag = leaveService.saveLeave(leave);
-        if (flag){
-            return "/getLeave";
-        }else {
-            return "false";
-        }
+        return flag;
     }
 
     /**
@@ -56,13 +55,10 @@ public class LeaveController {
      * @return
      */
     @RequestMapping("/updateLeaveStatus")
-    public String updateLeaveStatus( int leaveId, int verifyStatus){
+    @ResponseBody
+    public boolean updateLeaveStatus( int leaveId, int verifyStatus){
         boolean flag = leaveService.updateLeaveStatus(leaveId,verifyStatus);
-        if (flag){
-            return "/getLeave";
-        }else {
-            return "false";
-        }
+        return flag;
     }
 
     /**
@@ -72,13 +68,10 @@ public class LeaveController {
      * @return
      */
     @RequestMapping("/deleteLeave")
-    public String deleteLeave(int deleteFlag,int leaveId){
+    @ResponseBody
+    public boolean deleteLeave(int deleteFlag,int leaveId){
         boolean flag = leaveService.deleteLeave(deleteFlag,leaveId);
-        if (flag){
-            return "/getLeave";
-        }else {
-            return "false";
-        }
+        return flag;
     }
 
     /**
@@ -88,7 +81,7 @@ public class LeaveController {
      */
     @RequestMapping("/getLeave")
     public String getAllNoDeleteLeave(Model model){
-        List<Leave> allNoDeleteLeave = leaveService.getAllNoDeleteLeave();
+        List<HashMap> allNoDeleteLeave = leaveService.getAllNoDeleteLeave();
         model.addAttribute("noDeleteLeave",allNoDeleteLeave);
         return "system/winter/leave/noDeleteLeave";
     }
@@ -98,7 +91,7 @@ public class LeaveController {
      * @return
      */
     public String getAllDeleteLeave(Model model){
-        List<Leave> deleteLeave = leaveService.getAllNoDeleteLeave();
+        List<Leave> deleteLeave = leaveService.getAllDeleteLeave();
         model.addAttribute("deleteLeave",deleteLeave);
         return null;
     }
@@ -118,9 +111,19 @@ public class LeaveController {
      * @param leaveId
      * @return
      */
+    @RequestMapping("/findLeave")
     public String findLeaveOne(int leaveId, Model model){
         Leave leaveOne = leaveService.findLeaveOne(leaveId);
         model.addAttribute("leaveOne",leaveOne);
-        return null;
+        return "system/winter/leave/updateLeave";
+    }
+
+    /**
+     * 跳转到添加页面
+     * @return
+     */
+    @RequestMapping("/getSaveLeave")
+    public String getSaveLeave(){
+        return "system/winter/leave/saveLeave";
     }
 }

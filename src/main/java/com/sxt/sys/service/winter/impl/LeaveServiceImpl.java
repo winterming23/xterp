@@ -6,6 +6,7 @@ import com.sxt.sys.service.winter.LeaveServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -71,7 +72,7 @@ public class LeaveServiceImpl implements LeaveServiceI {
      * @return
      */
     @Override
-    public List<Leave> getAllNoDeleteLeave() {
+    public List<HashMap> getAllNoDeleteLeave() {
         return leaveMapper.getAllNoDeleteLeave();
     }
 

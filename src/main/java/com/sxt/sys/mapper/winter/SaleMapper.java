@@ -32,10 +32,11 @@ public interface SaleMapper {
 
     /**
      * 修改所有销售信息
-     * @param sale
+     * @param number
+     * @param id
      * @return
      */
-    boolean updateSale(Sale sale);
+    boolean updateSaleNumber(@Param("number") Integer number,@Param("id") Integer id);
 
     /**
      * 修改销售删除标记
@@ -69,7 +70,7 @@ public interface SaleMapper {
      * @param id
      * @return
      */
-    Sale findSaleOne(int id);
+    HashMap findSaleOne(int id);
 
     /**
      * 查询所有销售收款

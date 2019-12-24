@@ -51,4 +51,19 @@ public interface SaleServiceI {
      * @return
      */
     boolean updateSaleState(int state, int id);
+
+    /**
+     * 修改所有销售信息
+     * @param number
+     * @param id
+     * @return
+     */
+    boolean updateSaleNumber(Integer number,Integer id);
+
+    /**
+     * 查询单条销售数据
+     * @param id
+     * @return
+     */
+    HashMap findSaleOne(int id);
 }

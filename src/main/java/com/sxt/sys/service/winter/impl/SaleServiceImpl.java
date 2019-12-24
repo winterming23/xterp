@@ -81,7 +81,7 @@ public class SaleServiceImpl implements SaleServiceI {
             if (depotItems.getBasicNumber() < 5){
                 //生产数量 在需要销售的基础上 +100
                 int number = sale.getNumber() + 100;
-                ApplyFor applyFor = new ApplyFor(null,"生产计划申请",sale.getProductId(),number,"生产申请：缺少成品",0,sale.getUserId(),null,0);
+                ApplyFor applyFor = new ApplyFor(null,"生产计划申请",sale.getProductId(),number,"生产申请：缺少产品",0,sale.getUserId(),null,0);
                 applyForMappers.saveApplyFor(applyFor);
             }
             DepotItem item = new DepotItem();
@@ -103,5 +103,28 @@ public class SaleServiceImpl implements SaleServiceI {
     @Override
     public boolean updateSaleState(int state, int id) {
         return saleMapper.updateSaleState(state,id);
+    }
+
+    /**
+     * 修改所有销售信息
+     *
+     * @param number
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean updateSaleNumber(Integer number,Integer id) {
+        return saleMapper.updateSaleNumber(number,id);
+    }
+
+    /**
+     * 查询单条销售数据
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public HashMap findSaleOne(int id) {
+        return saleMapper.findSaleOne(id);
     }
 }

@@ -7,7 +7,9 @@ import com.sxt.sys.service.winter.SaleServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
@@ -73,5 +75,29 @@ public class SaleController {
     public boolean updateSaleState(int state,int id){
         boolean flag = saleService.updateSaleState(state,id);
         return flag;
+    }
+
+    /**
+     * 修改销售信息
+     * @param number
+     * @param id
+     * @return
+     */
+    @RequestMapping("/updateSaleNumber")
+    @ResponseBody
+    public boolean updateSale(@RequestParam("number") Integer number, @RequestParam("id") Integer id){
+        boolean flag = saleService.updateSaleNumber(number,id);
+        return flag;
+    }
+
+    /**
+     * 查询单条销售信息
+     * @return
+     */
+    @RequestMapping("/findSale")
+    public String findSale(int id,Model model){
+        HashMap saleOne = saleService.findSaleOne(id);
+        model.addAttribute("saleOne",saleOne);
+        return "system/winter/sale/updateSale";
     }
 }

@@ -62,14 +62,14 @@
             </td>
             <td th:if="${sale.state==0}">
                 <button type="button" class="layui-btn layui-btn-danger" th:onclick="stateSale([[${sale.saleId}]],1)">提交申请</button>
-                <button type="button" class="layui-btn" >编辑</button>
+                <button type="button" class="layui-btn" th:onclick="updateSale([[${sale.saleId}]])">编辑</button>
                 <button type="button" class="layui-btn layui-btn-danger" th:onclick="deleteSale([[${sale.saleId}]])">删除</button>
             </td>
             <td th:if="${sale.state==1}">
                 <button type="button" class="layui-btn layui-btn-normal" th:onclick="stateSale([[${sale.saleId}]],2)">审核</button>
             </td>
             <td th:if="${sale.state==2}">
-                <button type="button" class="layui-btn">编辑</button>
+                <button type="button" class="layui-btn" th:onclick="updateSale([[${sale.saleId}]])">编辑</button>
                 <button type="button" class="layui-btn layui-btn-danger" th:onclick="deleteSale([[${sale.saleId}]])">删除</button>
             </td>
         </tr>
@@ -169,6 +169,31 @@
                 }
             });
         });
+    }
+
+    //编辑销售信息
+    function updateSale(id){
+        layui.use('layer',function () {
+            var layer = layui.layer;
+            layer.open({
+                title:'修改销售记录',
+                type:2,
+                //skin: 'layui-layer-lan ', //样式类名
+                closeBtn: 1, //显示关闭按钮
+                anim: 2,
+                area:['95%','70%'],
+                resize:true,
+                id: '1', //防止重复弹出
+                shadeClose: true, //开启遮罩关闭
+                shade:[0.5], //透明度，背景颜色
+                content: ['/findSale?id='+id],
+                //offset:'left',
+                btn:['取消'],
+                yes:function () {
+                    window.location.href="/allSale"
+                }
+            });
+        })
     }
 </script>
 </body>

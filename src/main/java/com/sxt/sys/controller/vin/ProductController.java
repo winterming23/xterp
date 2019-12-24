@@ -120,12 +120,13 @@ public class ProductController {
      * @return
      */
     @RequestMapping("deleteProduct")
+    @ResponseBody
     public String deleteProduct(Long id){
         System.out.println("============================================================================================");
         System.out.println(id);
         boolean deleteProduct = productServiceI.deleteProduct(id);
         if(deleteProduct){
-            return "redirect:getAllProduct";
+            return "true";
         }else {
             return "";
         }

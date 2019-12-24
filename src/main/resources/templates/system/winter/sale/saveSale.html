@@ -40,7 +40,8 @@
                     <td>
                         <!-- 客户： -->
                         <select lay-verify="select" id="clientId">
-                            <option>=====请选择=====</option>
+                            <option>===请选择===</option>
+                            <option th:each="su:${supplier}" th:value="${su.id}">[[${su.supplier}]]</option>
                         </select>
                     </td>
                     <td>
@@ -60,13 +61,15 @@
                     <td>
                         <!--仓库名称： -->
                         <select id="depotId">
-                            <option>=====请选择=====</option>
+                            <option>===请选择===</option>
+                            <option th:each="depot:${depot}" th:value="${depot.id}">[[${depot.name}]]</option>
                         </select>
                     </td>
                     <td>
                         <!--产品名称： -->
                         <select id="productId">
-                            <option>=====请选择=====</option>
+                            <option>===请选择===</option>
+                            <option th:each="pro:${product}" th:value="${pro.product_name}">[[${pro.product_name}]]</option>
                         </select>
                     </td>
                     <td>
@@ -75,7 +78,7 @@
                     </td>
                     <td>
                         <!-- 库存：-->
-                        <input type="text" name="basicNumber" placeholder="请输入" class="layui-input"  id="basicNumber" readonly="readonly"/>
+                        <input type="text" name="number" placeholder="请输入" class="layui-input"  id="basicNumber" readonly="readonly"/>
                     </td>
                     <td>
                         <!--单价： -->
@@ -135,22 +138,28 @@
     var pushMoney = parseFloat(money)*0.02;
     var commission = $("#commission").val(pushMoney);
 
-
-   /* $(function () {
-        //查询客户
-        layui.use('layer',function () {
-            var layer = layui.layer;
-            layer.open({
-
-            })
-        })
-        //查询产品
-
-        //查询单据子表数据
-
-        //查询仓库
-        
-    })*/
+    //根据产品名称获取库存与单价
+    $("#productId").change(function () {
+        debugger;
+        var designation = $("#productId option:checked").val();//产品编号
+        var depotId = $("#depotId option:checked").val();//仓库编号
+        $.ajax({
+            url:'/selectItem',
+            dateType:'json',
+            type:'post',
+            data:{'designation':designation,'depotId':depotId},
+            success:function (resp) {
+                debugger;
+                if(resp!=null && resp!=""){
+                    alert(resp.basicNumber+"=="+resp.price);
+                   $("input[name='number']").val(resp.basicNumber);
+                   $("input[name='unitPrice']").val(resp.price);
+                }else {
+                    alert('库存不足，请联系生产部门');
+                }
+            }
+        });
+    })
 </script>
 </body>
 </html>

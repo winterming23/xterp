@@ -58,9 +58,7 @@ public interface DepotItemServiceI {
 
     /**
      *  标记删除
-     * @param flag 1：删除，0：不删除
-     * @param id 条件
-     * @param depotItem
+     * @param depotItem 1：删除，0：不删除
      * @return
      */
     boolean deleteFlagDepotItem(DepotItem depotItem);
@@ -75,8 +73,6 @@ public interface DepotItemServiceI {
 
     /**
      * 修改数量
-     * @param amount
-     * @param materialID
      * @param depotItem
      * @return
      */
@@ -89,4 +85,12 @@ public interface DepotItemServiceI {
      * @return
      */
     boolean updateImg(String img,Integer id);
+
+    /**
+     * 查询库存
+     * @param designation
+     * @param id
+     * @return
+     */
+    HashMap getCount(String designation,Integer id);
 }

@@ -39,7 +39,7 @@
                 <tr class="text-c">
                     <td>
                         <!-- 客户： -->
-                        <select lay-verify="select" id="clientId">
+                        <select lay-verify="select" name="clientId" id="clientId">
                             <option>===请选择===</option>
                             <option th:each="su:${supplier}" th:value="${su.id}">[[${su.supplier}]]</option>
                         </select>
@@ -60,14 +60,14 @@
                     </td>
                     <td>
                         <!--仓库名称： -->
-                        <select id="depotId">
+                        <select id="depotId" name="depotId">
                             <option>===请选择===</option>
                             <option th:each="depot:${depot}" th:value="${depot.id}">[[${depot.name}]]</option>
                         </select>
                     </td>
                     <td>
                         <!--产品名称： -->
-                        <select id="productId">
+                        <select id="productId" name="productId">
                             <option>===请选择===</option>
                             <option th:each="pro:${product}" th:value="${pro.product_name}">[[${pro.product_name}]]</option>
                         </select>
@@ -160,6 +160,8 @@
             }
         });
     })
+
+
 </script>
 </body>
 </html>

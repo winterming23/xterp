@@ -2,6 +2,7 @@ package com.sxt.sys.mapper.qxs.warehouse;
 
 import com.sxt.sys.domain.qxs.warehouse.DepotItem;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -12,7 +13,6 @@ import java.util.List;
  * 单据子表数据操作
  */
 public interface DepotItemMapper {
-
 
     /**
      * 查询所有未删除的单据子表
@@ -91,8 +91,6 @@ public interface DepotItemMapper {
 
     /**
      * 修改数量
-     * @param amount
-     * @param materialID
      * @param depotItem
      * @return
      */
@@ -107,4 +105,16 @@ public interface DepotItemMapper {
      */
     @Update("update depotItem set img=#{img} where id=#{id}")
     boolean updateImg(String img,Integer id);
+
+    /**
+     * 查询库存
+     * @param designation
+     * @param depotId
+     * @return
+     */
+    @Select("select d.id id,m.designation designation,m.mName mName," +
+            " m.price price,d.basicNumber basicNumber,d.depotId " +
+            " from materials m JOIN depotitem d on m.id=d.materialId" +
+            " where m.designation=#{designation} and d.depotId=#{depotId}")
+    HashMap getCount( String designation, int depotId);
 }

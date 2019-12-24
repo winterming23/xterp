@@ -58,9 +58,11 @@ public class ProductController {
      */
     @RequestMapping("getProductById")
     public String getProductById(long id, Model model){
-        List<Product_model> models = productServiceI.getProductModel();
+        List<Product_model> product_models = productServiceI.getProductModel();
+        System.out.println(product_models+"===============================================>>"+id);
         Product product = productServiceI.getProductById(id);
-        model.addAttribute("models",models);
+        System.out.println(product+"---------------------------------------------------->>");
+        model.addAttribute("product_models",product_models);
         model.addAttribute("product",product);
         if (product!=null){
             System.out.println(product);
@@ -118,12 +120,13 @@ public class ProductController {
      * @return
      */
     @RequestMapping("deleteProduct")
+    @ResponseBody
     public String deleteProduct(Long id){
         System.out.println("============================================================================================");
         System.out.println(id);
         boolean deleteProduct = productServiceI.deleteProduct(id);
         if(deleteProduct){
-            return "redirect:getAllProduct";
+            return "true";
         }else {
             return "";
         }

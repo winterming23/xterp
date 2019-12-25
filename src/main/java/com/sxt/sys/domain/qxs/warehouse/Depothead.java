@@ -21,7 +21,7 @@ public class Depothead {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;//创建时间 /获取当前时间
     private Date operTime;//出入库时间 /不需要添加
-    private Integer organId;//供应商/客户 id / 不添加
+    private Integer organId;//销售编号
     private Integer handsPersonId;//经手人id：销售/采购 /派工人
     private Integer account;//外键 付款账号 //不添加
     private double changeAmount;//单价

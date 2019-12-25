@@ -113,7 +113,7 @@ public interface DepotItemMapper {
      * @return
      */
     @Select("select m.id id,m.designation designation,m.mName mName," +
-            " m.price price,d.basicNumber basicNumber,d.depotId depotId" +
+            " m.price price,d.basicNumber basicNumber,d.depotId depotId,d.id did" +
             " from materials m JOIN depotitem d on m.id=d.materialId" +
             " where m.designation=#{designation} and d.depotId=#{depotId}")
     HashMap getCount( @Param("designation") String designation, @Param("depotId") int depotId);

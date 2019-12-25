@@ -25,12 +25,6 @@ import java.util.List;
 public class SaleServiceImpl implements SaleServiceI {
     @Autowired
     private SaleMapper saleMapper;//销售
-    @Autowired
-    private DepotHeadMapper depotHeadMappers;//单据主表
-    @Autowired
-    private DepotItemMapper depotItemMappers;//单据子表
-    @Autowired
-    private ApplyForMapper applyForMappers;//生产申请
     /**
      * 未删除的销售数据
      * @return
@@ -68,7 +62,7 @@ public class SaleServiceImpl implements SaleServiceI {
      * @return
      */
     @Override
-    public boolean saveSaleAndDepotHead(Sale sale) throws ParseException {
+    public boolean saveSaleAndDepotHead(Sale sale){
         return saleMapper.saveSale(sale);
     }
 

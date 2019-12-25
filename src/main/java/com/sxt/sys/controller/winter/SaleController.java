@@ -5,12 +5,14 @@ import com.sxt.sys.domain.qxs.warehouse.Depot;
 import com.sxt.sys.domain.qxs.warehouse.DepotItem;
 import com.sxt.sys.domain.qxs.warehouse.Depothead;
 import com.sxt.sys.domain.vin.Supplier;
+import com.sxt.sys.domain.winter.ApplyFor;
 import com.sxt.sys.domain.winter.Sale;
 import com.sxt.sys.service.qxs.warehouse.DepotHeadServiceI;
 import com.sxt.sys.service.qxs.warehouse.DepotItemServiceI;
 import com.sxt.sys.service.qxs.warehouse.DepotServiceI;
 import com.sxt.sys.service.vin.ProductServiceI;
 import com.sxt.sys.service.vin.SupplierServiceI;
+import com.sxt.sys.service.winter.ApplyForServiceI;
 import com.sxt.sys.service.winter.SaleServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,6 +46,8 @@ public class SaleController {
     private DepotServiceI depotServiceI;
     @Autowired
     private ProductServiceI productServiceI;
+    @Autowired
+    private ApplyForServiceI applyForServiceI;
 
     /**
      * 查询所有销售数据
@@ -95,31 +99,52 @@ public class SaleController {
 
     /**
      * 新增数据
-     * @param sale
-     * @param depothead
-     * @param depotItemId
+     * @param sale 销售数据
+     * @param depothead 单据子表数据
+     * @param materId 材料编号
+     * @param depotItemId 单据子表编号
+     * @param saleNumber 销售所需数量
+     * @param unitPrice 单价
+     * @param depotHeadNumber 单据主表编码
+     * @param request
      * @return
-     * @throws ParseException
      */
     @RequestMapping("/addSale")
-    public String addSale(Sale sale, Depothead depothead, int materId,HttpServletRequest request)throws ParseException{
+    public String addSale(Sale sale, Depothead depothead,
+                          int materId,int depotItemId,
+                          int saleNumber,double unitPrice,
+                          String depotHeadNumber,
+                          HttpServletRequest request){
         //获取用户编号用户名称
         User user = (User) request.getSession().getAttribute("user");
         int userId = user.getId();
         String userName = user.getName();
-        String saleNumber = request.getParameter("saleNumber");
-        int number = Integer.parseInt(saleNumber);
-        String unitPrice = request.getParameter("unitPrice");
-        double price = Double.parseDouble(unitPrice);
-        String depotHeadNumber = request.getParameter("depotHeadNumber");
-        depothead = new Depothead(0,"成品出库",depotHeadNumber,userName,depothead.getCreateTime(),null,null,null,null,price,sale.getMoney(),null,null,null,0,"0",materId,number);
-        //先添加单据主表 它的编号需要获取
-        depotHeadServiceI.addDepotHead(depothead);
+        //查询是否存在该单据子表
+        DepotItem depotItems = depotItemServiceI.getOneDepotItem(depotItemId);
+
         //根据产品名称获取产品编号
         String productName = request.getParameter("productName");
         int productId = productServiceI.findProductName(productName);
-        sale = new Sale(0,userId,sale.getClientId(),productId,sale.getDepotId(),depothead.getId(),0,number,sale.getDiscounts(),sale.getMoney(),sale.getReality(),0,sale.getCommission(),0);
-        boolean flag = saleService.saveSaleAndDepotHead(sale);
+
+        //单据子表存在时
+        if (depotItems != null) {
+            //判断单据中的数量小于需求数量时 生产申请表
+            if (depotItems.getBasicNumber() < saleNumber){
+                //生产数量 在需要销售的基础上 + 10
+                int numbers = saleNumber - depotItems.getBasicNumber() + 10;
+                ApplyFor applyFor = new ApplyFor(null,"生产计划申请",sale.getProductId(),numbers,"生产申请：缺少产品",0,sale.getUserId(),null,0,0);
+                applyForServiceI.saveApplyFor(applyFor);
+                //添加销售信息
+                sale = new Sale(0,userId,sale.getClientId(),productId,sale.getDepotId(),null,0,saleNumber,sale.getDiscounts(),sale.getMoney(),sale.getReality(),0,sale.getCommission(),0,applyFor.getId());
+            }else{
+                depothead = new Depothead(0,"成品出库",depotHeadNumber,userName,depothead.getCreateTime(),null,null,null,null,unitPrice,sale.getMoney(),null,null,null,0,"0",materId,saleNumber);
+                //添加单据主表 它的编号需要获取
+                depotHeadServiceI.addDepotHead(depothead);
+                //添加销售信息
+                sale = new Sale(0,userId,sale.getClientId(),productId,sale.getDepotId(),depothead.getId(),0,saleNumber,sale.getDiscounts(),sale.getMoney(),sale.getReality(),0,sale.getCommission(),0,null);
+            }
+            saleService.saveSaleAndDepotHead(sale);
+        }
         return "system/winter/sale/saveSale";
     }
 

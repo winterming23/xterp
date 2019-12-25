@@ -22,6 +22,7 @@ public class ApplyFor implements Serializable {
     private String itemDescribe;//物品描述
     private Integer approval;//审批
     private Integer proposer;//申请人
-    private Integer auditor;//审核人
+    private Integer auditor;//销售编号
     private Integer deleteFlag;//删除标记
+    private Integer salesStatus;//销售状态 0提交审核 1生产中 2销售出货
 }

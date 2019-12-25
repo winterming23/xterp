@@ -56,7 +56,7 @@
                     <td>
                         <!--销售人员： --><!--当前登录用户 th:value="${user.userName}"-->
                         <input type="hidden" name="userId" value="1"/>
-                        <input type="text" placeholder="请输入" class="layui-input"  name="userName" id="userName" readonly="readonly"/>
+                        <input type="text" placeholder="请输入" class="layui-input" th:value="${session.user.name}"  name="userName" id="userName" readonly="readonly"/>
                     </td>
                     <td>
                         <!--仓库名称： -->
@@ -80,6 +80,7 @@
                         <!-- 库存：-->
                         <input type="text" name="number" placeholder="请输入" class="layui-input"  id="basicNumber" readonly="readonly"/>
                         <input type="hidden" name="materId"  id="materId"/>
+                        <input type="hidden" name="depotItemId"  id="depotItemId"/>
                     </td>
                     <td>
                         <!--单价： -->
@@ -160,6 +161,7 @@
                    $("input[name='number']").val(resp.basicNumber);
                    $("input[name='unitPrice']").val(resp.price);
                    $("input[name='materId']").val(resp.id);
+                   $("input[name='depotItemId']").val(resp.did);
                 }else {
                     alert('库存不足，请联系生产部门');
                 }

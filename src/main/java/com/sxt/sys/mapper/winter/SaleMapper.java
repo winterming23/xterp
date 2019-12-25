@@ -88,4 +88,12 @@ public interface SaleMapper {
      */
     @Update("update sale set finance=1 where id=#{id}")
     boolean updateFinance(Integer id);
+
+    /**
+     * 根据id获取当前所需数量，仓库调用
+     * @param id
+     * @return
+     */
+    @Select("select number from sale where id=#{id}")
+    int getNumber(Integer id);
 }

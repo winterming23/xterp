@@ -2,6 +2,7 @@ package com.sxt.sys.mapper.winter;
 
 import com.sxt.sys.domain.winter.ApplyFor;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -57,4 +58,12 @@ public interface ApplyForMapper {
      */
     boolean deleteApplyFor(@Param("deleteFlag") int deleteFlag,
                            @Param("id") int id);
+
+    /**
+     * 根据销售id修改状态
+     * @param saleId
+     * @return
+     */
+    @Update("update applyfor set salesStatus=2 where auditor=#{saleId}")
+    boolean updateApplyForState(Integer saleId);
 }

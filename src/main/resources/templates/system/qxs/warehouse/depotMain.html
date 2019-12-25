@@ -553,6 +553,10 @@
                         alert('库存不足，已转至采购');
                         location.reload();
                         location.href='/depot/pageDepot';
+                    }else if(resp==10){
+                        alert('生产入库，转销售出货');
+                        location.reload();
+                        location.href='/depot/pageDepot';
                     }else {
                         alert('审核失败');
                     }

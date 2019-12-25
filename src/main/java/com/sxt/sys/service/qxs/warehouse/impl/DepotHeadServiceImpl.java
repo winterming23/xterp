@@ -14,6 +14,8 @@ import com.sxt.sys.mapper.hjn.OrderMapper;
 import com.sxt.sys.mapper.qxs.warehouse.DepotHeadMapper;
 import com.sxt.sys.mapper.qxs.warehouse.DepotItemMapper;
 import com.sxt.sys.mapper.qxs.warehouse.MaterialsMapper;
+import com.sxt.sys.mapper.winter.ApplyForMapper;
+import com.sxt.sys.mapper.winter.SaleMapper;
 import com.sxt.sys.mapper.zqw.PickingMapper;
 import com.sxt.sys.mapper.zqw.ProductionplanMapper;
 import com.sxt.sys.service.qxs.warehouse.DepotHeadServiceI;
@@ -47,9 +49,9 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private PickingMapper pickingMapper;
+    private ApplyForMapper applyForMapper;
     @Autowired
-    private ProductionplanMapper productionplanMapper;
+    private SaleMapper saleMapper;
 
     /**
      * 查询所有未删除的
@@ -114,6 +116,7 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
      * @return int 0：失败； 1:出库办理成功,通过审核；2：入库办理成功,通过审核；
      * 3：不存在此数据，需要对子表数据进行新增,通过审核; 5:子表数据添加/修改失败
      * 出库库存不够或者仓库没有此数据；零件 @return 9：转至采购；@return 8 成品：转至销售
+     * 10:代表生产完成以后进行的成品入库，已经转至销售出库，与客户完成点单
      */
     @Override
     public int depotHeadExamin(Depothead head,Integer user) {
@@ -188,13 +191,13 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                             if(updateAmount){
                                 depotHeadMapper.depotHeadExamin(head);
                                 depotHeadMapper.updateDateTime(new Depothead(head.getId()));
-                                //判断是否时成品入库，根据单据主表的
+                                //判断是否时成品入库，根据单据主表的销售id修改销售申请表状态
                                 if("成品入库".equals(depothead.getType())){
-                                    String[] split = depothead.getNumber().split("-");
-                                    int pickingId = Integer.parseInt(split[0]);
-                                    Picking picking = pickingMapper.getOnePicking(pickingId);
-                                    if(picking!=null){
-                                        productionplanMapper.xiugaizhuangtian(picking.getId());
+                                    int number = saleMapper.getNumber(depothead.getOrganId());
+                                    boolean update = depotItemMapper.updateAmount(new DepotItem((depotItem.getBasicNumber() - number), depotItem.getMaterialId()));
+                                    boolean b = applyForMapper.updateApplyForState(depothead.getOrganId());
+                                    if(update && b){
+                                        return 10;
                                     }
                                 }
                                 return 2;

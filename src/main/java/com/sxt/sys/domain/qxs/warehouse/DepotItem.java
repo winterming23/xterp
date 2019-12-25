@@ -39,6 +39,11 @@ public class DepotItem {
         this.deleteFlag = deleteFlag;
     }
 
+    /**
+     * 修改数量的构造方法
+     * @param basicNumber
+     * @param materialId
+     */
     public DepotItem(Integer basicNumber,Integer materialId){
         this.basicNumber=basicNumber;
         this.materialId=materialId;

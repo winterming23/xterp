@@ -102,4 +102,12 @@ public interface ProductionplanMapper {
             "where productionplan.pickingid=picking.id and Number.pickid=picking.id and picking.pickingNo=product_model.id")
     List<HashMap> seleProckll();
 
+    /**
+     * 修改状态，由仓库调用
+     * @param id
+     * @return
+     */
+    @Update("update productionplan set productionAudit=3 where id=#{id}")
+    boolean xiugaizhuangtian(Long id);
+
 }

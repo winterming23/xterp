@@ -6,12 +6,16 @@ import com.sxt.sys.domain.hjn.Orders;
 import com.sxt.sys.domain.qxs.warehouse.DepotItem;
 import com.sxt.sys.domain.qxs.warehouse.Depothead;
 import com.sxt.sys.domain.qxs.warehouse.Materials;
+import com.sxt.sys.domain.zqw.Picking;
+import com.sxt.sys.domain.zqw.Productionplan;
 import com.sxt.sys.mapper.UserMapper;
 import com.sxt.sys.mapper.hjn.DetailedMapper;
 import com.sxt.sys.mapper.hjn.OrderMapper;
 import com.sxt.sys.mapper.qxs.warehouse.DepotHeadMapper;
 import com.sxt.sys.mapper.qxs.warehouse.DepotItemMapper;
 import com.sxt.sys.mapper.qxs.warehouse.MaterialsMapper;
+import com.sxt.sys.mapper.zqw.PickingMapper;
+import com.sxt.sys.mapper.zqw.ProductionplanMapper;
 import com.sxt.sys.service.qxs.warehouse.DepotHeadServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +46,10 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
     private DetailedMapper detailedMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private PickingMapper pickingMapper;
+    @Autowired
+    private ProductionplanMapper productionplanMapper;
 
     /**
      * 查询所有未删除的
@@ -180,8 +188,17 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                             if(updateAmount){
                                 depotHeadMapper.depotHeadExamin(head);
                                 depotHeadMapper.updateDateTime(new Depothead(head.getId()));
+                                //判断是否时成品入库，根据单据主表的
+                                if("成品入库".equals(depothead.getType())){
+                                    String[] split = depothead.getNumber().split("-");
+                                    int pickingId = Integer.parseInt(split[0]);
+                                    Picking picking = pickingMapper.getOnePicking(pickingId);
+                                    if(picking!=null){
+                                        productionplanMapper.xiugaizhuangtian(picking.getId());
+                                    }
+                                }
                                 return 2;
-                            }else  {
+                            }else {
                                 head.setStatus(2);
                                 depotHeadMapper.depotHeadExamin(head);
                                 return 5;
@@ -198,6 +215,7 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                                 return 2;
                             }
                         }
+
                     }
                 }else {
                     return 3;

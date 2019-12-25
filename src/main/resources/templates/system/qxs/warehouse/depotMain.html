@@ -79,9 +79,6 @@
                             <i class="layui-icon">&#xe67c;</i>上传图片
                         </button>-->
                         <div class="layui-btn-group">
-                            <button type="button" th:onclick="addMaterials()" class="layui-btn layui-btn-sm">
-                                <i class="layui-icon">&#xe654;</i>新增材料类型
-                            </button>
                             <button type="button" th:if="${item.flag=='0'}" th:onclick="deleteDepot([[${item.id}]],0)" class="layui-btn layui-btn-sm">
                                 <i class="layui-icon">&#xe640;</i>删除
                             </button>
@@ -89,6 +86,9 @@
                     </td>
                 </tr>
                 </tbody>
+                <tr>
+                    <button type="button" th:onclick="addMaterials()" class="layui-btn">新增材料类型</button>
+                </tr>
             </table>
         </div>
 

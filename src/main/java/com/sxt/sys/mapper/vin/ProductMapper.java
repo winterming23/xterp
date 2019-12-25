@@ -121,6 +121,14 @@ public interface ProductMapper {
     public boolean updateProductStatus(long id);
 
     /**
+     * 查看该产品是否已存在
+     * @param product_name
+     * @return
+     */
+    @Select("SELECT * from product WHERE product_name = #{product_name}")
+    public Product queryProductByProductName(String product_name);
+
+    /**
      * 根据产品名称查询该编号
      * @param product_name
      * @return

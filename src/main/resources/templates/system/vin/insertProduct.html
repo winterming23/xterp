@@ -12,7 +12,14 @@
 <body>
 
 
-<form class="layui-form"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+<form class="layui-form">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品名称：</label>
+        <div class="layui-input-block">
+            <input type="text" id="product_name" autocomplete="off" placeholder="请输入产品名称" class="layui-input" required="required" >
+        </div>
+    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">产品型号：</label>
         <div class="layui-input-block" >
@@ -85,7 +92,7 @@
         var layer = layui.layer;
         form.on('select(promodels)', function (data) {
             var model_id = $("#select_model option:selected").val();
-            alert(model_id);
+            // alert(model_id);
             $.ajax({
                 url:"queryByModelName",
                 dateType:"json",
@@ -105,6 +112,26 @@
                 }
             })
         });
+
+        $("#product_name").blur(function () {
+            debugger;
+            var product_name = $("#product_name").val();
+            $.ajax({
+                url:"queryProductByProductName",
+                dateType:"json",
+                type:"post",
+                data:{"product_name":product_name},
+                success:function (resp) {
+                    debugger;
+                    if (resp==null||resp==""){
+                        alert("该产品已存在");
+                        var productName = "";
+                        $("#product_name").val(productName);
+                    }
+                }
+            });
+        });
+
         $("#sub").click(function () {
             debugger;
             var product_name = $("#product_name").val();
@@ -143,7 +170,6 @@
                 }
             });
         });
-        //各种基于事件的操作，下面会有进一步介绍
     });
 </script>
 </body>

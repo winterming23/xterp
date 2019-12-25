@@ -25,6 +25,10 @@
             top: 10%;
             left: 15%;
         }
+        a{
+            color:#0080F8;
+            text-decoration:underline;
+        }
     </style>
 </head>
 <body>
@@ -42,8 +46,8 @@
                 <thead>
                 <tr class="text-c">
                     <th>物品编号</th>
-                    <th>物品名称</th>
-                    <th width="400px">物品型号</th>
+                    <th>物品型号</th>
+                    <th width="400px">物品名称</th>
                     <th>物品类别</th>
                     <th>基础数量</th>
                     <th>物品单价</th>
@@ -87,6 +91,7 @@
                 </tbody>
             </table>
         </div>
+
         <div class="layui-tab-item">
             <ul class="layui-timeline">
                 <li class="layui-timeline-item" th:each="depot:${depots}">
@@ -554,6 +559,48 @@
                }
             });
         }
+    }
+    //根据产品名称查询产品详细信息
+    function openProductDepot(product_name) {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.ready(function () {
+                var index = layer.load(2);
+                layer.open({
+                    title: '产品详细信息',
+                    type: 2,
+                    area: ['70%', '35%'],
+                    content: 'queryProductByName?product_name=' + product_name,
+                    shadeClose: true, //开启遮罩关闭
+                    btn: ['确认', '取消'],
+                    end: function () {
+                        location.reload();
+                    }
+                });
+                layer.close(index);
+            });
+        });
+    }
+    //根据产品名称查询该产品出入库信息
+    function queryProductDepotStock(product_name) {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.ready(function () {
+                var index = layer.load(2);
+                layer.open({
+                    title: '产品详细信息',
+                    type: 2,
+                    area: ['70%', '35%'],
+                    content: 'queryProductByName?product_name=' + product_name,
+                    shadeClose: true, //开启遮罩关闭
+                    btn: ['确认', '取消'],
+                    end: function () {
+                        location.reload();
+                    }
+                });
+                layer.close(index);
+            });
+        });
     }
 
 </script>

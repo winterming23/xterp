@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>产品型号信息管理
+
+    </title>
     <script src="/resources/csss/jquery-1.8.3.min.js"></script>
     <script src="/resources/csss/jquery.dataTables.min.js"></script>
     <script src="/resources/layui/layui.js"></script>
@@ -36,12 +38,12 @@
         <th width="100">显卡</th>
         <th width="100">硬盘</th>
         <th width="100">固态硬盘</th>
-        <th width="100">尺寸</th>
+        <th width="70">尺寸</th>
         <th width="100">颜色</th>
         <th width="100">裸机重量</th>
-        <th width="150">型号类别</th>
-        <th width="100">创建时间</th>
+        <th width="100">型号类别</th>
         <th width="100">审核状态</th>
+        <th width="150">创建时间</th>
         <th width="110">操作</th>
     </tr>
     </thead>
@@ -61,11 +63,11 @@
         <td th:text="${proModels.color}"></td>
         <td th:text="${proModels.weight}"></td>
         <td th:text="${proModels.type_name}"></td>
-        <td th:text="${proModels.createtime}"></td>
         <td>
             <button th:if="${proModels.status=='0'}" class="layui-btn layui-btn-primary" th:onclick="updateStatus([[${proModels.id}]])">未审核</button>
             <span th:if="${proModels.status=='1'}">已审核</span>
         </td>
+        <td th:text="${proModels.createtime}"></td>
         <td>
             <a th:onclick="deleteProModel([[${proModels.id}]])">删除</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a th:onclick="update([[${proModels.id}]])">修改</a>

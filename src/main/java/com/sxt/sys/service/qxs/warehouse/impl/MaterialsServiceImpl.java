@@ -39,4 +39,9 @@ public class MaterialsServiceImpl implements MaterialsServiceI {
     public List<Materials> queryType(String type) {
         return materialsMapper.queryType(type);
     }
+
+    @Override
+    public Materials queryMaterialsByName(String designation) {
+        return materialsMapper.queryMaterialsByName(designation);
+    }
 }

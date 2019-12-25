@@ -35,7 +35,6 @@ public class ProductServiceImpl implements ProductServiceI {
 
     @Override
     public Product getProductById(long id) {
-        System.out.println(productMapper.getProductById(id)+"========>>>>>>>>>");
         return productMapper.getProductById(id);
     }
 
@@ -84,14 +83,10 @@ public class ProductServiceImpl implements ProductServiceI {
         return productMapper.updateProductStatus(id);
     }
 
-    /**
-     * 根据产品名称查询该编号
-     *
-     * @param product_name
-     * @return
-     */
     @Override
-    public int findProductName(String product_name) {
-        return productMapper.findProductName(product_name);
+    public Product queryProductByProductName(String product_name) {
+        return productMapper.queryProductByProductName(product_name);
     }
+
+
 }

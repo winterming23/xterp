@@ -37,4 +37,11 @@ public interface MaterialsServiceI {
      * @return
      */
     List<Materials> queryType(String type);
+
+    /**
+     * 根据名字查询单条数据
+     * @param designation
+     * @return
+     */
+    public Materials queryMaterialsByName(String designation );
 }

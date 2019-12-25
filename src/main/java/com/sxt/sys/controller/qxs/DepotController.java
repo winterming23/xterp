@@ -4,6 +4,7 @@ import com.sxt.sys.domain.qxs.warehouse.Depot;
 import com.sxt.sys.domain.qxs.warehouse.DepotItem;
 import com.sxt.sys.domain.qxs.warehouse.Depothead;
 import com.sxt.sys.domain.qxs.warehouse.Materials;
+import com.sxt.sys.domain.vin.Product;
 import com.sxt.sys.service.qxs.warehouse.DepotHeadServiceI;
 import com.sxt.sys.service.qxs.warehouse.DepotItemServiceI;
 import com.sxt.sys.service.qxs.warehouse.DepotServiceI;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +43,7 @@ public class DepotController {
     @Autowired
     private MaterialsServiceI materialsServiceI;
 
+
     /**
      * 跳转至仓库主页
      * @return
@@ -64,6 +67,8 @@ public class DepotController {
         //查询所有单据
         List<Depothead> depotHeads = depotHeadServiceI.queryAllDepotHead();
         model.addAttribute("depotHeads",depotHeads);
+
+
         return "system/qxs/warehouse/depotMain";
     }
 
@@ -156,4 +161,5 @@ public class DepotController {
     public List queryHead(){
         return depotHeadServiceI.queryHead();
     }
+
 }

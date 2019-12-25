@@ -121,10 +121,10 @@ public interface ProductMapper {
     public boolean updateProductStatus(long id);
 
     /**
-     * 根据产品名称查询该编号
+     * 查看该产品是否已存在
      * @param product_name
      * @return
      */
-    @Select("select id from product where product_name = #{product_name}")
-    int findProductName(String product_name);
+    @Select("SELECT * from product WHERE product_name = #{product_name}")
+    public Product queryProductByProductName(String product_name);
 }

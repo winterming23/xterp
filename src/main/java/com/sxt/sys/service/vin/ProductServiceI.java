@@ -101,9 +101,9 @@ public interface ProductServiceI {
     public boolean updateProductStatus(long id);
 
     /**
-     * 根据产品名称查询该编号
+     * 查看该产品是否已存在
      * @param product_name
      * @return
      */
-    int findProductName(String product_name);
+    public Product queryProductByProductName(String product_name);
 }

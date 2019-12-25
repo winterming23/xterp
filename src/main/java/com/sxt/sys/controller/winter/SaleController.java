@@ -102,8 +102,7 @@ public class SaleController {
      * @throws ParseException
      */
     @RequestMapping("/addSale")
-    @ResponseBody
-    public boolean addSale(Sale sale, Depothead depothead, int materId,HttpServletRequest request)throws ParseException{
+    public String addSale(Sale sale, Depothead depothead, int materId,HttpServletRequest request)throws ParseException{
         //获取用户编号用户名称
         User user = (User) request.getSession().getAttribute("user");
         int userId = user.getId();
@@ -121,7 +120,7 @@ public class SaleController {
         int productId = productServiceI.findProductName(productName);
         sale = new Sale(0,userId,sale.getClientId(),productId,sale.getDepotId(),depothead.getId(),0,number,sale.getDiscounts(),sale.getMoney(),sale.getReality(),0,sale.getCommission(),0);
         boolean flag = saleService.saveSaleAndDepotHead(sale);
-        return flag;
+        return "system/winter/sale/saveSale";
     }
 
     /**

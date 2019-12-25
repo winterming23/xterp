@@ -51,13 +51,13 @@ public interface SaleMapper {
      * 未删除的销售数据
      * @return
      */
-    List<HashMap> getAllNoDeleteSale();
+    List<HashMap> getAllNoDeleteSale(int auditor);
 
     /**
      * 已删除的销售数据
      * @return
      */
-    List<HashMap> getAllDeleteSale();
+    List<HashMap> getAllDeleteSale(int auditor);
 
     /**
      * 查询所有销售数据

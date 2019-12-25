@@ -19,13 +19,13 @@ public interface SaleServiceI {
      * 未删除的销售数据
      * @return
      */
-    List<HashMap> getAllNoDeleteSale();
+    List<HashMap> getAllNoDeleteSale(int auditor);
 
     /**
      * 已删除的销售数据
      * @return
      */
-    List<HashMap> getAllDeleteSale();
+    List<HashMap> getAllDeleteSale(int auditor);
 
     /**
      * 修改销售删除标记

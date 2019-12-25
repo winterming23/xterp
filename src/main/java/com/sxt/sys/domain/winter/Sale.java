@@ -29,5 +29,4 @@ public class Sale implements Serializable {
     private Integer deleteFlag;//删除标记
     private Double commission;//提成
     private Integer finance;//财务记录添加状态
-    private Integer applyId;//生产计划编号
 }

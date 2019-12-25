@@ -19,9 +19,9 @@
         select * from applyfor where id = #{id}
     </select>
     <!-- 添加申请数据 -->
-    <insert id="saveApplyFor" parameterType="com.sxt.sys.domain.winter.ApplyFor">
+    <insert id="saveApplyFor" useGeneratedKeys="true"  keyProperty="id" parameterType="com.sxt.sys.domain.winter.ApplyFor">
         insert into applyfor values(#{id},#{type},#{productId},#{number},
-        #{itemDescribe},#{approval},#{proposer},#{auditor},#{deleteFlag})
+        #{itemDescribe},#{approval},#{proposer},#{auditor},#{deleteFlag},#{salesStatus})
     </insert>
     <!-- 修改数据 -->
     <update id="updateApplyFor" parameterType="com.sxt.sys.domain.winter.ApplyFor">

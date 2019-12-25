@@ -54,11 +54,18 @@ public class SaleController {
      * @return
      */
     @RequestMapping("/allSale")
-    public String getAllSale(Model model){
-        List<HashMap> allNoDeleteSale = saleService.getAllNoDeleteSale();
-        model.addAttribute("sale",allNoDeleteSale);
-        for (HashMap pro : allNoDeleteSale){
-            System.out.println(pro);
+    public String getAllSale(Model model,HttpServletRequest request){
+        Integer saleId = (Integer)request.getSession().getAttribute("saleId");
+        if (saleId == null){
+            saleId = 0;
+            List<HashMap> allNoDeleteSale = saleService.getAllNoDeleteSale(saleId);
+            model.addAttribute("sale",allNoDeleteSale);
+            for (HashMap pro : allNoDeleteSale){
+                System.out.println(pro);
+            }
+        }else {
+            List<HashMap> allNoDeleteSale = saleService.getAllNoDeleteSale(saleId);
+            model.addAttribute("sale",allNoDeleteSale);
         }
         return "system/winter/sale/allSale";
     }
@@ -130,20 +137,24 @@ public class SaleController {
         if (depotItems != null) {
             //判断单据中的数量小于需求数量时 生产申请表
             if (depotItems.getBasicNumber() < saleNumber){
+                //先添加完销售信息 在获取到新增编号
+                //添加销售信息
+                sale = new Sale(0,userId,sale.getClientId(),productId,sale.getDepotId(),null,0,saleNumber,sale.getDiscounts(),sale.getMoney(),sale.getReality(),0,sale.getCommission(),0);
+                saleService.saveSaleAndDepotHead(sale);
+                //存新增销售编号
+                request.getSession().setAttribute("saleId",sale.getId());
                 //生产数量 在需要销售的基础上 + 10
                 int numbers = saleNumber - depotItems.getBasicNumber() + 10;
-                ApplyFor applyFor = new ApplyFor(null,"生产计划申请",sale.getProductId(),numbers,"生产申请：缺少产品",0,sale.getUserId(),null,0,0);
+                ApplyFor applyFor = new ApplyFor(0,"生产计划申请",sale.getProductId(),numbers,"生产申请：缺少产品",0,sale.getUserId(),sale.getId(),0,0);
                 applyForServiceI.saveApplyFor(applyFor);
-                //添加销售信息
-                sale = new Sale(0,userId,sale.getClientId(),productId,sale.getDepotId(),null,0,saleNumber,sale.getDiscounts(),sale.getMoney(),sale.getReality(),0,sale.getCommission(),0,applyFor.getId());
             }else{
                 depothead = new Depothead(0,"成品出库",depotHeadNumber,userName,depothead.getCreateTime(),null,null,null,null,unitPrice,sale.getMoney(),null,null,null,0,"0",materId,saleNumber);
                 //添加单据主表 它的编号需要获取
                 depotHeadServiceI.addDepotHead(depothead);
                 //添加销售信息
-                sale = new Sale(0,userId,sale.getClientId(),productId,sale.getDepotId(),depothead.getId(),0,saleNumber,sale.getDiscounts(),sale.getMoney(),sale.getReality(),0,sale.getCommission(),0,null);
+                sale = new Sale(0,userId,sale.getClientId(),productId,sale.getDepotId(),depothead.getId(),0,saleNumber,sale.getDiscounts(),sale.getMoney(),sale.getReality(),0,sale.getCommission(),0);
+                saleService.saveSaleAndDepotHead(sale);
             }
-            saleService.saveSaleAndDepotHead(sale);
         }
         return "system/winter/sale/saveSale";
     }

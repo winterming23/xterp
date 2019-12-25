@@ -30,8 +30,8 @@ public class SaleServiceImpl implements SaleServiceI {
      * @return
      */
     @Override
-    public List<HashMap> getAllNoDeleteSale() {
-        return saleMapper.getAllNoDeleteSale();
+    public List<HashMap> getAllNoDeleteSale(int auditor) {
+        return saleMapper.getAllNoDeleteSale(auditor);
     }
 
     /**
@@ -39,8 +39,8 @@ public class SaleServiceImpl implements SaleServiceI {
      * @return
      */
     @Override
-    public List<HashMap> getAllDeleteSale() {
-        return saleMapper.getAllDeleteSale();
+    public List<HashMap> getAllDeleteSale(int auditor) {
+        return saleMapper.getAllDeleteSale(auditor);
     }
 
     /**

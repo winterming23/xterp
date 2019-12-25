@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sxt.sys.mapper.winter.SaleMapper">
     <!--添加销售信息-->
-    <insert id="saveSale" parameterType="com.sxt.sys.domain.winter.Sale">
+    <insert id="saveSale" useGeneratedKeys="true"  keyProperty="id" parameterType="com.sxt.sys.domain.winter.Sale">
         insert into sale(id,userId,clientId,productId,depotId,depotHeadId,state,number,discounts,money,reality,deleteFlag,commission,finance) values(#{id},#{userId},#{clientId},#{productId},#{depotId},#{depotHeadId},#{state},#{number},#{discounts},#{money},#{reality},#{deleteFlag},#{commission},#{finance})
     </insert>
     <!--修改销售状态-->
@@ -22,28 +22,24 @@
 
     <!-- 未删除标记销售信息 --><!--resultMap="saleToUser"-->
     <select id="getAllNoDeleteSale" resultType="hashmap">
-         select s.id saleId,u.name userName,su.supplier,p.product_name productName,de.name deName,d.number depotName,s.number saleNumber,
-        s.discounts,s.money,s.reality,s.commission,s.state,d.status status from sale s
+         select (select salesStatus from applyfor where auditor = #{auditor}) salesStatus,s.id saleId,u.name userName,su.supplier,p.product_name productName,s.number saleNumber,
+        s.discounts,s.money,s.reality,s.commission,s.state state from sale s
         inner join sys_user u on s.userId = u.id
         inner join supplier su on s.clientId = su.id
         inner join product p on s.productId = p.id
-		inner join depot de on s.depotId = de.id
-        inner join depothead d on s.depotheadId = d.id
         where s.deleteFlag = 0
-        order by d.createTime desc
+        order by s.id desc
     </select>
 
     <!-- 查询已删除标记销售信息 --><!--resultMap="saleToUser"-->
     <select id="getAllDeleteSale" resultType="hashmap">
-         select s.id saleId,u.name userName,su.supplier,p.product_name productName,de.name deName,d.number depotName,s.number saleNumber,
-        s.discounts,s.money,s.reality,s.commission,s.state,d.status status from sale s
+         select (select salesStatus from applyfor where auditor = #{auditor}) salesStatus,s.id saleId,u.name userName,su.supplier,p.product_name productName,s.number saleNumber,
+        s.discounts,s.money,s.reality,s.commission,s.state state from sale s
         inner join sys_user u on s.userId = u.id
         inner join supplier su on s.clientId = su.id
         inner join product p on s.productId = p.id
-		inner join depot de on s.depotId = de.id
-        inner join depothead d on s.depotheadId = d.id
         where s.deleteFlag = 1
-        order by d.createTime desc
+        order by s.id desc
     </select>
 
     <!-- 查询已删除标记销售信息 -->

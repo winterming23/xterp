@@ -47,10 +47,13 @@
             <td th:if="${sale.state==0}">
                 <font color="red">未提交</font>
             </td>
-            <td th:if="${sale.status==0 && sale.state==1}">
-                <font color="yellow">审批</font>
+            <td th:if="${sale.state==1}">
+                <font color="#7fff00">审核中</font>
             </td>
-            <td th:if="${sale.status==1}">
+            <td th:if="${sale.state==1 && sale.salesStatus==1}">
+                <font color="yellow">生产中</font>
+            </td>
+            <td th:if="${sale.salesStatus==2}">
                 <font color="#00bfff">销售出货</font>
             </td>
             <td th:if="${sale.state==3}">
@@ -59,17 +62,19 @@
             <td th:if="${sale.state==0}">
                 <button type="button" class="layui-btn layui-btn-danger" th:onclick="stateSale([[${sale.saleId}]],1)">提交申请</button>
             </td>
-            <td th:if="${sale.status==0 && sale.state==1}">
+            <td th:if="${sale.state==1}">
                 <button type="button" class="layui-btn layui-btn-normal">审核中</button>
             </td>
-            <td th:if="${sale.status==1}">
+            <td th:if="${sale.state==1 && sale.salesStatus==1}">
+                <button type="button" class="layui-btn layui-btn-normal">审核中</button>
+            </td>
+            <td th:if="${sale.salesStatus==2}">
                 <button type="button" class="layui-btn layui-btn-danger" th:onclick="deleteSale([[${sale.saleId}]])">删除</button>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-
 <script>
     $("#ftop").DataTable({
         aLengthMenu: [3, 5, 1]

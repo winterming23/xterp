@@ -88,5 +88,10 @@ public class ProductServiceImpl implements ProductServiceI {
         return productMapper.queryProductByProductName(product_name);
     }
 
+    @Override
+    public int findProductName(String product_name) {
+        return productMapper.findProductName(product_name);
+    }
+
 
 }

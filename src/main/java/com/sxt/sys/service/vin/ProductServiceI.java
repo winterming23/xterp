@@ -106,4 +106,11 @@ public interface ProductServiceI {
      * @return
      */
     public Product queryProductByProductName(String product_name);
+
+    /**
+     * 根据产品名称查询该编号
+     * @param product_name
+     * @return
+     */
+    int findProductName(String product_name);
 }

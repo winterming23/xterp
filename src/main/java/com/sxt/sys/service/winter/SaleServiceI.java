@@ -39,10 +39,9 @@ public interface SaleServiceI {
      * 添加销售信息
      * 生成单据主表
      * @param sale
-     * @param depothead
      * @return
      */
-    boolean saveSaleAndDepotHead(Sale sale, Depothead depothead, DepotItem depotItem) throws ParseException;
+    boolean saveSaleAndDepotHead(Sale sale) throws ParseException;
 
     /**
      * 修改销售状态

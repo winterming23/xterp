@@ -83,4 +83,15 @@ public class ProductServiceImpl implements ProductServiceI {
     public boolean updateProductStatus(long id) {
         return productMapper.updateProductStatus(id);
     }
+
+    /**
+     * 根据产品名称查询该编号
+     *
+     * @param product_name
+     * @return
+     */
+    @Override
+    public int findProductName(String product_name) {
+        return productMapper.findProductName(product_name);
+    }
 }

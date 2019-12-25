@@ -1,10 +1,7 @@
 package com.sxt.sys.mapper.qxs.warehouse;
 
 import com.sxt.sys.domain.qxs.warehouse.Depothead;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -60,6 +57,7 @@ public interface DepotHeadMapper {
     @Insert("insert into depotHead values(null,#{type},#{number},#{operPersonName},#{createTime}," +
             "#{operTime},#{organId},#{handsPersonId},#{account},#{changeAmount},#{totalPrice},#{payType}," +
             "#{remark},#{accountDay},0,0,#{materialId},#{amount})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     boolean addDepotHead(Depothead depothead);
 
     /**

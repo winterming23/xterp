@@ -124,7 +124,7 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                     DepotItem depotItem = depotItemMapper.queryDepotItemRecord(depothead.getMaterialId());
                     //判断单据主表的类型
                     if("成品出库".equals(depothead.getType()) || "零件出库".equals(depothead.getType())){
-                        if(depotItem!=null && depotItem.getBasicNumber()>depothead.getAmount() ){
+                        if(depotItem!=null && depotItem.getBasicNumber()>=depothead.getAmount() ){
                             //修改子表数量
                             int i = depotItem.getBasicNumber() - depothead.getAmount();
                             boolean updateAmount = depotItemMapper.updateAmount(new DepotItem(i,depothead.getMaterialId()));

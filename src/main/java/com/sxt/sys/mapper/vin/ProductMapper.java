@@ -119,4 +119,12 @@ public interface ProductMapper {
      */
     @Update("update product set status = '1' where id = #{id}")
     public boolean updateProductStatus(long id);
+
+    /**
+     * 根据产品名称查询该编号
+     * @param product_name
+     * @return
+     */
+    @Select("select id from product where product_name = #{product_name}")
+    int findProductName(String product_name);
 }

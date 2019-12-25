@@ -68,28 +68,7 @@ public class SaleServiceImpl implements SaleServiceI {
      * @return
      */
     @Override
-    public boolean saveSaleAndDepotHead(Sale sale, Depothead depothead, DepotItem depotItem) throws ParseException {
-        //添加单据主表
-        depotHeadMappers.addDepotHead(depothead);
-        //查询是否存在该单据子表
-        DepotItem depotItems = depotItemMappers.queryDepotItemRecord(depotItem.getId());
-        //修改单据子表中的数量 数量=单据数量-销售数量 编号为查询编号
-        int amount = depotItems.getBasicNumber() - sale.getNumber();
-        //单据子表存在时
-        if (depotItems != null) {
-            //判断单据中的数量小于5时生成 生产申请表
-            if (depotItems.getBasicNumber() < 5){
-                //生产数量 在需要销售的基础上 +100
-                int number = sale.getNumber() + 100;
-                ApplyFor applyFor = new ApplyFor(null,"生产计划申请",sale.getProductId(),number,"生产申请：缺少产品",0,sale.getUserId(),null,0);
-                applyForMappers.saveApplyFor(applyFor);
-            }
-            DepotItem item = new DepotItem();
-            item.setBasicNumber(amount);
-            item.setId(depotItems.getId());
-            depotItemMappers.updateAmount(item);
-
-        }
+    public boolean saveSaleAndDepotHead(Sale sale) throws ParseException {
         return saleMapper.saveSale(sale);
     }
 

@@ -3,6 +3,7 @@ package com.sxt.sys.domain.qxs.warehouse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ public class Depothead {
     private String type;//类型：出库(成品，零件)/入库(成品,零件)
     private String number;//票据号
     private String operPersonName;//操作人姓名 /仓库管理员
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;//创建时间 /获取当前时间
     private Date operTime;//出入库时间 /不需要添加
     private Integer organId;//供应商/客户 id / 不添加

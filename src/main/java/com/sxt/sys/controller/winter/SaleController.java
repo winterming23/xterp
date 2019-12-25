@@ -1,5 +1,6 @@
 package com.sxt.sys.controller.winter;
 
+import com.sxt.sys.domain.User;
 import com.sxt.sys.domain.qxs.warehouse.Depot;
 import com.sxt.sys.domain.qxs.warehouse.DepotItem;
 import com.sxt.sys.domain.qxs.warehouse.Depothead;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
@@ -90,20 +92,37 @@ public class SaleController {
         return map;
     }
 
+
     /**
      * 新增数据
      * @param sale
      * @param depothead
-     * @param depotItem
+     * @param depotItemId
      * @return
      * @throws ParseException
      */
-    @ResponseBody
     @RequestMapping("/addSale")
-    public boolean addSale(Sale sale, Depothead depothead, DepotItem depotItem)throws ParseException{
-        return false;
+    @ResponseBody
+    public boolean addSale(Sale sale, Depothead depothead, int materId,HttpServletRequest request)throws ParseException{
+        //获取用户编号用户名称
+        User user = (User) request.getSession().getAttribute("user");
+        int userId = user.getId();
+        String userName = user.getName();
+        String saleNumber = request.getParameter("saleNumber");
+        int number = Integer.parseInt(saleNumber);
+        String unitPrice = request.getParameter("unitPrice");
+        double price = Double.parseDouble(unitPrice);
+        String depotHeadNumber = request.getParameter("depotHeadNumber");
+        depothead = new Depothead(0,"成品出库",depotHeadNumber,userName,depothead.getCreateTime(),null,null,null,null,price,sale.getMoney(),null,null,null,0,"0",materId,number);
+        //先添加单据主表 它的编号需要获取
+        depotHeadServiceI.addDepotHead(depothead);
+        //根据产品名称获取产品编号
+        String productName = request.getParameter("productName");
+        int productId = productServiceI.findProductName(productName);
+        sale = new Sale(0,userId,sale.getClientId(),productId,sale.getDepotId(),depothead.getId(),0,number,sale.getDiscounts(),sale.getMoney(),sale.getReality(),0,sale.getCommission(),0);
+        boolean flag = saleService.saveSaleAndDepotHead(sale);
+        return flag;
     }
-
 
     /**
      * 删除销售信息

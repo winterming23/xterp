@@ -11,7 +11,7 @@
 </head>
 <body>
 <div>
-    <form>
+    <form action="/addSale" method="post">
         <table class="layui-table">
            <!-- <colgroup>
                 <col width="150">
@@ -39,7 +39,7 @@
                 <tr class="text-c">
                     <td>
                         <!-- 客户： -->
-                        <select lay-verify="select" id="clientId">
+                        <select lay-verify="select" name="clientId" id="clientId">
                             <option>===请选择===</option>
                             <option th:each="su:${supplier}" th:value="${su.id}">[[${su.supplier}]]</option>
                         </select>
@@ -60,14 +60,14 @@
                     </td>
                     <td>
                         <!--仓库名称： -->
-                        <select id="depotId">
+                        <select name="depotId" id="depotId">
                             <option>===请选择===</option>
                             <option th:each="depot:${depot}" th:value="${depot.id}">[[${depot.name}]]</option>
                         </select>
                     </td>
                     <td>
                         <!--产品名称： -->
-                        <select id="productId">
+                        <select name="productName" id="productId">
                             <option>===请选择===</option>
                             <option th:each="pro:${product}" th:value="${pro.product_name}">[[${pro.product_name}]]</option>
                         </select>
@@ -79,6 +79,7 @@
                     <td>
                         <!-- 库存：-->
                         <input type="text" name="number" placeholder="请输入" class="layui-input"  id="basicNumber" readonly="readonly"/>
+                        <input type="hidden" name="materId"  id="materId"/>
                     </td>
                     <td>
                         <!--单价： -->
@@ -128,15 +129,19 @@
     }
     var UIDs = uuid(); //自定义ID
     $("#depotHeadNumber").val(UIDs);
+    //所需数量失焦
+    $("#saleNumber").blur(function () {
+        debugger;
+        //计算  总金额 = 单价*数量 提成
+        var saleNumber = $("#saleNumber").val();
+        var unitPrice = $("#unitPrice").val();
+        var totalMoney = parseFloat(unitPrice) * parseInt(saleNumber);
+        var money = $("#money").val(totalMoney);
+        // 提成 = 总金额*2%
+        var pushMoney = parseFloat(totalMoney)*0.02;
+        var commission = $("#commission").val(pushMoney);
+    })
 
-    //计算  总金额 = 单价*数量 提成
-    var saleNumber = $("#saleNumber").val();
-    var unitPrice = $("#unitPrice").val();
-    var totalMoney = parseFloat(unitPrice) * parseInt(saleNumber);
-    var money = $("#money").val(totalMoney);
-    // 提成 = 总金额*2%
-    var pushMoney = parseFloat(money)*0.02;
-    var commission = $("#commission").val(pushMoney);
 
     //根据产品名称获取库存与单价
     $("#productId").change(function () {
@@ -151,9 +156,10 @@
             success:function (resp) {
                 debugger;
                 if(resp!=null && resp!=""){
-                    alert(resp.basicNumber+"=="+resp.price);
+                    //alert(resp.basicNumber+"=="+resp.price);
                    $("input[name='number']").val(resp.basicNumber);
                    $("input[name='unitPrice']").val(resp.price);
+                   $("input[name='materId']").val(resp.id);
                 }else {
                     alert('库存不足，请联系生产部门');
                 }

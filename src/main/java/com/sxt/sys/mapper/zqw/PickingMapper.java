@@ -37,4 +37,12 @@ public interface PickingMapper {
      * @return
      */
     boolean deletePicking(int id, int deletePick);
+
+    /**
+     * 根据编号查询
+     * @param id
+     * @return
+     */
+    @Select("select * from picking where id=#{id}")
+    Picking getOnePicking(Integer id);
 }

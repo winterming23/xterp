@@ -167,7 +167,7 @@
                         <td th:text="${head.accountDay}"></td>
                         <td>
                             <button th:if="${head.status==0}" th:onclick="state([[${head.id}]],1)" class="layui-btn layui-btn-sm">通过</button>
-                            <button th:if="${head.status==0}" th:onclick="state([[${head.id}]],2)" class="layui-btn layui-btn-sm">拒绝</button>
+                            <button th:if="${head.status==0}" th:onclick="state([[${head.id}]],2)" class="layui-btn layui-btn-sm">驳回</button>
                             <samp th:if="${head.status==1}">审核通过</samp>
                             <samp th:if="${head.status==2}">已拒绝</samp>
                             <samp th:if="${head.status==3}">库存不足，已转销售</samp>

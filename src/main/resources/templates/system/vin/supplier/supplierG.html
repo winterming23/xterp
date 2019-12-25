@@ -144,26 +144,28 @@
             if (checkids.length <= 0) {
                 alert("请选择需要启用的数据")
             } else {
-                $("#tbo").find(":checkbox:checked").each(function () {
-                    var supid = $(this).parents().children().children(".supid").val();
-                     alert(supid);
-                    data.push(supid);
-                    $.ajax({
-                        url: "updateSupplierStateT",
-                        dateType: "json",
-                        type: "post",
-                        data: {"supid": supid},
-                        success: function (resp) {
-                            debugger;
-                            if (resp != null || resp != "") {
-                                alert("启用成功");
-                                location.href = "getAllSupplierG";
-                            } else {
-                                alert("启用失败")
+                if(confirm('是否确定启用该产品!')) {
+                    $("#tbo").find(":checkbox:checked").each(function () {
+                        var supid = $(this).parents().children().children(".supid").val();
+                        alert(supid);
+                        data.push(supid);
+                        $.ajax({
+                            url: "updateSupplierStateT",
+                            dateType: "json",
+                            type: "post",
+                            data: {"supid": supid},
+                            success: function (resp) {
+                                debugger;
+                                if (resp != null || resp != "") {
+                                    alert("启用成功");
+                                    location.href = "getAllSupplierG";
+                                } else {
+                                    alert("启用失败")
+                                }
                             }
-                        }
+                        });
                     });
-                });
+                }
             }
         });
         $("#btnClose").click(function () {
@@ -176,26 +178,28 @@
             if (checkids.length <= 0) {
                 alert("请选择需要禁用的数据")
             } else {
-                $("#tbo").find(":checkbox:checked").each(function () {
-                    var supid = $(this).parents().children().children(".supid").val();
-                     alert(supid);
-                    data.push(supid);
-                    $.ajax({
-                        url: "updateSupplierStateF",
-                        dateType: "json",
-                        type: "post",
-                        data: {"supid": supid},
-                        success: function (resp) {
-                            debugger;
-                            if (resp != null || resp != "") {
-                                alert("禁用成功");
-                                location.href = "getAllSupplierG";
-                            } else {
-                                alert("禁用失败")
+                if(confirm('是否确定禁用该产品!')) {
+                    $("#tbo").find(":checkbox:checked").each(function () {
+                        var supid = $(this).parents().children().children(".supid").val();
+                        alert(supid);
+                        data.push(supid);
+                        $.ajax({
+                            url: "updateSupplierStateF",
+                            dateType: "json",
+                            type: "post",
+                            data: {"supid": supid},
+                            success: function (resp) {
+                                debugger;
+                                if (resp != null || resp != "") {
+                                    alert("禁用成功");
+                                    location.href = "getAllSupplierG";
+                                } else {
+                                    alert("禁用失败")
+                                }
                             }
-                        }
+                        });
                     });
-                });
+                }
             }
         });
         //全选全不选

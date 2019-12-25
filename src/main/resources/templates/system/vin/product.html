@@ -30,17 +30,17 @@
     </tr>
     <tr class="text-c">
         <th width="20px"><input type="checkbox" id="checkAll" name="checkAll"></th>
-        <th width="100">编号</th>
+        <th width="30">编号</th>
         <th width="100">产品名称</th>
         <th width="100">产品型号</th>
-        <th width="100">产品类型</th>
-        <th width="100">单位</th>
+        <th width="70">产品类型</th>
+        <th width="50">单位</th>
         <th width="100">零售价</th>
         <th width="100">最低售价</th>
         <th width="100">成本价格</th>
         <th width="100">销售价格</th>
         <th width="100">产品状态</th>
-        <th width="100">序列号</th>
+        <th width="50">序列号</th>
         <th width="150">创建时间</th>
         <th width="100">审核状态</th>
         <th width="100">操作</th>
@@ -133,25 +133,27 @@
             if (checkids.length <= 0) {
                 alert("请选择需要启用的数据")
             } else {
-                $("#tbo").find(":checkbox:checked").each(function () {
-                    var val = $(this).parents().children().children(".proid").val();
-                    // alert(val);
-                    data.push(val);
-                    $.ajax({
-                        url: "updateProductStateT",
-                        dateType: "json",
-                        type: "post",
-                        data: {"proidsT": val},
-                        success: function (resp) {
-                            if (resp != null || resp != "") {
-                                alert("启用成功");
-                                location.href = "getAllProduct";
-                            } else {
-                                alert("启用失败")
+                if(confirm('是否确定启用该产品!')) {
+                    $("#tbo").find(":checkbox:checked").each(function () {
+                        var val = $(this).parents().children().children(".proid").val();
+                        // alert(val);
+                        data.push(val);
+                        $.ajax({
+                            url: "updateProductStateT",
+                            dateType: "json",
+                            type: "post",
+                            data: {"proidsT": val},
+                            success: function (resp) {
+                                if (resp != null || resp != "") {
+                                    alert("启用成功");
+                                    location.href = "getAllProduct";
+                                } else {
+                                    alert("启用失败")
+                                }
                             }
-                        }
+                        });
                     });
-                });
+                }
             }
         });
         $("#btnClose").click(function () {//删除多条
@@ -164,25 +166,27 @@
             if (checkids.length <= 0) {
                 alert("请选择需要禁用的数据")
             } else {
-                $("#tbo").find(":checkbox:checked").each(function () {
-                    var val = $(this).parents().children().children(".proid").val();
-                    // alert(val);
-                    data.push(val);
-                    $.ajax({
-                        url: "updateProductStateF",
-                        dateType: "json",
-                        type: "post",
-                        data: {"proidsF": val},
-                        success: function (resp) {
-                            if (resp != null || resp != "") {
-                                alert("禁用成功");
-                                location.href = "getAllProduct";
-                            } else {
-                                alert("禁用失败")
+                if(confirm('是否确定禁用该产品!')) {
+                    $("#tbo").find(":checkbox:checked").each(function () {
+                        var val = $(this).parents().children().children(".proid").val();
+                        // alert(val);
+                        data.push(val);
+                        $.ajax({
+                            url: "updateProductStateF",
+                            dateType: "json",
+                            type: "post",
+                            data: {"proidsF": val},
+                            success: function (resp) {
+                                if (resp != null || resp != "") {
+                                    alert("禁用成功");
+                                    location.href = "getAllProduct";
+                                } else {
+                                    alert("禁用失败")
+                                }
                             }
-                        }
+                        });
                     });
-                });
+                }
             }
         });
         //全选全不选
@@ -225,7 +229,7 @@
             layer.ready(function () {
                 var index = layer.load(2);
                 layer.open({
-                    title: '新增产品信息',
+                    title: '修改产品信息',
                     type: 2,
                     area: ['30%', '75%'],
                     content: 'getProductById?id=' + id,

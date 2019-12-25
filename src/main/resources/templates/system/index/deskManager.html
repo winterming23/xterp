@@ -23,7 +23,7 @@
 
         <blockquote class="layui-elem-quote title">最新文章 <i class="layui-icon layui-red">&#xe756;</i></blockquote>
         <!-- 数据表格开始 -->
-        <div  style="width:900px">
+        <div  style="width:890px">
             <table class="layui-hide" id="noticeTable" lay-filter="noticeTable"></table></div>
         <table class="layui-table mag0" lay-skin="line">
             <colgroup>
@@ -100,7 +100,7 @@
             ] ]
         });
 
-        //最新文章列表
+      /*  //最新文章列表
         $.get("/notice/loadAllNotice",function(data){
             var hotNewsHtml = '';
             for(var i=0;i<5;i++){
@@ -111,7 +111,7 @@
             }
             $(".hot_news").html(hotNewsHtml);
             $(".userAll span").text(data.length);
-        })
+        })*/
 
 
 

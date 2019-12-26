@@ -25,6 +25,7 @@ layui.config({
 		url:'/user/persUsersByDeptId',
 		success:function(data){
 			var ad=data.ad;
+			/*var as=data.as;*/
 			$("#id").attr("value",ad.id)
 			$("#loginname").attr("value",ad.loginname)
 			$("#name").attr("value",ad.name)

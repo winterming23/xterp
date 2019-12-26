@@ -133,10 +133,16 @@ public class WorkAttendanceController {
         logger.info("获取的用户编号：",userId);
         //获取新增的编号
         Object workId = request.getSession().getAttribute("workId");
-        int id = (int)workId;
-        logger.info("获取的自增编号：",id);
-        WorkAttendance workAttendance = workAttendanceService.findWorkAttendance(id);
-        request.setAttribute("workUser",workAttendance);
+        int id = 1;
+        if(workId!=null){
+            id = (int)workId;
+            logger.info("获取的自增编号：",id);
+            WorkAttendance workAttendance = workAttendanceService.findWorkAttendance(id);
+            request.setAttribute("workUser",workAttendance);
+        }else {
+            WorkAttendance workAttendance = workAttendanceService.findWorkAttendance(id);
+            request.setAttribute("workUser",workAttendance);
+        }
         return "forward:/workDay";
     }
 }

@@ -27,7 +27,7 @@
         inner join sys_user u on s.userId = u.id
         inner join supplier su on s.clientId = su.id
         inner join product p on s.productId = p.id
-        where s.deleteFlag = 0
+        where s.deleteFlag = 0 and s.id=#{auditor}
         order by s.id desc
     </select>
 

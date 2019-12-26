@@ -37,14 +37,14 @@
         <label class="layui-form-label">登录名</label>
         <div class="layui-input-block">
             <input type="text" id="loginname" class="layui-input userName"
-                   lay-verify="required" readonly="readonly" name="loginname">
+                   lay-verify="required" readonly="readonly" name="loginname" style="width: 300px">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">姓名</label>
         <div class="layui-input-block">
             <input type="text" name="name" id="name" class="layui-input userName"
-                   lay-verify="required" placeholder="请输入姓名">
+                   lay-verify="required" placeholder="请输入姓名" style="width: 300px">
         </div>
     </div>
 
@@ -75,14 +75,15 @@
     <div class="layui-form-item">
         <label class="layui-form-label">地址</label>
         <div class="layui-input-block">
-            <input type="text" name="address" id="address" class="layui-input userName" lay-verify="required" placeholder="请输入地址">
+            <input type="text" name="address" id="address" class="layui-input userName" lay-verify="required" placeholder="请输入地址" style="width: 300px">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">密码</label>
         <div class="layui-input-block">
-            <input type="text" name="pwd" id="pwd"  class="layui-input userName">
+            <input type="text" name="pwd" id="pwd"  class="layui-input userName" style="width: 300px">
         </div>
+
     </div>
     <!--<div class="layui-form-item">-->
         <!--<label class="layui-form-label">分配角色</label>-->
@@ -92,10 +93,10 @@
             <!--</select>-->
         <!--</div>-->
     <!--</div>-->
-    <div class="layui-col-md3 layui-col-xs5">
+    <div class="layui-col-md3 layui-col-xs5" style="position: absolute;left: 470px;top: 0px">
         <div class="layui-upload-list thumbBox mag0 magt3">
             <input type="hidden" name="imgpath" id="imgpath" value="images/noDefaultImage.jpg">
-            <img class="layui-upload-img thumbImg" th:src="|/file/showImageByPath?path=${session.user.imgpath}|">
+            <img class="layui-upload-img thumbImg" th:src="|/file/showImageByPath?path=${session.user.imgpath}|" style="height: 200px;width: 230px">
         </div>
     </div>
 

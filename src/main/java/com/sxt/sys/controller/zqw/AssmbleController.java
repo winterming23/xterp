@@ -117,7 +117,7 @@ public class AssmbleController {
     public String Assmrk(int id,int prpersonnel,Double retail_price,int quantity){
         String verificationCode = String.valueOf((int)((Math.random()*9+1)*1000));
         Date time = new Date();
-        Depothead depothead = new Depothead(0,"成品入库",(id+"-"+verificationCode),"0",time,null,0,0,prpersonnel,retail_price,(retail_price*quantity),"0","0",0,0,"0",1009,quantity);
+        Depothead depothead = new Depothead(0,"成品入库",(id+"-"+verificationCode),"0",time,null,0,prpersonnel,0,retail_price,(retail_price*quantity),"0","0",0,0,"0",1009,quantity);
         boolean b = assembleServiceI.inserDepths(depothead);
         return "redirect:/seleAssmble";
     }

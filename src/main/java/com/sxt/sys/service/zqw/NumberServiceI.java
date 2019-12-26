@@ -1,10 +1,12 @@
 package com.sxt.sys.service.zqw;
 
+
+
 import com.sxt.sys.domain.qxs.warehouse.Materials;
-import com.sxt.sys.domain.zqw.Number;
 import com.sxt.sys.domain.zqw.Picking;
 import com.sxt.sys.domain.zqw.Productionplan;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,10 +16,10 @@ import java.util.List;
 public interface NumberServiceI {
     /**
      * 添加物料数量
-     * @param number
+     * @param
      * @return
      */
-    Boolean inserNum(Number number, Picking picking, Productionplan productionplan);
+    Boolean inserNum(int id, Date startTime, Date endTime, int personCharge, Integer[] numbersl, int[] materialsId, String[] catname, Integer quantity, Integer salesid);
 
     /**
      * 查询材料表信息

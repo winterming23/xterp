@@ -1,5 +1,6 @@
 package com.sxt.sys.service.zqw.impl;
 
+
 import com.sxt.sys.domain.qxs.warehouse.Materials;
 import com.sxt.sys.domain.zqw.Number;
 import com.sxt.sys.domain.zqw.Picking;
@@ -10,6 +11,7 @@ import com.sxt.sys.service.zqw.NumberServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,17 +27,19 @@ public class NumberServiceImpl implements NumberServiceI {
 
 
     @Override
-    public Boolean inserNum(Number number, Picking picking, Productionplan productionplan) {
-
-        Boolean aBoolean = numberMapper.inserNum(number);
-        System.out.println(picking.getStartTime()+"--------------------------->sj");
-        boolean inserpick = productionplanMapper.inserpick(picking);
-        boolean b = productionplanMapper.inserProuct(productionplan);
-        if (aBoolean && inserpick && b){
-            return true;
+    public Boolean inserNum(int id, Date startTime, Date endTime, int personCharge, Integer[] numbersl, int[] materialsId,String[] catname,Integer quantity,Integer salesid) {
+        Number numbers = null;
+        for (int i=0;i<numbersl.length;i++){
+                numbers = new Number(0, materialsId[i], numbersl[i], id,catname[i]);
+                System.out.println("添加的值"+catname[i]);
+            numberMapper.inserNum(numbers);
         }
-        return false;
+        Date t = new Date();
+        Productionplan productionplan = new Productionplan(0, id, startTime, endTime, personCharge, 0, 0,id ,quantity,salesid);
+        boolean b1 = productionplanMapper.inserProuct(productionplan);
+        return true;
     }
+
 
     @Override
     public List<Materials> seleMat() {

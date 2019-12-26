@@ -1,5 +1,6 @@
 package com.sxt.sys.mapper.zqw;
 
+
 import com.sxt.sys.domain.qxs.warehouse.Materials;
 import com.sxt.sys.domain.zqw.Number;
 import com.sxt.sys.domain.zqw.Picking;
@@ -19,7 +20,7 @@ public interface NumberMapper {
      * @param number
      * @return
      */
-    @Insert("insert into number(id,materialsId,numbersl,pickid) values (null,#{materialsId},#{numbersl},#{pickid})")
+    @Insert("insert into number(id,materialsId,numbersl,pickid,catname) values (null,#{materialsId},#{numbersl},#{pickid},#{catname})")
     Boolean inserNum(Number number);
 
     /**

@@ -35,4 +35,24 @@ public class PickingServiceImpl implements PickingServiceI {
     public boolean deletePicking(int id, int deletePick) {
         return pickingMapper.deletePicking(id,deletePick);
     }
+
+    @Override
+    public boolean pickingSh(int id, int productionAudit) {
+        return pickingMapper.pickingSh(id,productionAudit);
+    }
+
+    @Override
+    public List<HashMap> seleDgpick(int id) {
+        return pickingMapper.seleDgpick(id);
+    }
+
+    @Override
+    public List<HashMap> seleDguser(int id) {
+        return pickingMapper.seleDguser(id);
+    }
+
+    @Override
+    public List<HashMap> seleDgProduct(int id) {
+        return pickingMapper.seleDgProduct(id);
+    }
 }

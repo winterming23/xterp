@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加派工</title>
+    <link rel="stylesheet" href="../../../static/resources/layui/css/layui.css">
+    <script src="../../../static/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="../../../static/resources/csss/H-ui.min.css">
+    <style>
+        #bigd{
+            margin-left: 200px;
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="inserDepothead" id="bigd">
+    <label class="layui-form-label">添加派工</label>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">派工人</label>
+        <div class="layui-input-block">
+            <select name="handsPersonId"  lay-verify="required">
+                <option value="">请选择派工人员</option>
+                <option th:each="selepkuser:${selepkuser}" th:value="${selepkuser.id}">[[${selepkuser.name}]]</option>
+            </select>
+        </div>
+    <div th:each="seleppik:${seleppik}">
+        <input th:value="${seleppik.id}" type="hidden" name="pickingid">
+        <input th:value="${seleppik.price}" type="hidden" name="changeAmount">
+        <input th:value="${seleppik.numbersl}" type="hidden" name="numbersl">
+        <input th:value="${seleppik.materialsId}" type="hidden" name="materialsId">
+    </div>
+    </div>
+    <table class="layui-table"  style="width: 600px">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>所需物料</th>
+            <th>物料名称</th>
+            <th>所需数量</th>
+            <th>单价</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="seleppik:${seleppik}">
+
+            <td th:text="${seleppik.mName}"></td>
+            <td th:text="${seleppik.catname}"></td>
+            <td th:text="${seleppik.numbersl}"></td>
+            <td th:text="${seleppik.price}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <textarea name="remark" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+/*        form.on('submit(formDemo)', function(data){
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });*/
+    });
+</script>
+</body>
+</html>

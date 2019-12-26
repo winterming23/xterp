@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查询申请表</title>
+    <link rel="stylesheet" href="../../../static/resources/layui/css/layui.css">
+    <script src="../../../static/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="../../../static/resources/csss/H-ui.min.css">
+
+
+</head>
+<body>
+<table id = "tbo"
+        class="table table-border table-bordered table-hover table-bg table-sort">
+    <thead>
+    <tr class="text-c">
+        <th width="100">申请类型</th>
+        <th width="100">产品名称</th>
+        <th width="100">数量</th>
+        <th width="100">物品描述</th>
+        <th width="100">申请人</th>
+        <th width="100">审核状态</th>
+        <th width="100">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="seleapply:${seleapply}" height="40px" class="text-c">
+        <td th:text="${seleapply.type}"></td>
+        <td th:text="${seleapply.product_name}"></td>
+        <td th:text="${seleapply.number}"></td>
+        <td th:text="${seleapply.itemDescribe}"></td>
+        <td th:text="${seleapply.name}"></td>
+        <td>
+            <a th:href="@{/applySh(auditor=${seleapply.auditor})}">
+            <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleapply.salesStatus==0}">
+                <i class="layui-icon">&#xe642;</i> 通过
+            </button>
+            </a>
+            <a>
+                <a th:href="@{/applyShNo(auditor=${seleapply.auditor})}">
+                <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleapply.salesStatus==0}">
+                    <i class="layui-icon">&#xe642;</i> 不通过
+                </button>
+                </a>
+            </a>
+            <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleapply.salesStatus==1}">
+                <i class="layui-icon">&#xe642;</i> 审核通过
+            </button>
+            <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleapply.salesStatus==2}">
+                <i class="layui-icon">&#xe642;</i> 审核未通过
+            </button>
+        </td>
+        <td>
+            <a th:href="@{/dgselepd(productId=${seleapply.productId},auditor=${seleapply.auditor})}">
+            <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleapply.salesStatus==1}">
+                <i class="layui-icon">&#xe642;</i> 添加生产计划
+            </button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    $(function(){
+        $('#tbo').DataTable({
+            "aLengthMenu":[4,6]  , //每页显示数
+        });
+    });
+
+</script>
+</body>
+</html>

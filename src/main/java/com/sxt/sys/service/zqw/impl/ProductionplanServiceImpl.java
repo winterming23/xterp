@@ -1,9 +1,11 @@
 package com.sxt.sys.service.zqw.impl;
 
+
 import com.sxt.sys.domain.vin.Product_model;
+import com.sxt.sys.domain.winter.ApplyFor;
 import com.sxt.sys.domain.zqw.Picking;
 import com.sxt.sys.domain.zqw.Productionplan;
-import com.sxt.sys.domain.zqw.Userinfo;
+import com.sxt.sys.domain.zqw.SysUser;
 import com.sxt.sys.mapper.zqw.ProductionplanMapper;
 import com.sxt.sys.service.zqw.ProductionplanServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +65,8 @@ public class ProductionplanServiceImpl implements ProductionplanServiceI {
      * @return
      */
     @Override
-    public List<HashMap> dgselepro() {
-        return productionplanMapper.dgselepro();
+    public List<HashMap> dgselepro(int productId) {
+        return productionplanMapper.dgselepro(productId);
     }
 
     /**
@@ -96,7 +98,7 @@ public class ProductionplanServiceImpl implements ProductionplanServiceI {
      * @return
      */
     @Override
-    public List<Userinfo> seleuser() {
+    public List<SysUser> seleuser() {
         return productionplanMapper.seleuser();
     }
 
@@ -113,6 +115,31 @@ public class ProductionplanServiceImpl implements ProductionplanServiceI {
     @Override
     public List<HashMap> seleProckll() {
         return productionplanMapper.seleProckll();
+    }
+
+    @Override
+    public boolean productSh(int id, int productionAudit) {
+        return productionplanMapper.productSh(id,productionAudit);
+    }
+
+    @Override
+    public List<SysUser> seleusers() {
+        return productionplanMapper.seleusers();
+    }
+
+    @Override
+    public List<HashMap> seleapply() {
+        return productionplanMapper.seleapply();
+    }
+
+    @Override
+    public boolean applySh(int auditor, int salesStatus) {
+        return productionplanMapper.applySh(auditor,salesStatus);
+    }
+
+    @Override
+    public List<ApplyFor> seleappfor(int auditor) {
+        return productionplanMapper.seleappfor(auditor);
     }
 
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查询派工信息</title>
+    <link rel="stylesheet" href="../../../static/resources/layui/css/layui.css">
+    <script src="../../../static/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="../../../static/resources/csss/H-ui.min.css">
+    <script src="../../../static/resources/jss/jquery-3.4.1.min.js"></script>
+
+
+</head>
+<body>
+<table id = "tbo"
+        class="table table-border table-bordered table-hover table-bg table-sort">
+    <thead>
+    <tr class="text-c">
+        <th width="100">生产名称</th>
+        <th width="100">派工时间</th>
+        <th width="100">派工人</th>
+        <th width="100">所需原料详情</th>
+        <th width="100">审核状态</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="seleDw:${seleDw}" height="40px" class="text-c" th:if="${seleDw.deleteProd==0}">
+        <td th:text="${seleDw.product_name}"></td>
+        <td th:text="${seleDw.dispatchingTime}"></td>
+        <td th:text="${seleDw.name}"></td>
+        <td><a th:href="@{/seledepi(id=${seleDw.id})}">原料详情</a></td>
+        <td >
+            <a th:href="@{/dispathSh(id=${seleDw.id},dispatchedNo=${seleDw.dispatchedNo},pickingid=${seleDw.propickid})}">
+            <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDw.dispatchedAudits==0}">
+                <i class="layui-icon">&#xe642;</i> 通过
+            </button>
+            </a>
+            <a>
+                <a th:href="@{/dispathShNo(id=${seleDw.id})}">
+                <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDw.dispatchedAudits==0}">
+                    <i class="layui-icon">&#xe642;</i> 不通过
+                </button>
+                </a>
+            </a>
+            <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDw.dispatchedAudits==1}">
+                <i class="layui-icon">&#xe642;</i> 审核通过
+            </button>
+            <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDw.dispatchedAudits==2}">
+                <i class="layui-icon">&#xe642;</i> 审核未通过
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    $(function(){
+        $('#tbo').DataTable({
+            "aLengthMenu":[4,6]  , //每页显示数
+        });
+    });
+
+</script>
+</body>
+</html>

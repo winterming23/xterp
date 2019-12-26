@@ -2,9 +2,10 @@
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
-    <script src="/resources/layui/layui.js"></script>
-    <link rel="stylesheet" href="/resources/layui/css/layui.css" />
-    <link rel="stylesheet" href="/resources/csss/H-ui.min.css" />
+    <link rel="stylesheet" href="../../../static/resources/layui/css/layui.css">
+    <script src="../../../static/resources/layui/layui.js"></script>
+    <link rel="stylesheet" href="../../../static/resources/csss/H-ui.min.css">
+    <script src="../../../static/resources/jss/jquery-3.4.1.min.js"></script>
     <title>添加页面</title>
     <style>
         div{
@@ -20,14 +21,15 @@
         }
 
     </style>
+
 </head>
 <body>
-<form class="layui-form"  method="post" action="insernum" th:each="selepmll:${selepmll}">
+<form class="layui-form" th:each="selepmll:${selepmll}">
     <table>
         <tr >
             <th>
             <div>
-            <select name="pickid" lay-verify="" >
+            <select lay-verify=""  name="pickingNo" id="pickingNo">
                 <option>请输入主板</option>
                 <option th:value="${selepmll.id}" th:text="${selepmll.motherboard}" name="ctname"></option>
             </select>
@@ -35,14 +37,14 @@
             </th>
             <td>
                 <div id="big">
-                    <input type="text" name="numberzb" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
+                    <input type="text" name="numberzb" id="numberzb" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
                 </div>
             </td>
         </tr>
         <tr >
             <th>
                 <div>
-                    <select name="pickid" lay-verify="" >
+                    <select name="pickingNo" lay-verify="" >
                         <option>请输入cpu</option>
                         <option th:value="${selepmll.id}" th:text="${selepmll.cpu}" name="ctname"></option>
                     </select>
@@ -50,14 +52,14 @@
             </th>
             <td>
                 <div id="big">
-                    <input type="text" name="numbercpu" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
+                    <input type="text" name="numbercpu" id="numbercpu" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
                 </div>
             </td>
         </tr>
         <tr >
             <th>
                 <div>
-                    <select name="pickid" lay-verify="">
+                    <select name="pickingNo" lay-verify="">
                         <option>请输入内存条</option>
                         <option th:value="${selepmll.id}" th:text="${selepmll.memories}" name="ctname"></option>
                     </select>
@@ -65,14 +67,14 @@
             </th>
             <td>
                 <div id="big">
-                    <input type="text" name="numbernc" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
+                    <input type="text" name="numbernc" id="numbernc" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
                 </div>
             </td>
         </tr>
         <tr >
             <th>
                 <div>
-                    <select name="pickid" lay-verify="" >
+                    <select name="pickingNo" lay-verify="" >
                         <option>请输入显卡</option>
                         <option th:value="${selepmll.id}" th:text="${selepmll.video_card}" name="ctname"></option>
                     </select>
@@ -80,14 +82,14 @@
             </th>
             <td>
                 <div id="big">
-                    <input type="text" name="numberxk" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
+                    <input type="text" name="numberxk" id="numberxk" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
                 </div>
             </td>
         </tr>
         <tr >
             <th>
                 <div>
-                    <select name="pickid" lay-verify="" >
+                    <select name="pickingNo" lay-verify="" >
                         <option>请输入硬盘</option>
                         <option th:value="${selepmll.id}" th:text="${selepmll.disks}" name="ctname"></option>
                     </select>
@@ -95,14 +97,14 @@
             </th>
             <td>
                 <div id="big">
-                    <input type="text" name="numberyp" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
+                    <input type="text" name="numberyp" id="numberyp" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
                 </div>
             </td>
         </tr>
         <tr >
             <th>
                 <div>
-                    <select name="pickid" lay-verify="" >
+                    <select name="pickingNo" lay-verify="" >
                         <option>请输入固态硬盘</option>
                         <option th:value="${selepmll.id}" th:text="${selepmll.ssd}" name="ctname"></option>
                     </select>
@@ -110,7 +112,7 @@
             </th>
             <td>
                 <div id="big">
-                    <input type="text" name="numbergtyp" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
+                    <input type="text" name="numbergtyp" id="numbergtyp" required lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
                 </div>
             </td>
         </tr>
@@ -126,6 +128,45 @@
         </tr>
     </table>
 </form>
+<script>
+    $(function () {
+        $("#tj").click(function () {
+            debugger;
+            var pickingNo = $("#pickingNo").val();
+            var numberzb = $("#numberzb").val();
+            var numbercpu = $("#numbercpu").val();
+            var numbernc = $("#numbernc").val();
+            var numberxk = $("#numberxk").val();
+            var numberyp = $("#numberyp").val();
+            var numbergtyp = $("#numbergtyp").val();
+            $.ajax({
+                url:"insernum",
+                dateType:"json",
+                type:"post",
+                data:{
+                    "pickingNo":pickingNo,
+                    "numberzb":numberzb,
+                    "numbercpu":numbercpu,
+                    "numbernc":numbernc,
+                    "numberxk":numberxk,
+                    "numberyp":numberyp,
+                    "numbergtyp":numbergtyp,
+
+
+                },
+                success:function (resp) {
+                    debugger;
+                    if (resp!=null){
+                        alert("添加")
+                    }else {
+                        layer.msg("添加失败")
+                    }
+                }
+            });
+        });
+    })
+
+</script>
 <script>
     //Demo
     layui.use('form', function(){

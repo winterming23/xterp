@@ -42,6 +42,7 @@ public class DispatchedworkerServiceImpl implements DispatchedworkerServiceI {
 
     @Override
     public boolean inserDepth(Integer pickingid,Integer handsPersonId,Double[] changeAmount,Integer[] numbersl,String remark,Integer[] materialsId) {
+        System.out.println("++++++++++++++++++++++++++++pickingid:"+pickingid+"handsPersonId"+handsPersonId);
         Date time = new Date();
         //生成一个四位的随机数
         String verificationCode = String.valueOf((int)((Math.random()*9+1)*1000));

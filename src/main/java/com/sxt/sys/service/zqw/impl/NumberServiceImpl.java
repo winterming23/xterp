@@ -11,6 +11,8 @@ import com.sxt.sys.service.zqw.NumberServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +29,10 @@ public class NumberServiceImpl implements NumberServiceI {
 
 
     @Override
-    public Boolean inserNum(int id, Date startTime, Date endTime, int personCharge, Integer[] numbersl, int[] materialsId,String[] catname,Integer quantity,Integer salesid) {
+    public Boolean inserNum(int id, String startTime, String endTime, int personCharge, Integer[] numbersl, int[] materialsId,String[] catname,Integer quantity,Integer salesid) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = sdf.parse(startTime);
+        Date date2 = sdf.parse(endTime);
         Number numbers = null;
         for (int i=0;i<numbersl.length;i++){
                 numbers = new Number(0, materialsId[i], numbersl[i], id,catname[i]);
@@ -35,7 +40,7 @@ public class NumberServiceImpl implements NumberServiceI {
             numberMapper.inserNum(numbers);
         }
         Date t = new Date();
-        Productionplan productionplan = new Productionplan(0, id, startTime, endTime, personCharge, 0, 0,id ,quantity,salesid);
+        Productionplan productionplan = new Productionplan(0, id, date1, date2, personCharge, 0, 0,id ,quantity,salesid);
         boolean b1 = productionplanMapper.inserProuct(productionplan);
         return true;
     }

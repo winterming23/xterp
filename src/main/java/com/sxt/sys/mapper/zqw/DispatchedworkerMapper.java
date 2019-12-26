@@ -62,7 +62,7 @@ public interface DispatchedworkerMapper {
      * @param depothead
      * @return
      */
-    @Insert("insert into depothead(id,type,number,operPersonName,createTime,operTime,organId,handsPersonId,accountId,changeAmount,totalPrice,payType,remark,accountDay,status,deleteFlag,materialId,amount) values (null,#{type},#{number},#{operPersonName},#{createTime},#{operTime},#{organId},#{handsPersonId},#{accountId},#{changeAmount},#{totalPrice},#{payType},#{remark},#{accountDay},#{status},#{deleteFlag},#{materialId},#{amount})")
+    @Insert("insert into depothead(id,type,number,operPersonName,createTime,operTime,organId,handsPersonId,accountid,changeAmount,totalPrice,payType,remark,accountDay,status,deleteFlag,materialId,amount) values (null,#{type},#{number},#{operPersonName},#{createTime},#{operTime},#{organId},#{handsPersonId},#{accountid},#{changeAmount},#{totalPrice},#{payType},#{remark},#{accountDay},#{status},#{deleteFlag},#{materialId},#{amount})")
     boolean inserDepth(Depothead depothead);
 
     /**
@@ -70,8 +70,7 @@ public interface DispatchedworkerMapper {
      * @param id
      * @return
      */
-    @Select("select productionplan.*,number.*,materials.*,dispatchedworker.id as disid,dispatchedworker.* from dispatchedworker,productionplan,number,materials,picking where \n" +
-            "productionplan.pickingid=number.pickid and number.materialsId=materials.id and dispatchedworker.pickingid=picking.id and picking.productionid=productionplan.id")
+    @Select("select productionplan.*,number.*,materials.* from productionplan,number,materials,picking where productionplan.pickingid=number.pickid and number.materialsId=materials.id  and picking.productionid=productionplan.id")
     List<HashMap> seleppik(int id);
 
     /**

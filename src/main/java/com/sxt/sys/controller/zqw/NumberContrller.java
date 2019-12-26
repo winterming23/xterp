@@ -22,7 +22,7 @@ public class NumberContrller {
      * @return
      */
     @RequestMapping("insernum")
-    public String insernum(int id, Date startTime, Date endTime, int personCharge, Integer[] numbersl, int[] materialsId, String[] catname, Integer quantity, Integer salesid, HttpServletRequest request) throws ParseException {
+    public String insernum(int id, String startTime, String endTime, int personCharge, Integer[] numbersl, int[] materialsId, String[] catname, Integer quantity, Integer salesid, HttpServletRequest request) throws ParseException {
             numberServiceI.inserNum(id,startTime,endTime,personCharge,numbersl,materialsId,catname,quantity,salesid);
             return "redirect:/pdsele";
     }

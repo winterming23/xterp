@@ -23,7 +23,7 @@ public class Depothead {
     private Date operTime;//出入库时间 /不需要添加
     private Integer organId;//销售编号
     private Integer handsPersonId;//经手人id：销售/采购 /派工人
-    private Integer account;//外键 付款账号 //不添加
+    private Integer accountid;//外键 付款账号 //不添加
     private double changeAmount;//单价
     private Double totalPrice;//合计金额
     private String payType;//付款方式 //不添加

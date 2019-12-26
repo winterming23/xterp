@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -60,11 +62,14 @@ public class AssmbleController {
      * @return
      */
     @RequestMapping("inserAssbble")
-    public String inserAssbble(String workingProcedure, Integer prpersonnel, String productionWorkshop, Date assembyTime,Date assembyendTime,int proid){
+    public String inserAssbble(String workingProcedure, Integer prpersonnel, String productionWorkshop, String assembyTime,String assembyendTime,int proid) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = sdf.parse(assembyTime);
+        Date date2 = sdf.parse(assembyendTime);
         System.out.println("++++++++++++++:"+workingProcedure+""+prpersonnel+""+productionWorkshop+""+assembyTime+""+assembyendTime);
-        Assemble assemble = new Assemble(0,workingProcedure,prpersonnel,productionWorkshop,assembyTime,assembyendTime,0,proid);
+        Assemble assemble = new Assemble(0,workingProcedure,prpersonnel,productionWorkshop,date1,date2,0,proid);
        boolean a = assembleServiceI.inserAssemble(assemble);
-        return "redirect:/seleDw";
+        return "redirect:/seleAssmble";
     }
 
     /**
@@ -100,11 +105,19 @@ public class AssmbleController {
         return "redirect:/seleAssmble";
     }
 
+    /**
+     * 添加成品入库单
+     * @param id
+     * @param prpersonnel
+     * @param retail_price
+     * @param quantity
+     * @return
+     */
     @RequestMapping("Assmrk")
     public String Assmrk(int id,int prpersonnel,Double retail_price,int quantity){
         String verificationCode = String.valueOf((int)((Math.random()*9+1)*1000));
         Date time = new Date();
-        Depothead depothead = new Depothead(0,"成品入库",(id+"-"+verificationCode),"0",time,null,0,0,prpersonnel,retail_price,(retail_price*quantity),"0","0",0,0,"0",1008,quantity);
+        Depothead depothead = new Depothead(0,"成品入库",(id+"-"+verificationCode),"0",time,null,0,0,prpersonnel,retail_price,(retail_price*quantity),"0","0",0,0,"0",1009,quantity);
         boolean b = assembleServiceI.inserDepths(depothead);
         return "redirect:/seleAssmble";
     }

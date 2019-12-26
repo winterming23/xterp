@@ -6,6 +6,7 @@ import com.sxt.sys.domain.qxs.warehouse.Materials;
 import com.sxt.sys.domain.zqw.Picking;
 import com.sxt.sys.domain.zqw.Productionplan;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ public interface NumberServiceI {
      * @param
      * @return
      */
-    Boolean inserNum(int id, Date startTime, Date endTime, int personCharge, Integer[] numbersl, int[] materialsId, String[] catname, Integer quantity, Integer salesid);
+    Boolean inserNum(int id, String startTime, String endTime, int personCharge, Integer[] numbersl, int[] materialsId, String[] catname, Integer quantity, Integer salesid) throws ParseException;
 
     /**
      * 查询材料表信息

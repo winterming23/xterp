@@ -13,6 +13,10 @@
             margin-left: 200px;
             width: 500px;
         }
+        #time{
+            margin-left: 110px;
+            width: 390px;
+        }
     </style>
 
 
@@ -27,12 +31,12 @@
             <input type="hidden" th:each="selePri:${selePri}" th:value="${selePri.proid}" name="proid">
         </div>
     </div>
-    <div class="layui-form-item">
+    <!--<div class="layui-form-item">
         <label class="layui-form-label">单据编号</label>
         <div class="layui-input-block">
-            <input type="text" name="id" required  lay-verify="required"   autocomplete="off" class="layui-input" th:each="selediswork:${selediswork}"  th:value="${selediswork.billid}" >
+            <input type="text" name="id" required   autocomplete="off" class="layui-input" th:each="selediswork:${selediswork}"  th:value="${selediswork.billid}" >
         </div>
-    </div>
+    </div>-->
 
     <div class="layui-form-item">
         <label class="layui-form-label">工序分类</label>
@@ -64,12 +68,12 @@
             </select>
         </div>
     </div>
-            <div class="layui-inline" id="startTime">
+            <div class="layui-inline" id="time">
                 <input type="text" class="layui-input" id="test1" placeholder="开始时间" name="assembyTime">
             </div>
             <br/>
             <br/>
-            <div class="layui-inline" id="endTime">
+            <div class="layui-inline" id="time">
                 <input type="text" class="layui-input" id="test2" placeholder="预计结束时间" name="assembyendTime">
             </div>
             <br/>

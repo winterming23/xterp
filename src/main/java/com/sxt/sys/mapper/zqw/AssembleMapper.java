@@ -70,6 +70,6 @@ public interface AssembleMapper {
      * @param depothead
      * @return
      */
-    @Insert("insert into depothead(id,type,number,operPersonName,createTime,operTime,organId,handsPersonId,accountId,changeAmount,totalPrice,payType,remark,accountDay,status,deleteFlag,materialId,amount) values (null,#{type},#{number},#{operPersonName},#{createTime},#{operTime},#{organId},#{handsPersonId},#{accountId},#{changeAmount},#{totalPrice},#{payType},#{remark},#{accountDay},#{status},#{deleteFlag},#{materialId},#{amount})")
+    @Insert("insert into depothead(id,type,number,operPersonName,createTime,operTime,organId,handsPersonId,accountid,changeAmount,totalPrice,payType,remark,accountDay,status,deleteFlag,materialId,amount) values (null,#{type},#{number},#{operPersonName},#{createTime},#{operTime},#{organId},#{handsPersonId},#{accountid},#{changeAmount},#{totalPrice},#{payType},#{remark},#{accountDay},#{status},#{deleteFlag},#{materialId},#{amount})")
     boolean inserDepths(Depothead depothead);
 }

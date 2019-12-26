@@ -39,7 +39,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
 	
@@ -121,6 +121,7 @@ public class UserController {
 
 
 
+
 	/**
 	 * 根据部门ID查询用户(主界面个人资料接口)
 	 */
@@ -128,8 +129,14 @@ public class UserController {
 	public JSONObject persUsersByDeptId(HttpServletRequest request) {
 		Integer deptid= (Integer) request.getSession().getAttribute("userId");
 		User user = this.userService.persUsersByDeptIdlist(deptid);
+		/*char[] a=user.getPwd().toCharArray();
+		for (int i =0; i < a.length;i++){
+			a[i]=(char) (a[i] ^ 't');
+		}
+		String s=new String(a);*/
 		JSONObject jsonObject=new JSONObject();
 		jsonObject.put("ad",user);
+		/*jsonObject.put("as",s);*/
 		return jsonObject;
 	}
 

@@ -64,6 +64,7 @@ public interface ApplyForMapper {
      * @param saleId
      * @return
      */
-    @Update("update applyfor set salesStatus=2 where auditor=#{saleId}")
-    boolean updateApplyForState(Integer saleId);
+    @Update("update applyfor set salesStatus=#{salesStatus} where auditor=#{saleId}")
+    boolean updateApplyForState(@Param("salesStatus") Integer salesStatus,@Param("auditor") Integer saleId);
+
 }

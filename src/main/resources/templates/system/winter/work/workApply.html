@@ -30,9 +30,9 @@
         <td th:text="${work.name}")></td>
         <td th:text="${work.attendanceDate}")></td>
         <td th:text="${work.week}"></td>
-        <td th:text="${work.startTime}"></td>
-        <td th:text="${work.endTime}"></td>
-        <td th:text="${work.allHour}"></td>
+        <td th:text="${work.startTime!=null?work.startTime:'未打卡'}"></td>
+        <td th:text="${work.endTime!=null?work.endTime:'未打卡'}"></td>
+        <td th:text="${work.allHour!=null?work.allHour:'未打卡'}"></td>
         <td th:switch="${work.state}">
             <p th:case="1">工时不足</p>
             <p th:case="2">全勤</p>
@@ -68,8 +68,8 @@
                 btn:['确定','取消'],
                 yes:function () {
                     debugger;
-                    alert(id)
-                    alert(proposer)
+                    /*alert(id)
+                    alert(proposer)*/
                     var workId = id;
                     var cause = $("#cause").val();
                     var applicationTime = new Date();

@@ -162,9 +162,9 @@
                     <tr class="text-c" th:each="head : ${depotHeads}" >
                         <td th:text="${head.number}"></td>
                         <td th:text="${head.type}"></td>
-                        <td th:text="${head.operPersonName}"></td>
+                        <td th:text="${head.operPersonName==null?'暂未审核':head.operPersonName}"></td>
                         <td th:text="${head.createTime}"></td>
-                        <td th:text="${head.operTime}"></td>
+                        <td th:text="${head.operTime==null?'暂未出库':head.operTime}"></td>
                         <td th:text="${head.handsPersonId}"></td>
                         <td th:text="${head.changeAmount}"></td>
                         <td th:text="${head.amount}"></td>

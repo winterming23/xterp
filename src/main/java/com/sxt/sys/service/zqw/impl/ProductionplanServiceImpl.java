@@ -6,6 +6,7 @@ import com.sxt.sys.domain.winter.ApplyFor;
 import com.sxt.sys.domain.zqw.Picking;
 import com.sxt.sys.domain.zqw.Productionplan;
 import com.sxt.sys.domain.zqw.SysUser;
+import com.sxt.sys.mapper.winter.ApplyForMapper;
 import com.sxt.sys.mapper.zqw.ProductionplanMapper;
 import com.sxt.sys.service.zqw.ProductionplanServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ import java.util.List;
 public class ProductionplanServiceImpl implements ProductionplanServiceI {
     @Autowired
     private ProductionplanMapper productionplanMapper;
+    @Autowired
+    private ApplyForMapper applyForMapper;
+
     /**
      * 查询生产计划
      * @return
@@ -134,6 +138,7 @@ public class ProductionplanServiceImpl implements ProductionplanServiceI {
 
     @Override
     public boolean applySh(int auditor, int salesStatus) {
+        applyForMapper.updateApplyForState(1,auditor);
         return productionplanMapper.applySh(auditor,salesStatus);
     }
 

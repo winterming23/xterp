@@ -164,7 +164,7 @@
                         <td th:text="${head.type}"></td>
                         <td th:text="${head.operPersonName==null?'暂未审核':head.operPersonName}"></td>
                         <td th:text="${head.createTime}"></td>
-                        <td th:text="${head.operTime==null?'暂未出库':head.operTime}"></td>
+                        <td th:text="${head.operTime==null?'暂未出入库':head.operTime}"></td>
                         <td th:text="${head.handsPersonId}"></td>
                         <td th:text="${head.changeAmount}"></td>
                         <td th:text="${head.amount}"></td>
@@ -291,7 +291,7 @@
                     ],*/
                     series:[{
                         type:'pie',
-                        radius:'95%',
+                        radius:'80%',
                         data:[
                             {value:ck[0],name:material[0]},
                             {value:ck[1],name:material[1]},

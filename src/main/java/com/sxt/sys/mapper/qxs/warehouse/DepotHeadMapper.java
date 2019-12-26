@@ -99,7 +99,7 @@ public interface DepotHeadMapper {
      * @param depothead
      * @return
      */
-    @Update("update depotHead set operTime=#{date} where id=#{id} and status=1")
+    @Update("update depotHead set operTime=#{operTime} where id=#{id} and status=1")
     boolean updateDateTime(Depothead depothead);
 
     /**

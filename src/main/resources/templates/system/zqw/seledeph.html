@@ -23,7 +23,6 @@
         <th>单据编号</th>
         <th>物料名称</th>
         <th>所需数量</th>
-        <th>状态</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -32,7 +31,7 @@
         <td th:text="${seleDep.Number}"></td>
         <td th:text="${seleDep.catname}"></td>
         <td th:text="${seleDep.numbersl}"></td>
-        <td>
+       <!-- <td>
             <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDep.Status==0}">
                 <i class="layui-icon"></i>领料中
             </button>
@@ -40,10 +39,10 @@
                 <i class="layui-icon">&#xe654;</i>领料成功
             </button>
             <input type="hidden" name="he" th:value="${seleDep.Status}" id="status" />
-        </td>
+        </td>-->
         <td>
             <a th:href="@{/selePri(id=${seleDep.deid})}"  id="gx" >
-                <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDep.Status==1}">
+                <button type="button" class="layui-btn layui-btn layui-btn-sm" >
                     <i class="layui-icon">&#xe654;</i>添加工序
                 </button>
             </a>

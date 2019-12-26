@@ -55,10 +55,13 @@
         </td>
         <td>
             <a th:href="@{/Assmrk(id=${seleAssmble.id},prpersonnel=${seleAssmble.prpersonnel},retail_price=${seleAssmble.retail_price},quantity=${seleAssmble.quantity})}">
-            <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleAssmble.qualityTesting==1}">
+                <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleAssmble.qualityTesting==1}">
                     <i class="layui-icon">&#xe654;</i>入库
                 </button>
             </a>
+            <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleAssmble.qualityTesting==3}">
+                <i class="layui-icon">&#xe654;</i>已入库
+            </button>
         </td>
     </tr>
     </tbody>

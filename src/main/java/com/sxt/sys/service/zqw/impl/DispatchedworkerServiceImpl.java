@@ -60,7 +60,7 @@ public class DispatchedworkerServiceImpl implements DispatchedworkerServiceI {
     }
 
     @Override
-    public boolean dispathSh(int id, int dispatchedAudits,int pickingid,int dispatchedNo) {
+    public boolean dispathSh(int id, int dispatchedAudits,int pickingid,int dispatchedNo,int salesid) {
         List<Number> numbers = dispatchedworkerMapper.seleDisNumber(pickingid);
         String verificationCode = String.valueOf((int)((Math.random()*9+1)*1000));
         System.out.println("=============================================="+numbers);
@@ -71,7 +71,7 @@ public class DispatchedworkerServiceImpl implements DispatchedworkerServiceI {
             List<Materials> materials = dispatchedworkerMapper.seleMater(number.getMaterialsId());
             for (Materials materials1:materials) {
                 for (Dispatchedworker dispatchedworker:dispatchedworkers) {
-                    Depothead depothead1 = new Depothead(0,"零件出库",dispatchedworker.getBillid(),null,time,null,null,dispatchedNo,null,materials1.getPrice(),number.getNumbersl()*materials1.getPrice(),null,null,null,0,null,number.getMaterialsId(),number.getNumbersl());
+                    Depothead depothead1 = new Depothead(0,"零件出库",dispatchedworker.getBillid(),null,time,null,salesid,dispatchedNo,null,materials1.getPrice(),number.getNumbersl()*materials1.getPrice(),null,null,null,0,"0",number.getMaterialsId(),number.getNumbersl());
                     boolean b = dispatchedworkerMapper.inserDepth(depothead1);
                     System.out.println("================================================================"+b);
                 }

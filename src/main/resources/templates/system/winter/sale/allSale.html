@@ -47,11 +47,11 @@
             <td th:if="${sale.state==0}">
                 <font color="red">未提交</font>
             </td>
-            <td th:switch="${sale.state}">
-                <font color="#7fff00" th:case="1">审核中</font>
-                <font color="yellow" th:case="1" th:if="${sale.salesStatus==1}">生产中</font>
+            <td th:if="${sale.state==1}">
+                <!--<font color="#7fff00" th:case="1">审核中</font>-->
+                <font color="yellow"  >生产中</font>
             </td>
-            <td th:if="${sale.salesStatus==2}">
+            <td th:if="${sale.state==2}">
                 <font color="#00bfff">销售出货</font>
             </td>
             <td th:if="${sale.state==3}">
@@ -64,7 +64,7 @@
                 <button type="button" class="layui-btn layui-btn-normal" th:case="1">审核中</button>
                 <button type="button" class="layui-btn layui-btn-normal" th:case="1" th:if="${sale.salesStatus==1}">生产中</button>
             </td>
-            <td th:if="${sale.salesStatus==2}">
+            <td th:if="${sale.state==2}">
                 <button type="button" class="layui-btn layui-btn-danger" th:onclick="deleteSale([[${sale.saleId}]])">删除</button>
             </td>
         </tr>

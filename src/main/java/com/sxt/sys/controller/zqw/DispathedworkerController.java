@@ -71,8 +71,8 @@ public class DispathedworkerController {
      * @return
      */
     @RequestMapping("dispathSh")
-    public String dispathSh(int id,int pickingid,int dispatchedNo){
-        boolean b = dispatchedworkerServiceI.dispathSh(id, 1, pickingid,dispatchedNo);
+    public String dispathSh(int id,int pickingid,int dispatchedNo,int salesid){
+        boolean b = dispatchedworkerServiceI.dispathSh(id, 1, pickingid,dispatchedNo,salesid);
         return "redirect:/seleDw";
     }
 
@@ -84,8 +84,8 @@ public class DispathedworkerController {
      * @return
      */
     @RequestMapping("dispathShNo")
-    public String dispathShNo(int id,int pickingid,int dispatchedNo){
-        boolean b = dispatchedworkerServiceI.dispathSh(id, 1, pickingid,dispatchedNo);
+    public String dispathShNo(int id,int pickingid,int dispatchedNo,int salesid){
+        boolean b = dispatchedworkerServiceI.dispathSh(id, 1, pickingid,dispatchedNo,salesid);
         return "redirect:/seleDw";
     }
 

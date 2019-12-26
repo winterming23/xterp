@@ -53,7 +53,7 @@ public interface AssembleMapper {
      * @return
      */
     @Select("SELECT depothead.*,dispatchedworker.id as deid, number.* from number,depothead,dispatchedworker WHERE\n" +
-            " depothead.number=dispatchedworker.billid and number.materialsId=depothead.materialId")
+            " depothead.number=dispatchedworker.billid and number.materialsId=depothead.materialId and depothead.`Status`=1 ")
     List<HashMap> seleDep(int id);
 
     /**
@@ -72,4 +72,7 @@ public interface AssembleMapper {
      */
     @Insert("insert into depothead(id,type,number,operPersonName,createTime,operTime,organId,handsPersonId,accountid,changeAmount,totalPrice,payType,remark,accountDay,status,deleteFlag,materialId,amount) values (null,#{type},#{number},#{operPersonName},#{createTime},#{operTime},#{organId},#{handsPersonId},#{accountid},#{changeAmount},#{totalPrice},#{payType},#{remark},#{accountDay},#{status},#{deleteFlag},#{materialId},#{amount})")
     boolean inserDepths(Depothead depothead);
+
+    @Select("select * from assemble where proid=#{id}")
+    Assemble getAssembleID(int sid);
 }

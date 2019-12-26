@@ -6,6 +6,7 @@ import com.sxt.sys.domain.hjn.Orders;
 import com.sxt.sys.domain.qxs.warehouse.DepotItem;
 import com.sxt.sys.domain.qxs.warehouse.Depothead;
 import com.sxt.sys.domain.qxs.warehouse.Materials;
+import com.sxt.sys.domain.zqw.Assemble;
 import com.sxt.sys.domain.zqw.Picking;
 import com.sxt.sys.domain.zqw.Productionplan;
 import com.sxt.sys.mapper.UserMapper;
@@ -16,6 +17,7 @@ import com.sxt.sys.mapper.qxs.warehouse.DepotItemMapper;
 import com.sxt.sys.mapper.qxs.warehouse.MaterialsMapper;
 import com.sxt.sys.mapper.winter.ApplyForMapper;
 import com.sxt.sys.mapper.winter.SaleMapper;
+import com.sxt.sys.mapper.zqw.AssembleMapper;
 import com.sxt.sys.mapper.zqw.PickingMapper;
 import com.sxt.sys.mapper.zqw.ProductionplanMapper;
 import com.sxt.sys.service.qxs.warehouse.DepotHeadServiceI;
@@ -49,9 +51,9 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private ApplyForMapper applyForMapper;
-    @Autowired
     private SaleMapper saleMapper;
+    @Autowired
+    private AssembleMapper assembleMapper;
 
     /**
      * 查询所有未删除的
@@ -193,9 +195,14 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                                 depotHeadMapper.updateDateTime(new Depothead(head.getId()));
                                 //判断是否时成品入库，根据单据主表的销售id修改销售申请表状态
                                 if("成品入库".equals(depothead.getType())){
+                                    //修改生产组装状态
+                                    Assemble assemble = assembleMapper.getAssembleID(depothead.getOrganId());
+                                    if(assemble!=null){
+                                        assembleMapper.AssemSh(assemble.getId(),3);
+                                    }
                                     int number = saleMapper.getNumber(depothead.getOrganId());
                                     boolean update = depotItemMapper.updateAmount(new DepotItem((depotItem.getBasicNumber() - number), depotItem.getMaterialId()));
-                                    boolean b = applyForMapper.updateApplyForState(depothead.getOrganId());
+                                    boolean b = saleMapper.updateSaleState(2,depothead.getOrganId());
                                     if(update && b){
                                         return 10;
                                     }
@@ -215,6 +222,19 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                             if(addDepotItem){
                                 depotHeadMapper.depotHeadExamin(head);
                                 depotHeadMapper.updateDateTime(new Depothead(head.getId()));
+                                if("成品入库".equals(depothead.getType())){
+                                    //修改生产组装状态
+                                    Assemble assemble = assembleMapper.getAssembleID(depothead.getOrganId());
+                                    if(assemble!=null){
+                                        assembleMapper.AssemSh(assemble.getId(),3);
+                                    }
+                                    int number = saleMapper.getNumber(depothead.getOrganId());
+                                    boolean update = depotItemMapper.updateAmount(new DepotItem((depotItem.getBasicNumber() - number), depotItem.getMaterialId()));
+                                    boolean b = saleMapper.updateSaleState(2,depothead.getOrganId());
+                                    if(update && b){
+                                        return 10;
+                                    }
+                                }
                                 return 2;
                             }
                         }

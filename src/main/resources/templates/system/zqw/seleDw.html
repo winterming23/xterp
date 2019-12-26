@@ -30,7 +30,7 @@
         <td th:text="${seleDw.name}"></td>
         <td><a th:href="@{/seledepi(id=${seleDw.id})}">原料详情</a></td>
         <td >
-            <a th:href="@{/dispathSh(id=${seleDw.id},dispatchedNo=${seleDw.dispatchedNo},pickingid=${seleDw.propickid})}">
+            <a th:href="@{/dispathSh(id=${seleDw.id},salesid=${seleDw.salesid},dispatchedNo=${seleDw.dispatchedNo},pickingid=${seleDw.propickid})}">
             <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDw.dispatchedAudits==0}">
                 <i class="layui-icon">&#xe642;</i> 通过
             </button>

@@ -55,7 +55,7 @@ public interface DispatchedworkerServiceI {
      * @param dispatchedAudits
      * @return
      */
-    boolean dispathSh(@Param("id") int id, @Param("dispatchedAudits") int dispatchedAudits, @Param("pickingid") int pickingid, @Param("dispatchedNo") int dispatchedNo);
+    boolean dispathSh(@Param("id") int id, @Param("dispatchedAudits") int dispatchedAudits, @Param("pickingid") int pickingid, @Param("dispatchedNo") int dispatchedNo,@Param("salesid")int salesid);
     /**
      * 根据id查询派工状态
      * @param id

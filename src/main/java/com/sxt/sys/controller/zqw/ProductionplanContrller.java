@@ -29,7 +29,7 @@ public class ProductionplanContrller {
     public String pdsele(HttpServletRequest request){
         List<HashMap> list = productionplanServiceI.seleProuct();
         request.setAttribute("pdsele",list);
-        return "zqw/seleProuct";
+        return "system/zqw/seleProuct";
     }
     @RequestMapping("aaa")
     public String aaa(){
@@ -52,7 +52,7 @@ public class ProductionplanContrller {
         request.setAttribute("seleuserf",seleuser);
         request.setAttribute("seleprockll",list1);
         request.setAttribute("seleappfor",seleappfor);
-        return "zqw/index1";
+        return "system/zqw/index1";
    }
 
 
@@ -98,7 +98,7 @@ public class ProductionplanContrller {
     public String selepropick(int pickingid, HttpServletRequest request){
         List<HashMap> selepropick = productionplanServiceI.selepropick(pickingid);
         request.setAttribute("selepropick",selepropick);
-        return "zqw/selepropick";
+        return "system/zqw/selepropick";
     }
 
     /**
@@ -122,7 +122,7 @@ public class ProductionplanContrller {
         List<HashMap> seleapply = productionplanServiceI.seleapply();
         request.setAttribute("seleapply",seleapply);
         System.out.println(seleapply);
-        return "zqw/apply";
+        return "system/zqw/apply";
     }
 
     /**

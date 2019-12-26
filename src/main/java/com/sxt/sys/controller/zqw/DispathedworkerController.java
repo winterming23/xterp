@@ -30,7 +30,7 @@ public class DispathedworkerController {
         List<HashMap> hashMap = dispatchedworkerServiceI.seleDw();
         request.setAttribute("seleDw",hashMap);
         System.out.println();
-        return "zqw/seleDw";
+        return "system/zqw/seleDw";
     }
 
     /**
@@ -46,7 +46,7 @@ public class DispathedworkerController {
         request.setAttribute("seleppik",seleppik);
         request.setAttribute("selepkuser",seleuser);
         request.setAttribute("selediswork",selediswork);
-        return "zqw/inserDis";
+        return "system/zqw/inserDis";
     }
 
     /**

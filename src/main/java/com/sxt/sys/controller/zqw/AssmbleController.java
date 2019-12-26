@@ -33,7 +33,7 @@ public class AssmbleController {
         List<SysUser> seleuser = productionplanServiceI.seleuser();
         request.setAttribute("selePri",list);
         request.setAttribute("seleuser",seleuser);
-        return "zqw/inserAssemble";
+        return "system/zqw/inserAssemble";
     }
 
     /**
@@ -47,7 +47,7 @@ public class AssmbleController {
         List<HashMap> list1 = assembleServiceI.seleDep(id);
         request.setAttribute("seleDep",list1);
         System.out.println(list1);
-        return "zqw/seledeph";
+        return "system/zqw/seledeph";
     }
 
     /**
@@ -76,7 +76,7 @@ public class AssmbleController {
     public String seleAssmble(HttpServletRequest request){
         List<HashMap> list = assembleServiceI.seleAssem();
         request.setAttribute("seleAssmble",list);
-        return "zqw/seleAssemble";
+        return "system/zqw/seleAssemble";
     }
 
     /**

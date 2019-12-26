@@ -27,7 +27,7 @@ public class PickingContrller {
         List<HashMap> list = pickingServiceI.selePicking();
         request.setAttribute("selePickadd",list);
         System.out.println(list);
-        return "zqw/selepicking";
+        return "system/zqw/selepicking";
     }
 
     /**
@@ -45,7 +45,7 @@ public class PickingContrller {
         request.setAttribute("seleDguser",list1);
         request.setAttribute("seleDgProduct",list2);
         System.out.println(list);
-        return "zqw/Pickadd";
+        return "system/zqw/Pickadd";
     }
 
     /**

@@ -195,7 +195,7 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                                 if("成品入库".equals(depothead.getType())){
                                     int number = saleMapper.getNumber(depothead.getOrganId());
                                     boolean update = depotItemMapper.updateAmount(new DepotItem((depotItem.getBasicNumber() - number), depotItem.getMaterialId()));
-                                    boolean b = applyForMapper.updateApplyForState(2,depothead.getOrganId());
+                                    boolean b = applyForMapper.updateApplyForState(depothead.getOrganId());
                                     if(update && b){
                                         return 10;
                                     }

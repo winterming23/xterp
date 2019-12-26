@@ -138,7 +138,7 @@ public class ProductionplanServiceImpl implements ProductionplanServiceI {
 
     @Override
     public boolean applySh(int auditor, int salesStatus) {
-        applyForMapper.updateApplyForState(1,auditor);
+        applyForMapper.updateForState(auditor);
         return productionplanMapper.applySh(auditor,salesStatus);
     }
 

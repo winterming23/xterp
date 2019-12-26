@@ -60,11 +60,18 @@ public interface ApplyForMapper {
                            @Param("id") int id);
 
     /**
-     * 根据销售id修改状态
+     * 根据销售id修改状态,仓库调用
      * @param saleId
      * @return
      */
-    @Update("update applyfor set salesStatus=#{salesStatus} where auditor=#{saleId}")
-    boolean updateApplyForState(@Param("salesStatus") Integer salesStatus,@Param("auditor") Integer saleId);
+    @Update("update applyfor set salesStatus=2 where auditor=#{saleId}")
+    boolean updateApplyForState(Integer saleId);
 
+    /**
+     * 根据销售id修改状态,生产调用
+     * @param saleId
+     * @return
+     */
+    @Update("update applyfor set salesStatus=1 where auditor=#{saleId}")
+    boolean updateForState(Integer saleId);
 }

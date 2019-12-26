@@ -30,10 +30,12 @@ public class Orders {
     private Integer costid; //外键,采购支出表
     private Date createtime;//创建时间
     private Integer finance;//财务记录添加状态
+    private Integer sale_id;
 
-    public Orders(Integer orderid){
+    public Orders(Integer orderid,Integer sale_id){
         this.orderId=orderid;
         this.createtime=new Date();
         this.finance=0;
+        this.sale_id=sale_id;
     }
 }

@@ -153,7 +153,7 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                                 //子表不存在这条数据，进行采购
                                 int orderid = (int)(Math.random()*1000);
                                 System.err.println(orderid);
-                                Orders orders = new Orders(orderid);
+                                Orders orders = new Orders(orderid,depothead.getOrganId());
                                 int i = orderMapper.addOrders(orders);
                                 if(i>0){
                                     Orders order = orderMapper.queryID(orderid);

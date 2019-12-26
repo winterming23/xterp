@@ -1,6 +1,7 @@
 package com.sxt.sys.mapper.hjn;
 
 import com.sxt.sys.domain.hjn.Orders;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -32,7 +33,7 @@ public interface OrderMapper {
      *
      * @return
      */
-    //@Insert("insert into orders values(null,#{orderid},#{supplierid},#{purchaserid},#{rebate},#{paytype},#{total},#{amount_paid},#{total_tax},#{orderstate},#{preferential},#{costid})")
+    @Insert("insert into orders values(null,#{orderid},#{supplierid},#{purchaserid},#{rebate},#{paytype},#{total},#{amount_paid},#{total_tax},#{orderstate},#{preferential},#{costid},#{sale_id})")
     int addOrders(Orders order);
 
 

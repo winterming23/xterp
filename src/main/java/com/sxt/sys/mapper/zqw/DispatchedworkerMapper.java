@@ -81,6 +81,14 @@ public interface DispatchedworkerMapper {
      */
     @Update("update dispatchedworker set dispatchedAudits=#{dispatchedAudits} where id=#{id}")
     boolean dispathSh(@Param("id") int id, @Param("dispatchedAudits") int dispatchedAudits);
+    /**
+     * 修改派工的审核状态
+     * @param id
+     * @param dispatchedAudits
+     * @return
+     */
+    @Update("update dispatchedworker set dispatchedAudits=#{dispatchedAudits} where id=#{id}")
+    boolean dispathSha(@Param("id") int id, @Param("dispatchedAudits") int dispatchedAudits);
 
     /**
      * 根据生产编号查询数量信息

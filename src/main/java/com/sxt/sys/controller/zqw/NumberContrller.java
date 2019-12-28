@@ -2,6 +2,7 @@ package com.sxt.sys.controller.zqw;
 
 
 import com.sxt.sys.service.zqw.NumberServiceI;
+import com.sxt.sys.service.zqw.impl.PickingServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,7 +16,8 @@ import java.util.Date;
 public class NumberContrller {
     @Resource
     private NumberServiceI numberServiceI;
-
+    @Resource
+    private PickingServiceImpl pickingService;
     /**
      * 添加领料
      * @param
@@ -24,6 +26,7 @@ public class NumberContrller {
     @RequestMapping("insernum")
     public String insernum(int id, String startTime, String endTime, int personCharge, Integer[] numbersl, int[] materialsId, String[] catname, Integer quantity, Integer salesid, HttpServletRequest request) throws ParseException {
             numberServiceI.inserNum(id,startTime,endTime,personCharge,numbersl,materialsId,catname,quantity,salesid);
-            return "redirect:/pdsele";
+            boolean b = pickingService.pickingSh(id, 4);
+        return "redirect:/pdsele";
     }
 }

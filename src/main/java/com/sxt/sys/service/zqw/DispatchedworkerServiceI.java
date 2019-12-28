@@ -5,6 +5,7 @@ import com.sxt.sys.domain.qxs.warehouse.Materials;
 import com.sxt.sys.domain.zqw.Dispatchedworker;
 import com.sxt.sys.domain.zqw.Number;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.HashMap;
 import java.util.List;
@@ -81,5 +82,12 @@ public interface DispatchedworkerServiceI {
      * @return
      */
     List<Dispatchedworker> seleDiskker(int id);
+    /**
+     * 修改派工的审核状态
+     * @param id
+     * @param dispatchedAudits
+     * @return
+     */
+    boolean dispathSha(@Param("id") int id, @Param("dispatchedAudits") int dispatchedAudits);
 
 }

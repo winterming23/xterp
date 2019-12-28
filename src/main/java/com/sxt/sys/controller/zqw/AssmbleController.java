@@ -6,6 +6,7 @@ import com.sxt.sys.domain.qxs.warehouse.Depothead;
 import com.sxt.sys.domain.zqw.Assemble;
 import com.sxt.sys.domain.zqw.SysUser;
 import com.sxt.sys.service.zqw.AssembleServiceI;
+import com.sxt.sys.service.zqw.DispatchedworkerServiceI;
 import com.sxt.sys.service.zqw.ProductionplanServiceI;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,8 @@ public class AssmbleController {
     private AssembleServiceI assembleServiceI;
     @Resource
     private ProductionplanServiceI productionplanServiceI;
+    @Resource
+    private DispatchedworkerServiceI dispatchedworkerServiceI;
     /**
      * 根据id查询生产名称
      * @param id
@@ -35,6 +38,7 @@ public class AssmbleController {
         List<SysUser> seleuser = productionplanServiceI.seleuser();
         request.setAttribute("selePri",list);
         request.setAttribute("seleuser",seleuser);
+        dispatchedworkerServiceI.dispathSha(id, 4);
         return "system/zqw/inserAssemble";
     }
 
@@ -119,6 +123,7 @@ public class AssmbleController {
         Date time = new Date();
         Depothead depothead = new Depothead(0,"成品入库",(id+"-"+verificationCode),"0",time,null,0,prpersonnel,0,retail_price,(retail_price*quantity),"0","0",0,0,"0",1009,quantity);
         boolean b = assembleServiceI.inserDepths(depothead);
+        boolean b1 = assembleServiceI.AssemSh(id, 4);
         return "redirect:/seleAssmble";
     }
 }

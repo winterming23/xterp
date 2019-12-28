@@ -102,5 +102,10 @@ public class DispatchedworkerServiceImpl implements DispatchedworkerServiceI {
         return dispatchedworkerMapper.seleDiskker(id);
     }
 
+    @Override
+    public boolean dispathSha(int id, int dispatchedAudits) {
+        return dispatchedworkerMapper.dispathSha(id,dispatchedAudits);
+    }
+
 
 }

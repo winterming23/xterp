@@ -2,7 +2,9 @@ package com.sxt.sys.controller.zqw;
 
 import com.sxt.sys.domain.zqw.Dispatchedworker;
 import com.sxt.sys.domain.zqw.SysUser;
+import com.sxt.sys.service.zqw.AssembleServiceI;
 import com.sxt.sys.service.zqw.DispatchedworkerServiceI;
+import com.sxt.sys.service.zqw.PickingServiceI;
 import com.sxt.sys.service.zqw.ProductionplanServiceI;
 import com.sxt.sys.service.zqw.impl.AssembleServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -20,7 +22,9 @@ public class DispathedworkerController {
     @Resource
     private DispatchedworkerServiceI dispatchedworkerServiceI;
     @Resource
-    private AssembleServiceImpl assembleService;
+    private AssembleServiceI assembleService;
+    @Resource
+    private PickingServiceI pickingServiceI;
     /**
      * 查询派工信息
      * @return
@@ -46,6 +50,7 @@ public class DispathedworkerController {
         request.setAttribute("seleppik",seleppik);
         request.setAttribute("selepkuser",seleuser);
         request.setAttribute("selediswork",selediswork);
+        pickingServiceI.pickingSh(id, 4);
         return "system/zqw/inserDis";
     }
 

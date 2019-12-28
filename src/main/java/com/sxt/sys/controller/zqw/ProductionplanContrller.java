@@ -52,6 +52,7 @@ public class ProductionplanContrller {
         request.setAttribute("seleuserf",seleuser);
         request.setAttribute("seleprockll",list1);
         request.setAttribute("seleappfor",seleappfor);
+        boolean b = productionplanServiceI.applySh(auditor, 4);
         return "system/zqw/index1";
    }
 

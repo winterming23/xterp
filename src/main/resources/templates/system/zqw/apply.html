@@ -25,7 +25,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="seleapply:${seleapply}" height="40px" class="text-c">
+    <tr th:each="seleapply:${seleapply}" height="40px" class="text-c" th:if="${seleapply.salesStatus!=4}">
         <td th:text="${seleapply.type}"></td>
         <td th:text="${seleapply.product_name}"></td>
         <td th:text="${seleapply.number}"></td>

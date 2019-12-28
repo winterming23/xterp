@@ -25,7 +25,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="seleuser:${pdsele}" height="40px" class="text-c" th:if="${seleuser.deleteProd==0}">
+    <tr th:each="seleuser:${pdsele}" height="40px" class="text-c" th:if="${seleuser.deleteProd==0 && seleuser.productionAudit!=4}">
         <td th:text="${seleuser.product_name}"></td>
         <td th:text="${seleuser.startTime}"></td>
         <td th:text="${seleuser.endTime}"></td>

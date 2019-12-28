@@ -3,6 +3,7 @@ package com.sxt.sys.controller.zqw;
 
 import com.sxt.sys.domain.zqw.Picking;
 import com.sxt.sys.service.zqw.PickingServiceI;
+import com.sxt.sys.service.zqw.ProductionplanServiceI;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,7 +17,8 @@ import java.util.List;
 public class PickingContrller {
     @Resource
     private PickingServiceI pickingServiceI;
-
+    @Resource
+    private ProductionplanServiceI productionplanServiceI;
     /**
      * 查询领料信息
      * @param request
@@ -44,6 +46,7 @@ public class PickingContrller {
         request.setAttribute("seleDgPick",list);
         request.setAttribute("seleDguser",list1);
         request.setAttribute("seleDgProduct",list2);
+        productionplanServiceI.productSh(id, 4);
         System.out.println(list);
         return "system/zqw/Pickadd";
     }

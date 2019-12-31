@@ -45,8 +45,6 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
     @Autowired
     private MaterialsMapper materialsMapper;
     @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
     private DetailedMapper detailedMapper;
     @Autowired
     private UserMapper userMapper;
@@ -159,9 +157,9 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                                 int orderid = (int)(Math.random()*1000);
                                 System.err.println(orderid);
                                 Orders orders = new Orders(orderid,depothead.getOrganId());
-                                int i = orderMapper.addOrders(orders);
+                                int i = depotHeadMapper.addOrders(orders);
                                 if(i>0){
-                                    Orders order = orderMapper.queryID(orderid);
+                                    Orders order = depotHeadMapper.queryID(orderid);
                                     System.err.println(order);
                                     int price = (int)depothead.getChangeAmount();
                                     if(order!=null){

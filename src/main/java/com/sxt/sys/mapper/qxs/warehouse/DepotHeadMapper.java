@@ -1,5 +1,6 @@
 package com.sxt.sys.mapper.qxs.warehouse;
 
+import com.sxt.sys.domain.hjn.Orders;
 import com.sxt.sys.domain.qxs.warehouse.Depothead;
 import org.apache.ibatis.annotations.*;
 
@@ -127,4 +128,22 @@ public interface DepotHeadMapper {
      */
     @Update("update depotHead set organId=#{organId} where id=#{id}")
     boolean updateSaleId(@Param("organId") Integer organId,@Param("id") Integer id);
+
+    /**
+     * 新增采购订单
+     *
+     * @return
+     */
+    @Insert("insert into orders values(null,#{orderId},#{supplierid},#{rebate}," +
+            "#{paytype},#{total},#{amount_paid},#{total_tax}," +
+            "#{orderstate},#{preferential},#{costid},#{createtime},#{purchaserid},0,#{sale_id})")
+    int addOrders(Orders order);
+
+    /**
+     * 根据订单编号查询
+     * @param id
+     * @return
+     */
+    @Select("select * from orders wehre orderid=#{id}")
+    Orders queryID(Integer id);
 }

@@ -23,7 +23,7 @@
     <!-- 未删除标记销售信息 --><!--resultMap="saleToUser"-->
     <select id="getAllNoDeleteSale" resultType="hashmap">
          select s.id saleId,u.name userName,su.supplier,p.product_name productName,s.number saleNumber,
-        s.discounts,s.money,s.reality,s.commission,s.state state from sale s
+        s.discounts,s.money,s.reality,s.commission,s.state state,s.depotheadId depothead from sale s
         inner join sys_user u on s.userId = u.id
         inner join supplier su on s.clientId = su.id
         inner join product p on s.productId = p.id

@@ -1,6 +1,7 @@
 package com.sxt.sys.service.qxs.warehouse;
 
 import com.sxt.sys.domain.qxs.warehouse.Depothead;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,4 +69,11 @@ public interface DepotHeadServiceI {
      */
     List<HashMap> queryHead();
 
+    /**
+     * 修改销售id
+     * @param organId
+     * @param id
+     * @return
+     */
+    boolean updateSaleId(@Param("organId") Integer organId, @Param("id") Integer id);
 }

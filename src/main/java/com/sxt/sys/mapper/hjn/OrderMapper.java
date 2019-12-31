@@ -33,7 +33,9 @@ public interface OrderMapper {
      *
      * @return
      */
-    @Insert("insert into orders values(null,#{orderid},#{supplierid},#{purchaserid},#{rebate},#{paytype},#{total},#{amount_paid},#{total_tax},#{orderstate},#{preferential},#{costid},#{sale_id})")
+    @Insert("insert into orders values(null,#{orderId},#{supplierid},#{rebate}," +
+            "#{paytype},#{total},#{amount_paid},#{total_tax}," +
+            "#{orderstate},#{preferential},#{costid},#{createtime},#{purchaserid},0,#{sale_id})")
     int addOrders(Orders order);
 
 

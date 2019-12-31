@@ -36,7 +36,9 @@ public class Depothead {
 
     public Depothead(Integer id){
         this.id=id;
-        this.createTime=new Date();
+        Date date = new Date();
+        System.err.println(date);
+        this.createTime=date;
     }
 
     public Depothead(Integer status,Integer id,String deleteFlag){

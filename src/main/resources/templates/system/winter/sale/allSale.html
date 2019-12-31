@@ -11,7 +11,7 @@
 </head>
 <body>
 <div id="fsWin" style="width: 95%;">
-    <table style="width: 100%;height: 100%" id="ftop"
+    <table style="width: 100%;height: 100%" id="fto"
            class="table table-border table-bordered table-hover table-bg table-sort">
         <thead>
         <tr >
@@ -47,9 +47,13 @@
             <td th:if="${sale.state==0}">
                 <font color="red">未提交</font>
             </td>
-            <td th:if="${sale.state==1}">
+            <td th:if="${sale.state==1 and sale.depothead==0}">
                 <!--<font color="#7fff00" th:case="1">审核中</font>-->
-                <font color="yellow"  >生产中</font>
+                <font color="yellow" >生产中</font>
+            </td>
+            <td th:if="${sale.state==1 and sale.depothead>0}">
+                <!--<font color="#7fff00" th:case="1">审核中</font>-->
+                <font color="yellow" >待仓库审核</font>
             </td>
             <td th:if="${sale.state==2}">
                 <font color="#00bfff">销售出货</font>
@@ -72,9 +76,9 @@
     </table>
 </div>
 <script>
-    $("#ftop").DataTable({
+    /*$("#fto").DataTable({
         aLengthMenu: [5,10]
-    });
+    });*/
 
     $("#btnInsert").click(function () {
         //使用layui展示客户与仓库信息

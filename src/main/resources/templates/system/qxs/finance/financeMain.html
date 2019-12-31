@@ -146,6 +146,32 @@
                 type:'line',
                 //data: [30, 100, 45]
             }
+        ],
+        dataZoom: [
+            {   // 这个dataZoom组件，默认控制x轴。
+                type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+                xAxisIndex: 0,
+                start: 100,      // 左边在 10% 的位置。
+                end: 0         // 右边在 60% 的位置。
+            },
+            {   // 这个dataZoom组件，也控制x轴。
+                type: 'inside', // 这个 dataZoom 组件是 inside 型 dataZoom 组件
+                xAxisIndex: 0,
+                start: 100,      // 左边在 10% 的位置。
+                end: 0        // 右边在 60% 的位置。
+            },
+            {
+                type: 'slider',
+                yAxisIndex: 0,
+                start: 100,
+                end: 0
+            },
+            {
+                type: 'inside',
+                yAxisIndex: 0,
+                start: 100,
+                end: 0
+            }
         ]
     };
     // 使用刚指定的配置项和数据显示图表。

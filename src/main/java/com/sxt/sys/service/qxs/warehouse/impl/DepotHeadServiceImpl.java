@@ -144,6 +144,9 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                             if(updateAmount){
                                 depotHeadMapper.depotHeadExamin(head);
                                 depotHeadMapper.updateDateTime(new Depothead(head.getId()));
+                                if("成品出库".equals(depothead.getType())){
+                                    boolean b = saleMapper.updateSaleState(2,depothead.getOrganId());
+                                }
                                 return 1;
                             }else {
                                 head.setStatus(2);
@@ -264,5 +267,10 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
     @Override
     public List<HashMap> queryHead() {
         return depotHeadMapper.queryHead();
+    }
+
+    @Override
+    public boolean updateSaleId(Integer organId, Integer id) {
+        return depotHeadMapper.updateSaleId(organId, id);
     }
 }

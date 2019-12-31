@@ -143,6 +143,7 @@
            <table id="tab" class="table table-border table-bordered table-hover table-bg table-sort">
                <thead>
                     <tr class="text-c">
+                        <th>物品编号</th>
                         <th>票据号</th>
                         <th>类型</th>
                         <th>操作人</th>
@@ -160,6 +161,7 @@
                </thead>
                <tbody>
                     <tr class="text-c" th:each="head : ${depotHeads}" >
+                        <td th:text="${head.materialId}"></td>
                         <td th:text="${head.number}"></td>
                         <td th:text="${head.type}"></td>
                         <td th:text="${head.operPersonName==null?'暂未审核':head.operPersonName}"></td>
@@ -169,7 +171,7 @@
                         <td th:text="${head.changeAmount}"></td>
                         <td th:text="${head.amount}"></td>
                         <td th:text="${head.totalPrice}"></td>
-                        <td th:text="${head.accountDay}"></td>
+                        <td th:text="${head.accountDay==null?100:head.accountDay}"></td>
                         <td>
                             <button th:if="${head.status==0}" th:onclick="state([[${head.id}]],1)" class="layui-btn layui-btn-sm">通过</button>
                             <button th:if="${head.status==0}" th:onclick="state([[${head.id}]],2)" class="layui-btn layui-btn-sm">驳回</button>

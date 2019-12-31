@@ -55,7 +55,7 @@ public interface DepotHeadMapper {
      * @return
      */
     @Insert("insert into depotHead values(null,#{type},#{number},#{operPersonName},#{createTime}," +
-            "#{operTime},#{organId},#{handsPersonId},#{account},#{changeAmount},#{totalPrice},#{payType}," +
+            "#{operTime},#{organId},#{handsPersonId},#{accountid},#{changeAmount},#{totalPrice},#{payType}," +
             "#{remark},#{accountDay},0,0,#{materialId},#{amount})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     boolean addDepotHead(Depothead depothead);
@@ -118,4 +118,13 @@ public interface DepotHeadMapper {
      */
     @Update("update depotHead set operPersonName=#{operPersonName} where id=#{id}")
     boolean updateDepotName(Depothead depothead);
+
+    /**
+     * 修改销售id
+     * @param organId
+     * @param id
+     * @return
+     */
+    @Update("update depotHead set organId=#{organId} where id=#{id}")
+    boolean updateSaleId(@Param("organId") Integer organId,@Param("id") Integer id);
 }

@@ -45,8 +45,6 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
     @Autowired
     private MaterialsMapper materialsMapper;
     @Autowired
-    private DetailedMapper detailedMapper;
-    @Autowired
     private UserMapper userMapper;
     @Autowired
     private SaleMapper saleMapper;
@@ -171,7 +169,7 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                                             detailed.setNumber(depothead.getAmount()-depotItem.getBasicNumber());
                                         }
                                         System.err.println(detailed.getNumber());
-                                        int add = detailedMapper.addDetailed(detailed);
+                                        int add = depotHeadMapper.addDetailed(detailed);
                                         if(add>0){
                                             head.setStatus(4);
                                             depotHeadMapper.depotHeadExamin(head);

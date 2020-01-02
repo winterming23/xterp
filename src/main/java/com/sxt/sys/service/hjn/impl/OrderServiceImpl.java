@@ -6,6 +6,7 @@ import com.sxt.sys.domain.qxs.warehouse.Materials;
 import com.sxt.sys.domain.vin.Supplier;
 import com.sxt.sys.mapper.hjn.OrderMapper;
 import com.sxt.sys.service.hjn.OrderServiceI;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class OrderServiceImpl implements OrderServiceI {
      * @return
      */
     @Override
-    public List<HashMap<String, Object>>  findOrders(String orderid, Date createtime) {
+    public List<HashMap<String, Object>>  findOrders(@Param("orderid") String orderid, @Param("createtime") Date createtime) {
         List<HashMap<String, Object>>  list=orderMapper.findOrders(orderid,createtime);
         return list;
     }
@@ -66,7 +67,9 @@ public class OrderServiceImpl implements OrderServiceI {
      * @return
      */
     @Override
-    public int updateOrders(int id, int preferential,int supplierid, int purchaserid, int rebate, int amount_paid) {
+    public int updateOrders(@Param("id") int id, @Param("preferential") int preferential,
+                            @Param("supplierid") int supplierid, @Param("purchaserid") int purchaserid,
+                            @Param("rebate") int rebate, @Param("amount_paid") int amount_paid){
         return orderMapper.updateOrders(id,preferential,supplierid,purchaserid,rebate,amount_paid);
     }
 
@@ -96,7 +99,10 @@ public class OrderServiceImpl implements OrderServiceI {
     }
 
     @Override
-    public int add(int orderid, Date createtime, int supplierid, int amount_paid, int totalPrice, int paytype, int goodsid, int number) {
+    public int add(@Param("orderid") int orderid, @Param("createtime") Date createtime,
+                   @Param("supplierid") int supplierid, @Param("amount_paid") int amount_paid,
+                   @Param("totalPrice") int totalPrice, @Param("paytype") int paytype,
+                   @Param("goodsid") int goodsid, @Param("number") int number){
         return orderMapper.add(orderid,createtime,supplierid,amount_paid,totalPrice,paytype,goodsid,number);
     }
 

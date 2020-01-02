@@ -2,6 +2,7 @@ package com.sxt.sys.service.hjn.impl;
 
 import com.sxt.sys.mapper.hjn.DetailedMapper;
 import com.sxt.sys.service.hjn.DetailedServicel;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,11 @@ public class DetailedServiceImpl implements DetailedServicel {
      * @return
      */
     @Override
-    public int addDetailed(int id,int storehouseid,int goodsid,int number,int price,String remarks) {
-        return detailedMapper.addDetailed( id, storehouseid, goodsid, number, price, remarks);
+    public int addDetailed(@Param("orderid") int orderid,
+                           @Param("storehouseid") int storehouseid,
+                           @Param("goodsid") int goodsid, @Param("number") int number,
+                           @Param("price") int price, @Param("remarks") String remarks) {
+        return detailedMapper.addDetailed( orderid, storehouseid, goodsid, number, price, remarks);
     }
 
     @Override
@@ -51,7 +55,9 @@ public class DetailedServiceImpl implements DetailedServicel {
      * @return
      */
     @Override
-    public int updateDetailed(int id,int storehouseid,int goodsid,int number,int price,String remarks) {
+    public int updateDetailed(@Param("id") int id, @Param("storehouseid") int storehouseid,
+                              @Param("goodsid") int goodsid, @Param("number") int number,
+                              @Param("price") int price, @Param("remarks") String remarks) {
         return detailedMapper.updateDetailed(id, storehouseid, goodsid, number, price, remarks);
     }
 

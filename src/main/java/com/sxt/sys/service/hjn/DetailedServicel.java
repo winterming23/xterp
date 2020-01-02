@@ -1,7 +1,6 @@
 package com.sxt.sys.service.hjn;
 
-import com.sxt.sys.domain.hjn.Detailed;
-
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -16,23 +15,23 @@ public interface DetailedServicel {
      *
      * @return
      */
-    int addDetailed(Detailed detailed);
+    int addDetailed(int id, int storehouseid, int goodsid, int number, int price, String remarks);
 
     /**
      * 查询采购订单的明细
      * @return
      */
-    List<Detailed> queryDetailed(int orderid);
+    List<HashMap<String,Object>> queryDetailed(int orderid);
 
     /**
      * 修改采购订单的明细
      * @return
      */
-    int updateDetailed(Detailed detailed);
+    int updateDetailed(int id, int storehouseid, int goodsid, int number, int price, String remarks);
 
     /**
      * 删除采购订单的明细
      * @return
      */
-    int updateDetailed(int id);
+    int deleteDetailed(int id);
 }

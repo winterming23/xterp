@@ -1,6 +1,9 @@
 package com.sxt.sys.service.hjn.impl;
 
 import com.sxt.sys.domain.hjn.Orders;
+import com.sxt.sys.domain.hjn.Payment;
+import com.sxt.sys.domain.qxs.warehouse.Materials;
+import com.sxt.sys.domain.vin.Supplier;
 import com.sxt.sys.mapper.hjn.OrderMapper;
 import com.sxt.sys.service.hjn.OrderServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +66,38 @@ public class OrderServiceImpl implements OrderServiceI {
      * @return
      */
     @Override
-    public int updateOrders(int id, int supplierid, int purchaserid, int rebate, int amount_paid) {
-        return orderMapper.updateOrders(id,supplierid,purchaserid,rebate,amount_paid);
+    public int updateOrders(int id, int preferential,int supplierid, int purchaserid, int rebate, int amount_paid) {
+        return orderMapper.updateOrders(id,preferential,supplierid,purchaserid,rebate,amount_paid);
     }
+
+    @Override
+    public List<Supplier> allSupplier() {
+        return orderMapper.allSupplier();
+    }
+
+    @Override
+    public List<Payment> allPayment() {
+        return orderMapper.allpayment();
+    }
+
+    @Override
+    public List<Materials> selectMaterials() {
+        return orderMapper.selectMaterials();
+    }
+
+    @Override
+    public int getTatol(int orderid) {
+        return orderMapper.getTatol(orderid);
+    }
+
+    @Override
+    public int getOrders() {
+        return orderMapper.queryMaxId(orderMapper.queryMaxID(),new Date());
+    }
+
+    @Override
+    public int add(int orderid, Date createtime, int supplierid, int amount_paid, int totalPrice, int paytype, int goodsid, int number) {
+        return orderMapper.add(orderid,createtime,supplierid,amount_paid,totalPrice,paytype,goodsid,number);
+    }
+
 }

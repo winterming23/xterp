@@ -1,11 +1,11 @@
 package com.sxt.sys.service.hjn.impl;
 
-import com.sxt.sys.domain.hjn.Detailed;
 import com.sxt.sys.mapper.hjn.DetailedMapper;
 import com.sxt.sys.service.hjn.DetailedServicel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,26 +28,31 @@ public class DetailedServiceImpl implements DetailedServicel {
      * @return
      */
     @Override
-    public int addDetailed(Detailed detailed) {
-        return detailedMapper.addDetailed(detailed);
+    public int addDetailed(int id,int storehouseid,int goodsid,int number,int price,String remarks) {
+        return detailedMapper.addDetailed( id, storehouseid, goodsid, number, price, remarks);
+    }
+
+    @Override
+    public List<HashMap<String,Object>> queryDetailed(int orderid) {
+        return detailedMapper.queryDetailed(orderid);
     }
 
     /**
      * 查询采购订单的明细
      * @return
      */
-    @Override
-    public List<Detailed> queryDetailed(int orderid) {
-        return detailedMapper.queryDetailed(orderid);
-    }
+//    @Override
+//    public List<Detailed> queryDetailed(int orderid) {
+//        return detailedMapper.queryDetailed(orderid);
+//    }
 
     /**
      * 修改采购订单的明细
      * @return
      */
     @Override
-    public int updateDetailed(Detailed detailed) {
-        return detailedMapper.updateDetailed(detailed);
+    public int updateDetailed(int id,int storehouseid,int goodsid,int number,int price,String remarks) {
+        return detailedMapper.updateDetailed(id, storehouseid, goodsid, number, price, remarks);
     }
 
     /**
@@ -55,7 +60,7 @@ public class DetailedServiceImpl implements DetailedServicel {
      * @return
      */
     @Override
-    public int updateDetailed(int id) {
-        return detailedMapper.updateDetailed(id);
+    public int deleteDetailed(int id) {
+        return detailedMapper.deleteDetailed(id);
     }
 }

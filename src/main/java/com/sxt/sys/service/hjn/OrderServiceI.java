@@ -1,6 +1,9 @@
 package com.sxt.sys.service.hjn;
 
 import com.sxt.sys.domain.hjn.Orders;
+import com.sxt.sys.domain.hjn.Payment;
+import com.sxt.sys.domain.qxs.warehouse.Materials;
+import com.sxt.sys.domain.vin.Supplier;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -40,10 +43,23 @@ public interface OrderServiceI {
      * @param amount_paid
      * @return
      */
-    int updateOrders(int id, int supplierid, int purchaserid, int rebate, int amount_paid);
+    int updateOrders(int id, int preferential, int supplierid, int purchaserid, int rebate, int amount_paid);
+
+    //查询所有供应商
+    List<Supplier> allSupplier();
 
 
+    //查询所有付款方式
+    List<Payment> allPayment();
 
+    //查询所有零件
+    List<Materials> selectMaterials();
 
+    //查询总价格
+    int getTatol(int orderid);
+    //生产一条订单
+    int getOrders();
 
+    //添加明细到仓库入库记录
+    int add(int orderid, Date createtime, int supplierid, int amount_paid, int totalPrice, int paytype, int goodsid, int number);
 }

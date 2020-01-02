@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.sxt.sys.mapper.hjn.OrderMapper">
+    <select id="findOrders"  resultType="hashmap">
+        select Orders.*,supplier.supplier,sys_user.name from Orders,supplier,sys_user
+        <where>
+            <if test="1==1">
+                Orders.supplierid=supplier.id
+                and Orders.purchaserid=sys_user.id
+            </if>
+            <if test="orderid !=null and orderid!=''">
+                and  orderId like '%${orderid}%'
+            </if>
+            <if test="createtime!=null">
+                and createtime>=#{createtime}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

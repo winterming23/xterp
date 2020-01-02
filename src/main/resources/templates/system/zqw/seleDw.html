@@ -24,7 +24,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="seleDw:${seleDw}" height="40px" class="text-c" th:if="${seleDw.deleteProd==0 && seleDw.dispatchedAudits!=4}">
+    <tr th:each="seleDw:${seleDw}" height="40px" class="text-c" th:if="${seleDw.deleteProd==0}">
         <td th:text="${seleDw.product_name}"></td>
         <td th:text="${seleDw.dispatchingTime}"></td>
         <td th:text="${seleDw.name}"></td>

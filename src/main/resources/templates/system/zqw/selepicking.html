@@ -25,7 +25,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="selePickadd:${selePickadd}" height="40px" class="text-c" th:if="${selePickadd.deleteProd==0 && selePickadd.productionAudit!=4}" >
+    <tr th:each="selePickadd:${selePickadd}" height="40px" class="text-c" th:if="${selePickadd.deleteProd==0}" >
         <td  th:text="${selePickadd.product_name}"></td>
         <td th:text="${selePickadd.startTime}"></td>
         <td th:text="${selePickadd.name}"></td>

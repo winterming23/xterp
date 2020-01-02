@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="/resources/csss/H-ui.min.css"/>
 
     <style>
+        #insernum{
+            margin-left: 0px;
+        }
         #test1{
             margin-left: 110px;
         }
@@ -20,7 +23,7 @@
             margin-left: 200px;
         }
         #big{
-            width: 500px;
+            width: 370px;
         }
         #big1{
             margin-left: 0px;
@@ -28,45 +31,67 @@
         }
         #selepl{
             margin-left: 110px;
-            width: 400px;
+            width: 260px;
         }
         #selepl input{
             margin-top: 10px;
+        }
+        #endTime{
+            margin-top: -20px;
+        }
+        #startTime{
+            margin-top: -20px;
+        }
+      /*  #tra{
+            text-align:center;
+            word-wrap:break-word;
+            word-break:break-all;
+            white-space:normal;
+            max-width:100px;
+
+        }*/
+        td{
+            white-space:nowrap;
         }
     </style>
     <script src="/static/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-<form class="layui-form" method="post" action="insernum">
-    <h3>添加生产计划</h3>
-    <div class="layui-form-item" id="big">
-        <label class="layui-form-label">产品名称</label>
-        <div class="layui-input-block">
-            <select name="id" lay-verify="required" id="id">
-                <option>请选择产品名称</option>
-                <option th:each="dgselepds:${dgselepd}"
-                        th:value="${dgselepds.id}" th:text="${dgselepds.product_name}" >
-                </option>
-            </select>
-        </div>
-    </div>
-    <div class="layui-inline" id="startTime">
-        <input type="text" class="layui-input" id="test1" placeholder="开始时间" name="startTime">
-    </div>
+<h3>添加生产计划</h3>
+<form class="layui-form" method="post" action="insernum" id="insernum">
+
+                <div class="layui-form-item" id="big">
+                    <label class="layui-form-label">产品名称</label>
+                    <div class="layui-input-block">
+                        <select name="id" lay-verify="required" id="id">
+                            <option>请选择产品名称</option>
+                            <option th:each="dgselepds:${dgselepd}"
+                                    th:value="${dgselepds.id}" th:text="${dgselepds.product_name}" >
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <br/>
+                <div class="layui-inline" id="startTime">
+                    <input type="text" class="layui-input" id="test1" placeholder="开始时间" name="startTime">
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <div class="layui-inline" id="endTime">
+                    <input type="text" class="layui-input" id="test2" placeholder="预计结束时间" name="endTime">
+                </div>
+                <br/>
+                <br/>
+                <div  id="selepl" th:each="selepmll:${selepmll}">
+                    <span th:text="${selepmll.mName}"></span>
+                    <input type="hidden"  th:value="${selepmll.id}"  name="materialsId"/>
+                    <input type="text" name="catname" id="catname" required lay-verify="required" placeholder="请输入物料名称" autocomplete="off" class="layui-input"  >
+                    <input type="text" name="numbersl" id="numbersl" required lay-verify="required" placeholder="请输入物料数量" autocomplete="off" class="layui-input" >
+                </div>
     <br/>
     <br/>
-    <div class="layui-inline" id="endTime">
-        <input type="text" class="layui-input" id="test2" placeholder="预计结束时间" name="endTime">
-    </div>
-    <br/>
-    <br/>
-    <div th:each="selepmll:${selepmll}" id="selepl">
-        <span th:text="${selepmll.mName}"></span>
-        <input type="hidden"  th:value="${selepmll.id}"  name="materialsId"/>
-        <input type="text" name="catname" id="catname" required lay-verify="required" placeholder="请输入物料名称" autocomplete="off" class="layui-input"  >
-        <input type="text" name="numbersl" id="numbersl" required lay-verify="required" placeholder="请输入物料数量" autocomplete="off" class="layui-input" >
-        <br/>
-    </div>
+
         <div class="layui-form-item" id="big">
             <label class="layui-form-label">负责人</label>
             <div class="layui-input-block">
@@ -78,7 +103,7 @@
                 </select>
             </div>
         </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item" id="big">
         <label class="layui-form-label">生产数量</label>
         <div class="layui-input-block">
             <input type="text" name="quantity" required  lay-verify="required"  autocomplete="off" class="layui-input" th:each="seleappfor:${seleappfor}" th:value="${seleappfor.number}">

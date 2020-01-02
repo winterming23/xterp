@@ -27,7 +27,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="seleAssmble:${seleAssmble}" height="40px" class="text-c" th:if="${seleAssmble.deleteProd==0 && seleAssmble.qualityTesting==4}">
+    <tr th:each="seleAssmble:${seleAssmble}" height="40px" class="text-c" th:if="${seleAssmble.deleteProd==0 }">
         <td th:text="${seleAssmble.product_name}"></td>
         <td th:text="${seleAssmble.billid}"></td>
         <td th:text="${seleAssmble.workingProcedure}"></td>

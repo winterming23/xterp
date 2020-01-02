@@ -8,7 +8,6 @@ import com.sxt.sys.domain.hjn.Payment;
 import com.sxt.sys.domain.qxs.warehouse.Depot;
 import com.sxt.sys.domain.qxs.warehouse.Materials;
 import com.sxt.sys.domain.vin.Supplier;
-import com.sxt.sys.service.hjn.CostServicel;
 import com.sxt.sys.service.hjn.DetailedServicel;
 import com.sxt.sys.service.hjn.OrderServiceI;
 import com.sxt.sys.service.qxs.warehouse.DepotServiceI;
@@ -40,8 +39,6 @@ public class OrderController {
 
     @Autowired
     private OrderServiceI orderServiceI;
-    @Autowired
-    private CostServicel costServicel;
     @Autowired
     private DetailedServicel detailedServicel;
 

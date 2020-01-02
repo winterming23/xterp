@@ -4,6 +4,7 @@ import com.sxt.sys.domain.hjn.Orders;
 import com.sxt.sys.domain.hjn.Payment;
 import com.sxt.sys.domain.qxs.warehouse.Materials;
 import com.sxt.sys.domain.vin.Supplier;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ public interface OrderServiceI {
      * 查询所有采购订单
      * @return
      */
-    List<HashMap<String, Object>>  findOrders(String orderid, Date createtime);
+    List<HashMap<String, Object>> findOrders(@Param("orderid") String orderid, @Param("createtime") Date createtime);
 
     /**
      * 添加采购订单
@@ -43,7 +44,7 @@ public interface OrderServiceI {
      * @param amount_paid
      * @return
      */
-    int updateOrders(int id, int preferential, int supplierid, int purchaserid, int rebate, int amount_paid);
+    int updateOrders(@Param("id") int id, @Param("preferential") int preferential, @Param("supplierid") int supplierid, @Param("purchaserid") int purchaserid, @Param("rebate") int rebate, @Param("amount_paid") int amount_paid);
 
     //查询所有供应商
     List<Supplier> allSupplier();
@@ -61,5 +62,5 @@ public interface OrderServiceI {
     int getOrders();
 
     //添加明细到仓库入库记录
-    int add(int orderid, Date createtime, int supplierid, int amount_paid, int totalPrice, int paytype, int goodsid, int number);
+    int add(@Param("orderid") int orderid, @Param("createtime") Date createtime, @Param("supplierid") int supplierid, @Param("amount_paid") int amount_paid, @Param("totalPrice") int totalPrice, @Param("paytype") int paytype, @Param("goodsid") int goodsid, @Param("number") int number);
 }

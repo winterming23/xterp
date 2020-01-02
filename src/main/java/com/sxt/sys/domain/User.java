@@ -23,7 +23,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_user")
+@TableName("sys_user") //建立与数据库sys_user表的关系
 @ToString
 public class User implements Serializable {
 
@@ -70,7 +70,7 @@ public class User implements Serializable {
      * 领导名称
      * @return
      */
-    @TableField(exist = false)
+    @TableField(exist = false) //value对应数据库字段 exist=false 当查询数据库不存在这个字段时忽悠这个属性
     private String leadername;
     /**
      * 部门名称

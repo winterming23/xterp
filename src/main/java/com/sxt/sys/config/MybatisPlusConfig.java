@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * mybatisplus的配置类
+ * mybatisplus的分页配置类
  * @author LJH
  *
  */

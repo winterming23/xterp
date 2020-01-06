@@ -60,10 +60,10 @@
                 </button>
             </a>
             <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleAssmble.qualityTesting==4}">
-                <i class="layui-icon">&#xe654;</i>入库中
+                <i class="layui-icon"></i>入库中
             </button>
             <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleAssmble.qualityTesting==3}">
-                <i class="layui-icon">&#xe654;</i>已入库
+                <i class="layui-icon"></i>已入库
             </button>
         </td>
     </tr>
@@ -90,9 +90,9 @@
             var month = now.getMonth() + 1;     //月
             var day = now.getDate();            //日
 
-            var hh = now.getHours();            //时
+           /* var hh = now.getHours();            //时
             var mm = now.getMinutes();          //分
-            var ss = now.getSeconds();           //秒
+            var ss = now.getSeconds();           //秒*/
 
             var clock = year + "-";
 
@@ -106,7 +106,7 @@
 
             clock += day + " ";
 
-            if(hh < 10)
+/*            if(hh < 10)
                 clock += "0";
 
             clock += hh + ":";
@@ -114,10 +114,10 @@
             clock += mm + ":";
 
             if (ss < 10) clock += '0';
-            clock += ss;
+            clock += ss;*/
             return(clock);
         }
-
+        alert(assembyendTime>=CurentTime())
         if (assembyendTime>=CurentTime()){
             $("#bt").show();
         }

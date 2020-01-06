@@ -62,7 +62,6 @@ public class AssmbleController {
 
     /**
      * 添加工序
-     * @param workingProcedure
      * @param prpersonnel
      * @param productionWorkshop
      * @param assembyTime
@@ -70,12 +69,11 @@ public class AssmbleController {
      * @return
      */
     @RequestMapping("inserAssbble")
-    public String inserAssbble(String workingProcedure, Integer prpersonnel, String productionWorkshop, String assembyTime,String assembyendTime,int proid) throws ParseException {
+    public String inserAssbble( Integer prpersonnel, String productionWorkshop, String assembyTime,String assembyendTime,int proid) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = sdf.parse(assembyTime);
         Date date2 = sdf.parse(assembyendTime);
-        System.out.println("++++++++++++++:"+workingProcedure+""+prpersonnel+""+productionWorkshop+""+assembyTime+""+assembyendTime);
-        Assemble assemble = new Assemble(0,workingProcedure,prpersonnel,productionWorkshop,date1,date2,0,proid);
+        Assemble assemble = new Assemble(0,"组装",prpersonnel,productionWorkshop,date1,date2,0,proid);
        boolean a = assembleServiceI.inserAssemble(assemble);
         return "redirect:/seleAssmble";
     }

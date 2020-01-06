@@ -1,7 +1,5 @@
 package com.sxt.sys.service.hjn;
 
-import org.apache.ibatis.annotations.Param;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,7 +15,7 @@ public interface DetailedServicel {
      *
      * @return
      */
-    int addDetailed(@Param("orderid") int orderid, @Param("storehouseid") int storehouseid, @Param("goodsid") int goodsid, @Param("number") int number, @Param("price") int price, @Param("remarks") String remarks);
+    int addDetailed(int id, int storehouseid, int goodsid, int number, int price, String remarks);
 
     /**
      * 查询采购订单的明细
@@ -29,7 +27,7 @@ public interface DetailedServicel {
      * 修改采购订单的明细
      * @return
      */
-    int updateDetailed(@Param("id") int id, @Param("storehouseid") int storehouseid, @Param("goodsid") int goodsid, @Param("number") int number, @Param("price") int price, @Param("remarks") String remarks);
+    int updateDetailed(int id, int storehouseid, int goodsid, int number, int price, String remarks);
 
     /**
      * 删除采购订单的明细

@@ -8,6 +8,7 @@ import com.sxt.sys.domain.hjn.Payment;
 import com.sxt.sys.domain.qxs.warehouse.Depot;
 import com.sxt.sys.domain.qxs.warehouse.Materials;
 import com.sxt.sys.domain.vin.Supplier;
+import com.sxt.sys.service.hjn.CostServicel;
 import com.sxt.sys.service.hjn.DetailedServicel;
 import com.sxt.sys.service.hjn.OrderServiceI;
 import com.sxt.sys.service.qxs.warehouse.DepotServiceI;
@@ -40,6 +41,8 @@ public class OrderController {
     @Autowired
     private OrderServiceI orderServiceI;
     @Autowired
+    private CostServicel costServicel;
+    @Autowired
     private DetailedServicel detailedServicel;
 
     @Autowired
@@ -56,7 +59,7 @@ public class OrderController {
      */
     @ResponseBody
     @RequestMapping("queryOrdersPage")
-    public String queryOrdersPage(String orderId, String createtime, Model model) throws ParseException {
+    public String queryOrdersPage(String orderId, String createtime, Model model,int page,int limit) throws ParseException {
         Date date = null;
         if (createtime!= null && createtime !="") {
             /*simpleDateFormat parse = new simpleDateFormat.parse(createtime);*/
@@ -66,9 +69,13 @@ public class OrderController {
 
         System.out.println(orderId);
         System.out.println(createtime);
+        System.out.println(page+"当前页数");
+        System.out.println(limit+"--------每页显示条数");
+        int ii=(page-1)*limit;
 
         //查询采购订单
-        List<HashMap<String, Object>> listOrders = orderServiceI.findOrders(orderId, date);
+        List<HashMap<String, Object>> listOrders = orderServiceI.findOrders(orderId, date,ii,limit);
+        int listOrdersCount = orderServiceI.findOrdersCount(orderId, date);
         model.addAttribute("listOrders", listOrders);
         for (HashMap h : listOrders) {
             System.out.println(h);
@@ -81,7 +88,6 @@ public class OrderController {
             }else if ((int) h.get("orderstate") == 4) {
                 h.put("orderstatename", "待仓库审核");
             }
-
         }
 
 
@@ -91,9 +97,9 @@ public class OrderController {
         //前台通过key值获得对应的value值
         obj.put("code", 0);
         obj.put("msg", "");
-        obj.put("count", listOrders.size());
+        obj.put("count",listOrdersCount);
         obj.put("data", listOrders);
-        return obj.toJSONString();
+                return obj.toJSONString();
     }
 
     @RequestMapping("queryPage")
@@ -136,6 +142,16 @@ public class OrderController {
         detailedServicel.deleteDetailed(detailed_id);
         System.out.println("哈哈哈哈");
 
+        return null;
+    }
+
+    //删除订单
+    @ResponseBody
+    @RequestMapping("shanchudingdan")
+    public String shanchudingdan(int orderid) {
+
+        System.out.println("删除订单");
+        orderServiceI.deleteOrder(orderid);
         return null;
     }
 
@@ -242,7 +258,7 @@ public class OrderController {
 
         String s= orderId+"";
 
-        List<HashMap<String, Object>> orders = orderServiceI.findOrders(s, null);
+        List<HashMap<String, Object>> orders = orderServiceI.findOrders(s, null,0,5 );
         System.out.println(orders+"-------------------------------明细mingxiShow()");
         model.addAttribute("order",orders.get(0));
         model.addAttribute("orderId",orderId);
@@ -262,7 +278,7 @@ public class OrderController {
     @RequestMapping("xiangqing")
     public String xiangqing(int orderId, Model model){
         String s= orderId+"";
-        List<HashMap<String, Object>> orders = orderServiceI.findOrders(s, null);
+        List<HashMap<String, Object>> orders = orderServiceI.findOrders(s, null,0,5);
         System.out.println(orders+"-------------------------------详情xiangqing()");
         model.addAttribute("order",orders.get(0));
         model.addAttribute("orderId",orderId);
@@ -290,8 +306,8 @@ public class OrderController {
                     //循环添加入库记录
                     date = new Date();
                     int add = orderServiceI.add(Integer.parseInt(id), date, orders.getSupplierid(), orders.getAmount_paid(), alltotal, orders.getPaytype(), Integer.parseInt(h.get("goodsid").toString()), Integer.parseInt(h.get("number").toString()));
-                   int a= orderServiceI.updateState(4,orders.getOrderstate());
                 }
+                int a= orderServiceI.updateState(4,Integer.parseInt(id));
             }
         }
 

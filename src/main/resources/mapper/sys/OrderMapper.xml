@@ -17,7 +17,27 @@
                 and createtime>=#{createtime}
             </if>
         </where>
+        order by createtime desc
+        limit #{pages},#{pageCount}
+
     </select>
 
+
+
+    <select id="findOrdersCount"  resultType="int">
+        select count(*) from Orders
+        <where>
+            <if test="1==1">
+                1=1
+            </if>
+            <if test="orderid !=null and orderid!=''">
+                and  orderId like '%${orderid}%'
+            </if>
+            <if test="createtime!=null">
+                and createtime>=#{createtime}
+            </if>
+        </where>
+
+    </select>
 
 </mapper>

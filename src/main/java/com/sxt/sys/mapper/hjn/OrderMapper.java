@@ -5,10 +5,7 @@ import com.sxt.sys.domain.hjn.Payment;
 import com.sxt.sys.domain.qxs.warehouse.Materials;
 import com.sxt.sys.domain.vin.Product;
 import com.sxt.sys.domain.vin.Supplier;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -32,7 +29,10 @@ public interface OrderMapper {
     /**
      * 条件查询采购订单
      */
-    List<HashMap<String, Object>>  findOrders(@Param("orderid") String orderid, @Param("createtime") Date createtime);
+    List<HashMap<String, Object>>  findOrders(@Param("orderid") String orderid, @Param("createtime") Date createtime, @Param("pages") int pages, @Param("pageCount") int pageCount);
+
+
+    int  findOrdersCount(@Param("orderid") String orderid, @Param("createtime") Date createtime);
 
     /**
      * 条件查询采购订单
@@ -52,7 +52,7 @@ public interface OrderMapper {
      *
      * @return
      */
-    @Update("update Orders set orderstate=#{orderstate} where id=#{id}")
+    @Update("update Orders set orderstate=#{orderstate} where orderId=#{id}")
     int updateState(@Param("orderstate") int orderstate, @Param("id") int id);
 
     /**
@@ -61,6 +61,11 @@ public interface OrderMapper {
      */
     //@Update("update Orders set orderstate=3 where id=#{id}")
     int updateOrderState(int id);
+
+    //删除订单
+    @Delete("delete from Orders   where orderId=#{id}")
+    int deleteOrder(@Param("id") int id);
+
 
     /**
      * 修改采购订单

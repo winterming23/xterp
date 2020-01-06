@@ -113,58 +113,10 @@
 <!-- 添加和修改的弹出层开始 -->
 <div style="display: none;padding: 5px;" id="addOrUpdateDiv">
     <form action="" method="post" class="layui-form layui-form-pane" id="dataFrm" lay-filter="dataFrm">
-        <!--<div class="layui-form-item">-->
-            <!--<div class="layui-inline">-->
-                <!--<label class="layui-form-label">供应商</label>-->
-                <!--<div class="layui-input-inline">-->
-                    <!--<select name="supplierid" id="supplierid"   lay-filter="supplierid">-->
-                        <!--<option value="0">请选择供应商</option>-->
-                    <!--</select>-->
-                    <!--<div class="mydiv" title="不可修改" style="position:absolute;width:100%;height:100%;left:0px;top:0px;background:#fff;opacity:0;filter:alpha(opacity=0)"> </div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="layui-inline">-->
-                <!--<label class="layui-form-label">商品名称</label>-->
-                <!--<div class="layui-input-inline">-->
-                    <!--<select name="productid" id="productid">-->
-                        <!--<option value="0">请选择商品</option>-->
-                    <!--</select>-->
-                    <!--<div class="mydiv" title="不可修改" style="position:absolute;width:100%;height:100%;left:0px;top:0px;background:#fff;opacity:0;filter:alpha(opacity=0)"> </div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="layui-form-item">-->
-                <!--<div class="layui-inline">-->
-                    <!--<label class="layui-form-label">进货数量</label>-->
-                    <!--<div class="layui-input-inline">-->
-                        <!--<input type="hidden" name="id">-->
-                        <!--<input type="text" class="layui-input"  name="number" lay-verify="number" placeholder="请输入商品进货包装">-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="layui-inline">-->
-                    <!--<label class="layui-form-label">进货价格</label>-->
-                    <!--<div class="layui-input-inline">-->
-                        <!--<input type="text" class="layui-input" name="inportprice" lay-verify="number" placeholder="请输入商品进货规格">-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="layui-form-item">-->
-                <!--<label class="layui-form-label">支付类型</label>-->
-                <!--<div class="layui-input-block">-->
-                    <!--<input type="radio" name="paytype" value="1" title="支付宝">-->
-                    <!--<input type="radio" name="paytype" value="2" title="微信">-->
-                    <!--<input type="radio" name="paytype" value="3" title="信用卡">-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="layui-form-item">-->
-                <!--<label class="layui-form-label">进货备注</label>-->
-                <!--<div class="layui-input-block">-->
-                    <!--<textarea  name="remark" class="layui-textarea"></textarea>-->
-                <!--</div>-->
-            <!--</div>-->
+
             <div class="layui-form-item">
                 <div class="layui-input-block" style="text-align: center;">
                     <button type="button" class="layui-btn" lay-submit="" lay-filter="doSubmit" id="doSubmit" ><span class="layui-icon layui-icon-add-1"></span>提交</button>
-                    <!--<button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh-1"></span>重置</button>-->
                 </div>
             </div>
         <!--</div>-->
@@ -233,10 +185,12 @@
     {{# if(d.orderstate==1){ }}
     <button type="button" lay-event="shenhe" class="layui-btn layui-btn-sm" style="width: 120px" ><span class="layui-icon layui-icon-edit" >审核</span></button>
     <button type="button" lay-event="bianji" class="layui-btn layui-btn-sm" style="width: 120px"><span class="layui-icon layui-icon-edit"></span>编辑</button>
+    <button type="button" lay-event="shanchu" class="layui-btn layui-btn-sm layui-btn-danger" style="width: 120px"><span class="layui-icon layui-icon-delete"></span>删除</button>
+
     {{# } }}
     {{# if(d.orderstate==2){ }}
     <button type="button" lay-event="zhuancaigou" class="layui-btn layui-btn-sm"><span class="layui-icon layui-icon-edit" >转采购入库</span></button>
-    <button type="button" lay-event="fanshenhe" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>反审核</button>
+    <button type="button" lay-event="fanshenhe" class="layui-btn layui-btn-sm "><span class="layui-icon layui-icon-delete"></span>反审核</button>
     {{# } }}
     {{# if(d.orderstate==3){ }}
     <button type="button" lay-event="xiangqing" class="layui-btn layui-btn-sm"><span class="layui-icon layui-icon-edit" >详情</span></button>
@@ -324,8 +278,17 @@
             ,url:'queryOrdersPage'
             ,toolbar: '#inportToolBar'//开启头部工具栏，并为其绑定左侧模板
             ,title: '商品进货数据表'
-            ,height:'full-250'
-            ,page: true
+            ,height:'full-280'
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                ,limit:4 //一页显示多少条
+                ,limits:[4,8,12]//每页条数的选择项
+                ,groups: 2 //只显示 2 个连续页码
+                ,first: "首页" //不显示首页
+                ,last: "尾页" //不显示尾页
+
+            }
             ,cols: [ [
                 {field:'orderId', title:'订单编号',align:'center' ,width:'180'}
                 ,{field:'supplier', title:'供应商名称',align:'center',width:'220'}
@@ -391,6 +354,7 @@
             switch(obj.event){
                 case 'shenhe':
                     openShenheInportLayer(data);
+                    window.location.reload()
                     break;
                 case 'fanshenhe':
                     openFanshenheInportLayer(data);
@@ -403,6 +367,9 @@
                     break;
                 case 'xiangqing':
                     xiangqing(data);
+                    break;
+                case 'shanchu':
+                    shanchu(data);
                     break;
 
             };
@@ -484,7 +451,7 @@
                 success:function(){
                     $("#dataFrm")[0].reset();
                     //装载新的数据
-                    url="shenhe?orderid="+data.id+"&&orderstate="+2;
+                    url="shenhe?orderid="+data.orderId+"&&orderstate="+2;
                     //禁用供应商和商品的下拉框
                     $(".mydiv").show();
 
@@ -532,7 +499,7 @@
                 success:function(){
                     $("#dataFrm")[0].reset();
                     //装载新的数据
-                    url="shenhe?orderid="+data.id+"&&orderstate="+1;
+                    url="shenhe?orderid="+data.orderId+"&&orderstate="+1;
                     //禁用供应商和商品的下拉框
                     $(".mydiv").show();
 
@@ -580,7 +547,36 @@
         }
 
         function openadd(){
-            $.post("mingxiS")
+            mainIndex=layer.open({
+                type:1,
+                content:$("#addOrUpdateDiv"),
+                area:['200px','150px'],
+                title:'是否生成一条订单记录',
+                success:function(){
+                    //装载新的数据
+                    url="mingxiS";
+                    //禁用供应商和商品的下拉框
+
+                }
+            });
+
+        }
+
+        function shanchu(data){
+            mainIndex=layer.open({
+                type:1,
+                content:$("#addOrUpdateDiv"),
+                area:['200px','150px'],
+                title:'是否删除此订单',
+                success:function(){
+
+                    //装载新的数据
+                    url="shanchudingdan?orderid="+data.orderId;
+                    //禁用供应商和商品的下拉框
+
+
+                }
+            });
         }
 
         //自定义验证规则

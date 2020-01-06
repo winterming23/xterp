@@ -51,7 +51,11 @@ public class AssmbleController {
     @RequestMapping("seledepi")
     public String seledepi(int id, HttpServletRequest request){
         List<HashMap> list1 = assembleServiceI.seleDep(id);
+        List<HashMap> list = assembleServiceI.seleDepqb(id);
+        List<HashMap> list2 = assembleServiceI.seleDepqba(id);
         request.setAttribute("seleDep",list1);
+        request.setAttribute("seleDepqb",list);
+        request.setAttribute("seleDepqba",list2);
         System.out.println(list1);
         return "system/zqw/seledeph";
     }

@@ -4,6 +4,7 @@ package com.sxt.sys.service.zqw;
 import com.sxt.sys.domain.qxs.warehouse.Depothead;
 import com.sxt.sys.domain.zqw.Assemble;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,4 +49,16 @@ public interface AssembleServiceI {
      * @return
      */
     boolean inserDepths(Depothead depothead);
+    /**
+     * 根据编号查询领料的数据行数
+     * @param id
+     * @return
+     */
+    List<HashMap> seleDepqb(int id);
+    /**
+     * 根据编号查询领料的数据行数
+     * @param id
+     * @return
+     */
+    List<HashMap> seleDepqba(int id);
 }

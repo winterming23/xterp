@@ -55,4 +55,14 @@ public class AssembleServiceImpl implements AssembleServiceI {
     public boolean inserDepths(Depothead depothead) {
         return  assembleMapper.inserDepths(depothead);
     }
+
+    @Override
+    public List<HashMap> seleDepqb(int id) {
+        return assembleMapper.seleDepqb(id);
+    }
+
+    @Override
+    public List<HashMap> seleDepqba(int id) {
+        return assembleMapper.seleDepqba(id);
+    }
 }

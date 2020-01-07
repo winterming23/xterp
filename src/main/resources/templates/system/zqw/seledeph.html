@@ -23,7 +23,10 @@
         <th>单据编号</th>
         <th>物料名称</th>
         <th>所需数量</th>
+<<<<<<< HEAD
         <th>操作</th>
+=======
+>>>>>>> zqw1
     </tr>
     </thead>
     <tbody>
@@ -38,8 +41,15 @@
             <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDep.Status==1}">
                 <i class="layui-icon">&#xe654;</i>领料成功
             </button>
+<<<<<<< HEAD
             <input type="hidden" name="he" th:value="${seleDep.Status}" id="status" />
         </td>-->
+=======
+        </td>-->
+    </tr>
+    <tr th:each="seleDepqb:${seleDepqb}">
+        <td th:text="${seleDepqb.countt}" id="countt"></td>
+>>>>>>> zqw1
         <td>
             <a th:href="@{/selePri(id=${seleDep.deid})}"  id="gx" >
                 <button type="button" class="layui-btn layui-btn layui-btn-sm" >

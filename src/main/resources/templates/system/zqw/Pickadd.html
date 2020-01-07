@@ -12,12 +12,14 @@
         h3{
             margin-left: 300px;
         }
+        form{
+            width: 500px;
+        }
     </style>
 
 </head>
 <body>
 <form class="layui-form" action="inserPickingd" method="post">
-     <h3  th:each="seleDgProduct:${seleDgProduct}" th:text="${seleDgProduct.product_name+'-领料'}"></h3>
     <div class="layui-form-item" th:each="seleDgPick:${seleDgPick}">
         <input type="hidden"  th:value="${seleDgPick.id}"  name="productionid"/>
         <input type="hidden"  th:value="${seleDgPick.piid}"  name="pickingNo"/>

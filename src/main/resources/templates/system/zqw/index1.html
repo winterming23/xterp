@@ -53,14 +53,19 @@
         td{
             white-space:nowrap;
         }
+        #selepmll{
+            margin-left: 0px;
+        }
+        #numbersl{
+            width: 260px;
+            margin-left: 110px;
+        }
     </style>
     <script src="/static/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-<h3>添加生产计划</h3>
 <form class="layui-form" method="post" action="insernum" id="insernum">
-
-                <div class="layui-form-item" id="big">
+                <!--<div class="layui-form-item" id="big">
                     <label class="layui-form-label">产品名称</label>
                     <div class="layui-input-block">
                         <select name="id" lay-verify="required" id="id">
@@ -70,8 +75,12 @@
                             </option>
                         </select>
                     </div>
-                </div>
-                <br/>
+                </div>-->
+    <label class="layui-form-label">产品名称</label>
+    <input type="text" name="id"  th:each="dgselepds:${dgselepd}"  th:value="${dgselepds.product_name}" id="big" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 260px">
+    <input  type="hidden"  th:each="dgselepds:${dgselepd}"th:value="${dgselepds.id}"/>
+    <br/>
+    <br/>
                 <div class="layui-inline" id="startTime">
                     <input type="text" class="layui-input" id="test1" placeholder="开始时间" name="startTime">
                 </div>
@@ -83,15 +92,26 @@
                 </div>
                 <br/>
                 <br/>
-                <div  id="selepl" th:each="selepmll:${selepmll}">
-                    <span th:text="${selepmll.mName}"></span>
-                    <input type="hidden"  th:value="${selepmll.id}"  name="materialsId"/>
-                    <input type="text" name="catname" id="catname" required lay-verify="required" placeholder="请输入物料名称" autocomplete="off" class="layui-input"  >
-                    <input type="text" name="numbersl" id="numbersl" required lay-verify="required" placeholder="请输入物料数量" autocomplete="off" class="layui-input" >
+                <div  id="selepmll" th:each="selepmll:${selepmll}">
+
+                    <div class="layui-form-item" id="big">
+                        <div class="layui-input-block">
+                            <span th:text="${selepmll.mName}"></span>
+                            <select name="" lay-verify="required" id="id">
+                                <option th:text="${'请选择'+selepmll.mName}"></option>
+                                <option th:text="${selepmll.designation}" name="catname">
+                                </option>
+                            </select>
+                        </div>
+                        <br/>
+                        <input type="text" name="numbersl" id="numbersl" required lay-verify="required" placeholder="请输入物料数量" autocomplete="off" class="layui-input" >
+                    </div>
+
+                    <input type="hidden"  th:value="${selepmll.id}"  name="materialsId" id="materialsId"/>
+                    <!--<input type="text" name="catname" th:value="${selepmll.designation}" id="catname" required lay-verify="required" placeholder="请输入物料名称" autocomplete="off" class="layui-input"  >-->
+
                 </div>
     <br/>
-    <br/>
-
         <div class="layui-form-item" id="big">
             <label class="layui-form-label">负责人</label>
             <div class="layui-input-block">
@@ -182,6 +202,11 @@
             });
         });
     })*/
+</script>
+<script>
+    $(function () {
+        $("#materialsId").hide();
+    })
 </script>
 </body>
 </html>

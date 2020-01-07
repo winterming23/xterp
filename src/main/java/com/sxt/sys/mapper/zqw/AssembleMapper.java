@@ -53,7 +53,7 @@ public interface AssembleMapper {
      * @return
      */
     @Select("SELECT depothead.*,dispatchedworker.id as deid, number.* from number,depothead,dispatchedworker WHERE\n" +
-            "depothead.number=dispatchedworker.billid and number.materialsId=depothead.materialId")
+            "depothead.number=dispatchedworker.billid and number.materialsId=depothead.materialId and depothead.status='1' ")
     List<HashMap> seleDep(int id);
     /**
      * 根据编号查询领料的数据行数

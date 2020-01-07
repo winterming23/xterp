@@ -248,8 +248,8 @@
 
 
 <script type="text/javascript">
-
-    $("#shuaxin").click(function () {
+    sx();
+    function sx() {
         $.post('selectTatol?orderId='+[[${orderId}]],"json",function (data) {
             var rebate=$("#rebate").val();
             //折扣率
@@ -276,7 +276,9 @@
 
         })
 
-    })
+    }
+
+    $("#shuaxin").click(sx());
 
     //加载订单明细仓库的下拉框
         function cangku(dataa){

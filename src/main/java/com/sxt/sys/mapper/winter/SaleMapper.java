@@ -79,7 +79,8 @@ public interface SaleMapper {
     @Select(" select s.id saleId,s.userid userId,su.id suId,su.supplier suName," +
             " su.accountNumber account,s.money money,s.reality reality,s.commission commission from sale s " +
             " LEFT JOIN supplier su on s.clientId=su.id" +
-            " where s.state=1 or s.state=2 and su.type='客户' and su.delete_flag=0  and s.deleteFlag=0 and s.finance=0")
+            " where s.state=1 and su.type='客户' and su.delete_flag=0  and s.deleteFlag=0 and s.finance=0" +
+            " or s.state=2 and su.type='客户' and su.delete_flag=0  and s.deleteFlag=0 and s.finance=0 ")
     List<HashMap> salesProceeds();
 
     /**

@@ -22,7 +22,13 @@ public interface OrderServiceI {
      */
     List<HashMap<String, Object>>  findOrders(String orderid, Date createtime, int pages, int pageCount);
 
+    List<HashMap<String, Object>>  findOrderstuihuo(String orderid, Date createtime, int pages, int pageCount);
+
+
     int  findOrdersCount(String orderid, Date createtime);
+
+    int  findOrdersCounttuihuo(String orderid, Date createtime);
+
     /**
      * 添加采购订单
      * @return
@@ -67,4 +73,6 @@ public interface OrderServiceI {
 
     //删除订单
     int deleteOrder(int orderid);
+
+    int tuihuoshouru(int supplierid, int amount_paid, int userid);
 }

@@ -38,9 +38,19 @@ public class OrderServiceImpl implements OrderServiceI {
         return list;
     }
 
+    public List<HashMap<String, Object>>  findOrderstuihuo(String orderid, Date createtime,int pages,int pageCount) {
+        List<HashMap<String, Object>>  list=orderMapper.findOrderstuihuo(orderid,createtime ,pages,pageCount);
+        return list;
+    }
+
     @Override
     public int findOrdersCount(String orderid, Date createtime) {
-        return orderMapper.findOrdersCount(orderid,createtime );
+        return orderMapper.findOrdersCount(orderid,createtime);
+    }
+
+    @Override
+    public int findOrdersCounttuihuo(String orderid, Date createtime) {
+        return orderMapper.findOrdersCounttuihuo(orderid,createtime );
     }
 
     /**
@@ -108,6 +118,11 @@ public class OrderServiceImpl implements OrderServiceI {
     @Override
     public int deleteOrder(int orderid) {
         return orderMapper.deleteOrder(orderid);
+    }
+
+    @Override
+    public int tuihuoshouru(int supplierid, int amount_paid,  int userid) {
+        return orderMapper.tuihuoshouru(supplierid,amount_paid,new Date(),userid);
     }
 
 }

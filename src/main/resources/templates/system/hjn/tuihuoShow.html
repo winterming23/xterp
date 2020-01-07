@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-   <!--// <link rel="icon" href="/favicon.ico">-->
+    <!--// <link rel="icon" href="/favicon.ico">-->
     <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
     <link rel="stylesheet" href="/resources/css/public.css" media="all" />
 </head>
@@ -116,7 +116,7 @@
             <div class="layui-form-item">
                 <div class="layui-input-block" style="text-align: center;">
 
-                    <button type="button" class="layui-btn" lay-submit="" lay-filter="" id="shuaxin" ><span class="layui-icon layui-icon-add-1"></span>刷新金额</button>
+                    <button type="button"  class="layui-btn" lay-submit="" lay-filter="" id="shuaxin" ><span class="layui-icon layui-icon-add-1"></span>退货退款</button>
 
                 </div>
             </div>
@@ -229,8 +229,8 @@
 
 
 <script type="text/javascript">
-
     sx();
+
     function sx() {
         $.post('selectTatol?orderId='+[[${orderId}]],"json",function (data) {
             var rebate=$("#rebate").val();
@@ -247,10 +247,10 @@
             //总价格
             $("#total").val(data);
 
-            var a=parseInt(total_tax)+parseInt(data);
+            var a=parseFloat(total_tax)+parseFloat(data);
             //应付金额
 
-            $("#yinfu").val(parseInt(a*ra-parseInt(preferential)));
+            $("#yinfu").val(a*ra-parseInt(preferential));
 
             //已付金额
             var yifu=$("#amount_paid").val();
@@ -260,9 +260,11 @@
 
     }
 
-    $("#shuaxin").click(sx());
+    $("#shuaxin").click(function (){
+        window.location.href("tuihuoOrders?orderid="+[[${orderId}]]);
+    });
 
-  //加载订单明细仓库的下拉框
+    //加载订单明细仓库的下拉框
     function cangku(dataa){
 
         $.post('findAllDepot',"json",function (data) {
@@ -286,7 +288,7 @@
         );
     }
 
-  //加载订单明细中商品的下拉框
+    //加载订单明细中商品的下拉框
     function lingjian(dataa) {
         $.post('selectMaterials', "json", function (data) {
                 $("#product_name option").remove();
@@ -309,12 +311,12 @@
 
 
 
-  //加载供应商下拉列表
+    //加载供应商下拉列表
     $.post('findSupplier',"json",function (data) {
             $("#supplierid option").remove();
 
             for (var i=0;i<data.length;i++) {
-              //var a = "<option  value=" + data[i].id + ">"+ data[i].name + "</option>";
+                //var a = "<option  value=" + data[i].id + ">"+ data[i].name + "</option>";
                 if(data[i].id=[[${order.supplierid}]])
                     $("#supplierid").append("<option selected  value=" + data[i].id + ">"+ data[i].supplier + "</option>");
                 else
@@ -325,12 +327,12 @@
         }
     );
 
-  //加载付款方式下拉列表
+    //加载付款方式下拉列表
     $.post('findPayment',"json",function (data) {
             $("#paytype option").remove();
 
             for (var i=0;i<data.length;i++) {
-              //var a = "<option  value=" + data[i].id + ">"+ data[i].name + "</option>";
+                //var a = "<option  value=" + data[i].id + ">"+ data[i].name + "</option>";
                 if(data[i].id=[[${order.paytype}]])
                     $("#paytype").append("<option selected value=" + data[i].id + ">"+ data[i].type + "</option>");
                 else
@@ -342,25 +344,25 @@
 
 
 
-  // / function selectProduct(){
-  // /     var selectProduct = '<select>';
-  // /     $.ajax({
-  // /         url: 'selectProduct',
-  // /         type: 'post',
-  // /         async: false,
-  // /         success: function (data) {
-  // /             for (k in data) {
-  // /
-  // /                     selectProduct += '<option  value=' + data[k].id + '>' + data[k].name + '</option>';
-  // /
-  // /
-  // /
-  // /             }
-  // /             selectProduct += '</select>';
-  // /         }
-  // /     });
-  // /     return selectProduct;
-  // / }
+    // / function selectProduct(){
+    // /     var selectProduct = '<select>';
+    // /     $.ajax({
+    // /         url: 'selectProduct',
+    // /         type: 'post',
+    // /         async: false,
+    // /         success: function (data) {
+    // /             for (k in data) {
+    // /
+    // /                     selectProduct += '<option  value=' + data[k].id + '>' + data[k].name + '</option>';
+    // /
+    // /
+    // /
+    // /             }
+    // /             selectProduct += '</select>';
+    // /         }
+    // /     });
+    // /     return selectProduct;
+    // / }
 
 
 </script>
@@ -375,13 +377,13 @@
         var table=layui.table;
         var layer=layui.layer;
         var laydate=layui.laydate;
-      //渲染时间选择器
+        //渲染时间选择器
         laydate.render({
             elem:'.createtime'
         });
 
 
-      //加载 数据
+        //加载 数据
         tableIns=table.render({
             elem: '#inportTable'
             ,url:'queryDetailed?orderid='+[[${orderId}]]
@@ -420,7 +422,7 @@
 
 
 
-      //模糊查询
+        //模糊查询
         form.on("submit(doSearch)",function(data){
             tableIns.reload({
                 where:data.field,
@@ -431,7 +433,7 @@
             return false;
         });
 
-      //监听工具条的事件
+        //监听工具条的事件
         table.on("toolbar(inportTable)",function(obj){
             switch(obj.event){
                 case 'add':
@@ -441,7 +443,7 @@
         }) ;
 
 
-      //监听行工具条的事件
+        //监听行工具条的事件
         table.on("tool(inportTable)",function(obj){
             var data = obj.data/获得当前行数据
             switch(obj.event){
@@ -456,7 +458,7 @@
         var mainIndex;
         var url;
 
-      //打开修改的弹出层
+        //打开修改的弹出层
         function openUpdateUserLayer(data){
             mainIndex=layer.open({
                 type:1,
@@ -468,7 +470,7 @@
                     lingjian(data);
                     $("#HdataFrm")[0].reset();
                     $("#detailed_id").val("");
-                  //装载新的数据
+                    //装载新的数据
                     form.val("HdataFrm",data);
 
                     url="updateDetailed?detailed_id="+data.detailed_id;
@@ -477,7 +479,7 @@
         }
 
 
-      //打开添加的弹出层
+        //打开添加的弹出层
         function openAddUserLayer(data){
             mainIndex=layer.open({
                 type:1,
@@ -489,13 +491,13 @@
                     lingjian(data);
                     $("#HdataFrm")[0].reset();
                     $("#detailed_id").val("");
-                  //装载新的数据
+                    //装载新的数据
                     form.val("HdataFrm",data);
-                  // /选中之前的所属部门  nodeId=data.deptid;
-                  // / dtree.dataInit("deptTree", data.detailed_id);
-                  // / dtree.setSelectValue("deptTree");
-                  // / //选中领导部门
-                  // / var leaderid=data.product_name;
+                    // /选中之前的所属部门  nodeId=data.deptid;
+                    // / dtree.dataInit("deptTree", data.detailed_id);
+                    // / dtree.setSelectValue("deptTree");
+                    // / //选中领导部门
+                    // / var leaderid=data.product_name;
                     url="addDetailed?detailed_id="+[[${orderId}]];
                 }
             });
@@ -503,7 +505,7 @@
 
 
 
-      //初始化添加和修改页面的下拉列表
+        //初始化添加和修改页面的下拉列表
         function initProviderSelect(supplierid){
             var dom=$("#productid");
             dom.html("");
@@ -515,7 +517,7 @@
                     html+='<option value="'+item.id+'">'+item.supplier+'</option>'
                 });
                 dom.html(html);
-              //如果supplierid有值就反选
+                //如果supplierid有值就反选
                 if(supplierid!=undefined){
                     dom.val(supplierid);
                 }
@@ -523,13 +525,13 @@
             });
         }
 
-      //监听添加页面的供应商下拉框的改变事件
+        //监听添加页面的供应商下拉框的改变事件
         form.on('select(supplierid)', function(data){
             var supplierid=data.value;
             initGoodsSelect(supplierid);
         });
 
-      //加载商品下拉列表
+        //加载商品下拉列表
         function initGoodsSelect(supplierid,productid){
             $.get("loadGoodsBysupplierid",{supplierid:supplierid},function(res){
                 var data=res.data;
@@ -539,7 +541,7 @@
                     html+='<option value="'+item.id+'">'+item.goodsname+'-'+item.size+'['+item.providername+']</option>'
                 });
                 dom.html(html);
-              //如果productid有值就反选
+                //如果productid有值就反选
                 if(productid!=undefined){
                     dom.val(productid);
                 }
@@ -551,7 +553,7 @@
 
 
 
-      //打开删除明细的弹出层
+        //打开删除明细的弹出层
         function openshanchumingxiInportLayer(data){
 
             mainIndex=layer.open({
@@ -561,9 +563,9 @@
                 title:'删除明细',
                 success:function(){
 
-                  //装载新的数据
+                    //装载新的数据
                     url="shanchumingxi?detailed_id="+data.detailed_id;
-                  //禁用供应商和商品的下拉框
+                    //禁用供应商和商品的下拉框
                 }
             });
         }
@@ -599,7 +601,7 @@
 
 
 
-      //自定义验证规则
+        //自定义验证规则
         form.verify({
             checknumber: function(value){
                 var currentnumber=parseInt($("#currentnumber").val());
@@ -609,7 +611,7 @@
             }
         });
 
-      //退货提交
+        //退货提交
         form.on("submit(doBackSubmit)",function(data){
             $.post("/outport/addOutport",data.field,function(res){
                 if(res.code==200){

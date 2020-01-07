@@ -1,6 +1,7 @@
 package com.sxt.sys.mapper.qxs.finance;
 
 import com.sxt.sys.domain.qxs.finance.Income;
+import com.sxt.sys.domain.vin.Supplier;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -97,4 +98,20 @@ public interface IncomeMapper {
      */
     @Update("update income set stateClose=#{stateClose} ")
     boolean updateStateClose(Integer stateClose);
+
+    /**
+     * 根据id查询供应商
+     * @param clientId
+     * @return
+     */
+    @Select("select * from supplier where id=#{clientId}")
+    Supplier querySupplier(Integer clientId);
+
+    /**
+     * 根据供应商编号修改订单表状态
+     * @param clientId
+     * @return
+     */
+    @Update("update orders set orderstate=9 where supplierid=#{clientId}")
+    boolean upOrders(Integer clientId);
 }

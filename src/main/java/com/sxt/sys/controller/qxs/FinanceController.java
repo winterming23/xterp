@@ -121,7 +121,7 @@ public class FinanceController {
      */
     @RequestMapping("affirm")
     @ResponseBody
-    public boolean affirm(Integer confirm_receipt,Integer id,String type){
+    public boolean affirm(Integer confirm_receipt,Integer id,String type,Integer clientId){
         System.err.println(confirm_receipt+"=="+id+"=="+type);
         if("支出".equals(type)){
             Expenditure expenditure = new Expenditure();
@@ -134,7 +134,7 @@ public class FinanceController {
             income.setConfirmReceipt(confirm_receipt);
             income.setIncomeId(id);
             System.err.println(income);
-            return incomeServiceI.confirmation(income);
+            return incomeServiceI.confirmation(income,clientId);
         }
         return false;
     }

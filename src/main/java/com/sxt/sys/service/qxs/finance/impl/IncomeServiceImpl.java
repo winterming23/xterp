@@ -2,6 +2,7 @@ package com.sxt.sys.service.qxs.finance.impl;
 
 import com.sxt.sys.domain.qxs.finance.FinancialSettlement;
 import com.sxt.sys.domain.qxs.finance.Income;
+import com.sxt.sys.domain.vin.Supplier;
 import com.sxt.sys.mapper.hjn.OrderMapper;
 import com.sxt.sys.mapper.qxs.finance.FinancialSettlementMapper;
 import com.sxt.sys.mapper.qxs.finance.IncomeMapper;
@@ -70,7 +71,11 @@ public class IncomeServiceImpl implements IncomeServiceI {
      * @return
      */
     @Override
-    public boolean confirmation(Income income) {
+    public boolean confirmation(Income income,Integer clientId) {
+        Supplier supplier = incomeMapper.querySupplier(clientId);
+        if("供应商".equals(supplier.getType())){
+            incomeMapper.upOrders(clientId);
+        }
         return incomeMapper.confirmation(income);
     }
 

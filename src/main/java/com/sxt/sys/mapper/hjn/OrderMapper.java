@@ -31,8 +31,13 @@ public interface OrderMapper {
      */
     List<HashMap<String, Object>>  findOrders(@Param("orderid") String orderid, @Param("createtime") Date createtime, @Param("pages") int pages, @Param("pageCount") int pageCount);
 
+    List<HashMap<String, Object>>  findOrderstuihuo(@Param("orderid") String orderid, @Param("createtime") Date createtime, @Param("pages") int pages, @Param("pageCount") int pageCount);
+
 
     int  findOrdersCount(@Param("orderid") String orderid, @Param("createtime") Date createtime);
+
+    int  findOrdersCounttuihuo(@Param("orderid") String orderid, @Param("createtime") Date createtime);
+
 
     /**
      * 条件查询采购订单
@@ -85,7 +90,7 @@ public interface OrderMapper {
 
 
     //查询所有供应商
-    @Select("select * from Supplier")
+    @Select("select * from Supplier where type='供应商'")
     List<Supplier> allSupplier();
     //查询所有商品
     @Select("select * from product")
@@ -108,7 +113,8 @@ public interface OrderMapper {
             " o.purchaserid as pid,o.total as total,o.amount_paid as amount,ct.costtype as costType,ct.costprice as costPrice " +
             " from orders o LEFT JOIN cost ct ON o.costid=ct.id " +
             " LEFT JOIN supplier sl on o.supplierid=sl.id" +
-            " where o.orderstate=2 and sl.type='供应商' and sl.delete_Flag=0 and o.finance=0 ")
+            " where o.orderstate=4 and sl.delete_Flag=0 and o.finance=0" +
+            " or o.orderstate=3 and sl.delete_Flag=0 and o.finance=0")
     List<HashMap> incurExpense();
 
     /**
@@ -160,5 +166,13 @@ public interface OrderMapper {
      */
     @Select("select sum(price*number) from detailed where orderid=#{orderid} group by orderid")
     int  getTatol(@Param("orderid") Integer orderid);
+
+    /**
+     * 添加收入记录表
+     * @param
+     * @return
+     */
+    @Insert("insert into income values(null,#{supplierid},0,#{amount_paid},0,#{date},0,null,#{userid},0,null,1)")
+    int  tuihuoshouru(@Param("supplierid") int supplierid, @Param("amount_paid") int amount_paid, @Param("date") Date date, @Param("userid") int userid);
 
 }

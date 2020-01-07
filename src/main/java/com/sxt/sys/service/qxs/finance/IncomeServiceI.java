@@ -41,7 +41,7 @@ public interface IncomeServiceI {
      * @param income
      * @return
      */
-    boolean confirmation(Income income);
+    boolean confirmation(Income income,Integer clientId);
 
     /**
      * 修改收入记录

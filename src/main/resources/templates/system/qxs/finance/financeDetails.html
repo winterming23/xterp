@@ -111,7 +111,7 @@
                         <td th:text="${in.deleteFlag==0?'正常':'已删除'}"></td>
                         <td th:text="${in.stateClose==0?'未结算':'已结算'}"></td>
                         <td>
-                            <button th:onclick="|affirm('${in.incomeId} ',1)|" id="sk" th:if="${in.confirmReceipt==0}" class="layui-btn layui-btn-radius layui-btn-warm">
+                            <button th:onclick="|affirm('${in.incomeId} ',1,'${in.clientId}')|" id="sk" th:if="${in.confirmReceipt==0}" class="layui-btn layui-btn-radius layui-btn-warm">
                                 确定收款
                             </button>
                             <samp th:if="${in.confirmReceipt==1}">已收款</samp>
@@ -144,7 +144,7 @@
         aLengthMenu:[5,10]
     });
     // 确认收付款
-    function affirm(id,price) {
+    function affirm(id,price,clientId) {
         //debugger;
         var affirmId = id;
         //alert(id+"===="+price)
@@ -155,7 +155,7 @@
                     url:'/finance/affirm',
                     dataType:'json',
                     type:'post',
-                    data:{'confirm_receipt':1,'id':affirmId,'type':'支出'},
+                    data:{'confirm_receipt':1,'id':affirmId,'type':'支出','clientId':clientId},
                     success:function (resp) {
                         debugger;
                         if(resp){
@@ -176,7 +176,7 @@
                     url:'/finance/affirm',
                     dataType:'json',
                     type:'post',
-                    data:{'confirm_receipt':1,'id':affirmId,'type':'收入'},
+                    data:{'confirm_receipt':1,'id':affirmId,'type':'收入','clientId':clientId},
                     success:function (resp) {
                         if(resp){
                             alert('已收款');

@@ -354,7 +354,7 @@
             switch(obj.event){
                 case 'shenhe':
                     openShenheInportLayer(data);
-                    window.location.reload()
+
                     break;
                 case 'fanshenhe':
                     openFanshenheInportLayer(data);
@@ -370,6 +370,9 @@
                     break;
                 case 'shanchu':
                     shanchu(data);
+                    break;
+                case 'tuihuo':
+                    tuihuo(data);
                     break;
 
             };
@@ -541,9 +544,13 @@
             window.location.href="mingxiShow?orderId="+data.orderId;
         }
 
-        //打开采购订单编辑的网址
+        //打开采购订单详情的网址
         function xiangqing(data){
             window.location.href="xiangqing?orderId="+data.orderId;
+        }
+//打开采购订单退货的网址
+        function tuihuo(data){
+            window.location.href="tuihuo?orderId="+data.orderId;
         }
 
         function openadd(){

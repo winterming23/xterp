@@ -91,7 +91,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">部门地址</label>
 			<div class="layui-input-block">
-				<input type="text" name="address" lay-verify="required" autocomplete="off" placeholder="请输入部门地址" class="layui-input">
+				<input type="text" name="address"  autocomplete="off" placeholder="请输入部门地址" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -124,7 +124,7 @@
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block" style="text-align: center;">
-				<button type="button" class="layui-btn" lay-submit="" id="doSubmit" ><span class="layui-icon layui-icon-add-1"></span>提交</button>
+				<button type="button" class="layui-btn" lay-submit="" lay-filter="doSubmit" id="doSubmit" ><span class="layui-icon layui-icon-add-1"></span>提交</button>
 				<button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh-1"></span>重置</button>
 			</div>
 		</div>
@@ -251,7 +251,7 @@
                 }
             });
         }
-        $("#doSubmit").click(function(){
+     /*   $("#doSubmit").click(function(){
             var data=$("#dataFrm").serialize();
             $.post(url,data,function(res){
                 if(res.code==200){
@@ -264,6 +264,21 @@
                 layer.msg(res.msg);
                 layer.close(mainIndex);
             })
+        })*/
+        form.on("submit(doSubmit)",function(data){
+            //var data=$("#dataFrm").serialize();
+            $.post(url,data.field,function(res){
+                if(res.code==200){
+                    tableIns.reload();
+                    //刷新下拉树
+                    selectTree.reload();
+                    //刷新左边的部门树
+                    window.parent.left.deptTree.reload();
+                }
+                layer.msg(res.msg);
+                layer.close(mainIndex);
+            })
+            return false;
         })
         //删除
         function deleteDept(data){

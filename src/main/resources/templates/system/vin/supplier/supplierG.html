@@ -103,39 +103,37 @@
             $(this).addClass("s1").siblings().removeClass("s1");
         });
         $("#btnDelete").click(function () {//删除多条
-             debugger;
-            var checkids = [];
-            var data = [];
-            $("input[name='ckb']:checked").each(function (i) {
-                checkids[i] = $(this).val();
-            });
-            if (checkids.length <= 0) {
-                alert("请选择一条需要被删除的数据")
-            } else {
-                $("#tbo").find(":checkbox:checked").each(function () {
-                    var supid = $(this).parents().children().children(".supid").val();
-                     alert(supid);
-                    data.push(supid);
-                    $.ajax({
-                        url: "deleteSuppliersG",
-                        dateType: "json",
-                        type: "post",
-                        data: {"supid": supid},
-                        success: function (resp) {
-                            debugger;
-                            if (resp != null || resp != "") {
-                                alert("成功");
-                                location.href = "getAllSupplierG";
-                            } else {
-                                alert("失败")
-                            }
-                        }
-                    });
+            if(confirm('是否确定删除!')) {
+                var checkids = [];
+                var data = [];
+                $("input[name='ckb']:checked").each(function (i) {
+                    checkids[i] = $(this).val();
                 });
+                if (checkids.length <= 0) {
+                    alert("请选择一条需要被删除的数据")
+                } else {
+                    $("#tbo").find(":checkbox:checked").each(function () {
+                        var supid = $(this).parents().children().children(".supid").val();
+                        data.push(supid);
+                        $.ajax({
+                            url: "deleteSuppliersG",
+                            dateType: "json",
+                            type: "post",
+                            data: {"supid": supid},
+                            success: function (resp) {
+                                if (resp != null || resp != "") {
+                                    alert("成功");
+                                    location.href = "getAllSupplierG";
+                                } else {
+                                    alert("失败")
+                                }
+                            }
+                        });
+                    });
+                }
             }
         });
         $("#btnOpen").click(function () {
-             debugger;
             var checkids = [];
             var data = [];
             $("input[name='ckb']:checked").each(function (i) {
@@ -147,7 +145,6 @@
                 if(confirm('是否确定启用该产品!')) {
                     $("#tbo").find(":checkbox:checked").each(function () {
                         var supid = $(this).parents().children().children(".supid").val();
-                        alert(supid);
                         data.push(supid);
                         $.ajax({
                             url: "updateSupplierStateT",
@@ -169,7 +166,6 @@
             }
         });
         $("#btnClose").click(function () {
-             debugger;
             var checkids = [];
             var data = [];
             $("input[name='ckb']:checked").each(function (i) {
@@ -181,7 +177,6 @@
                 if(confirm('是否确定禁用该产品!')) {
                     $("#tbo").find(":checkbox:checked").each(function () {
                         var supid = $(this).parents().children().children(".supid").val();
-                        alert(supid);
                         data.push(supid);
                         $.ajax({
                             url: "updateSupplierStateF",

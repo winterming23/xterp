@@ -32,7 +32,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">产品类别：</label>
         <div class="layui-input-block">
-            <input type="text" id="product_type_name" autocomplete="off" class="layui-input" required="required" readonly="readonly">
+            <input type="text" id="product_type_name" autocomplete="off" class="layui-input" required="required" readonly="readonly" th:value="${product.product_type==1?'游戏本':'商务本'}">
             <input type="hidden" id="proType" name="product_type">
         </div>
     </div>
@@ -45,25 +45,25 @@
     <div class="layui-form-item">
         <label class="layui-form-label">零售价：</label>
         <div class="layui-input-block">
-            <input type="text" name="retail_price" id="retail_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required" th:value="${product.product_unit}">
+            <input type="text" name="retail_price" id="retail_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required" th:value="${product.retail_price}">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">最低售价：</label>
         <div class="layui-input-block">
-            <input type="text" name="min_price" id="min_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required" th:value="${product.product_unit}">
+            <input type="text" name="min_price" id="min_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required" th:value="${product.min_price}">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">成本价：</label>
         <div class="layui-input-block">
-            <input type="text" name="cost_price" id="cost_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required" th:value="${product.product_unit}">
+            <input type="text" name="cost_price" id="cost_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required" th:value="${product.cost_price}">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">销售价格：</label>
         <div class="layui-input-block">
-            <input type="text" name="trade_price" id="trade_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required" th:value="${product.product_unit}">
+            <input type="text" name="trade_price" id="trade_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required" th:value="${product.trade_price}">
         </div>
     </div>
     <div class="layui-form-item">
@@ -85,60 +85,40 @@
 </form>
 <!--<script src="layui.js"></script>-->
 <script>
-    layui.use(['form', 'layer'], function(){
-        var form = layui.form;
-        var layer = layui.layer;
+        layui.use(['form', 'layer'], function(){
+            var form = layui.form;
+            var layer = layui.layer;
+            var single = [[${product.product_model}]];
+            var serialNumber = [[${product.serial_number}]];
+            $("#select_model").find("option[value="+single+"]").prop("selected",true);
+            $("#serial_number").find("option[value="+serialNumber+"]").prop("selected",true);
+            form.render();
 
-        var single = [[${product.product_model}]];
-        var serialNumber = [[${product.serial_number}]];
-        $("#select_model").find("option[value="+single+"]").prop("selected",true);
-        $("#serial_number").find("option[value="+serialNumber+"]").prop("selected",true);
-        form.render();
-
-        // debugger;
-        // var model_id = $("#select_model option:selected").val();
-        // $.ajax({
-        //     url:"queryByModelName",
-        //     dateType:"json",
-        //     type:"post",
-        //     data:{"model_id":model_id},
-        //     success:function (resp) {
-        //         debugger;
-        //         if(resp!=null){
-        //             var typename = resp.type_name;
-        //             var typeid = resp.id;
-        //             $("#product_type_name").val(typename);
-        //             $("#proType").val(typeid);
-        //         }else {
-        //             $("#product_type_name").val("");
-        //         }
-        //     }
-        // });
-
-        form.on('select(promodels)', function (data) {
-            var model_id = $("#select_model option:selected").val();
-            $.ajax({
-                url:"queryByModelName",
-                dateType:"json",
-                type:"post",
-                data:{"model_id":model_id},
-                success:function (resp) {
-                    // debugger;
-                    if(resp!=null||resp!=""){
-                        // var s = "<td></td>";
-                        var typename = resp.type_name;
-                        var typeid = resp.id;
-                        $("#product_type_name").val(typename);
-                        $("#proType").val(typeid);
-                    }else {
-                        $("#product_type_name").val("");
+            form.on('select(promodels)', function (data) {
+                debugger;
+                var model_id = $("#select_model option:selected").val();
+                $.ajax({
+                    url:"queryByModelName",
+                    dateType:"json",
+                    type:"post",
+                    data:{"model_id":model_id},
+                    success:function (resp) {
+                        if(resp!=null||resp!=""){
+                            var typeid = resp.model_type;
+                            if(resp.model_type==1){
+                                $("#product_type_name").val("游戏本");
+                            }else if(resp.model_type==2){
+                                $("#product_type_name").val("商务本");
+                            }
+                            $("#proType").val(typeid);
+                        }else {
+                            $("#product_type_name").val("");
+                        }
                     }
-                }
-            })
-        });
+                })
+            });
 
         $("#sub").click(function () {
-            debugger;
             var id = [[${product.id}]];
             var product_name = $("#product_name").val();
             var product_model = $("#select_model option:selected").val();
@@ -166,7 +146,6 @@
                     "serial_number":serial_number
                 },
                 success:function (resp) {
-                    debugger;
                     if (resp!=null){
                         layer.msg("修改产品信息成功，待审核");
                         var index = parent.layer.getFrameIndex(window.name);
@@ -178,13 +157,7 @@
             });
         });
     });
-    // $.ready(function () {
-    //     debugger;
-    //     var single = [[${product.product_model}]];
-    //     var serialNumber = [[${product.serial_number}]];
-    //     $("#serial_number option[value="+serialNumber+"]").attr('selected', true);
-    //     $("#select_model option[value= " + single + "]").prop("selected",true);
-    // })
+
 </script>
 </body>
 </html>

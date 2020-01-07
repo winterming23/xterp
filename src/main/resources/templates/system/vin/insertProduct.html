@@ -41,31 +41,31 @@
     <div class="layui-form-item">
         <label class="layui-form-label">产品单位：</label>
         <div class="layui-input-block">
-            <input type="text" name="product_unit" id="product_unit" placeholder="请输入" autocomplete="off" class="layui-input" required="required">
+            <input type="text" name="product_unit" id="product_unit" placeholder="请输入产品单位" autocomplete="off" class="layui-input" required="required">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">零售价：</label>
         <div class="layui-input-block">
-            <input type="text" name="retail_price" id="retail_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required">
+            <input type="text" name="retail_price" id="retail_price" placeholder="请输入零售价" autocomplete="off" class="layui-input" required="required">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">最低售价：</label>
         <div class="layui-input-block">
-            <input type="text" name="min_price" id="min_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required">
+            <input type="text" name="min_price" id="min_price" placeholder="请输入最低售价" autocomplete="off" class="layui-input" required="required">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">成本价：</label>
         <div class="layui-input-block">
-            <input type="text" name="cost_price" id="cost_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required">
+            <input type="text" name="cost_price" id="cost_price" placeholder="请输入成本价" autocomplete="off" class="layui-input" required="required">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">销售价格：</label>
         <div class="layui-input-block">
-            <input type="text" name="trade_price" id="trade_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required">
+            <input type="text" name="trade_price" id="trade_price" placeholder="请输入销售价格" autocomplete="off" class="layui-input" required="required">
         </div>
     </div>
     <div class="layui-form-item">
@@ -91,19 +91,14 @@
         var form = layui.form;
         var layer = layui.layer;
         form.on('select(promodels)', function (data) {
-            debugger;
             var model_id = $("#select_model option:selected").val();
-            // alert(model_id);
             $.ajax({
                 url:"queryByModelName",
                 dateType:"json",
                 type:"post",
                 data:{"model_id":model_id},
                 success:function (resp) {
-                    debugger;
                     if(resp!=null||resp!=""){
-                        // var s = "<td></td>";
-                        //var typename = resp.type_name;
                         var typeid = resp.model_type;
                         if(resp.model_type==1){
                             $("#product_type_name").val("游戏本");
@@ -119,7 +114,6 @@
         });
 
         $("#product_name").blur(function () {
-            debugger;
             var product_name = $("#product_name").val();
             $.ajax({
                 url:"queryProductByProductName",
@@ -127,7 +121,6 @@
                 type:"post",
                 data:{"product_name":product_name},
                 success:function (resp) {
-                    debugger;
                     if (resp==null||resp==""){
                         alert("该产品已存在");
                         var productName = "";
@@ -138,7 +131,6 @@
         });
 
         $("#sub").click(function () {
-            debugger;
             var product_name = $("#product_name").val();
             var product_model = $("#select_model option:selected").val();
             var product_type = $("#proType").val();
@@ -164,7 +156,6 @@
                     "serial_number":serial_number
                 },
                 success:function (resp) {
-                    debugger;
                     if (resp!=null){
                         layer.msg("新增产品信息成功，待审核");
                         var index = parent.layer.getFrameIndex(window.name);

@@ -120,7 +120,6 @@
         var layer = layui.layer;
     });
         $("#sub").click(function () {
-            debugger;
             var id = [[${supplierG.id}]];
             var supplier = $("#supplier").val();
             var contacts = $("#contacts").val();
@@ -162,7 +161,6 @@
                     "taxRate":taxRate
                 },
                 success:function (resp) {
-                    debugger;
                     if (resp!=null){
                         layer.msg("修改供应商信息成功");
                         var index = parent.layer.getFrameIndex(window.name);

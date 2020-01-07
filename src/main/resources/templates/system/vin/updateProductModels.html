@@ -16,7 +16,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">型号名称：</label>
         <div class="layui-input-block">
-            <input type="text" name="brand" id="brand" placeholder="请输入型号名称" autocomplete="off" th:value="${productModel.brand}" class="layui-input" required="required">
+            <input type="text" name="model_name" id="model_name" placeholder="请输入型号名称" autocomplete="off" th:value="${productModel.model_name}" class="layui-input" required="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">型号品牌：</label>
+        <div class="layui-input-block">
+            <input type="text" name="model_name" id="brand" placeholder="请输入型号品牌名称" autocomplete="off" th:value="${productModel.brand}" class="layui-input" required="required">
         </div>
     </div>
     <div class="layui-form-item">
@@ -101,7 +107,6 @@
         form.render();
 
         $("#sub").click(function () {
-            debugger;
             var id = [[${productModel.id}]];
             var model_name = $("#model_name").val();
             var brand = $("#brand").val();
@@ -135,7 +140,6 @@
                     "model_type":model_type,
                 },
                 success:function (resp) {
-                    debugger;
                     if (resp!=null){
                         layer.msg("修改产品型号信息成功");
                         var index = parent.layer.getFrameIndex(window.name);

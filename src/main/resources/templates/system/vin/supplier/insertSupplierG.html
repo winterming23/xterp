@@ -29,7 +29,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">联系电话：</label>
         <div class="layui-input-block">
-            <input type="text" name="phonenum" id="phonenum" placeholder="请输入联系人名称" autocomplete="off" class="layui-input" required="required">
+            <input type="text" name="phonenum" id="phonenum" placeholder="请输入联系电话" autocomplete="off" class="layui-input" required="required">
         </div>
     </div>
     <div class="layui-form-item">
@@ -57,9 +57,9 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">销售价格：</label>
+        <label class="layui-form-label">销售价：</label>
         <div class="layui-input-block">
-            <input type="text" name="trade_price" id="trade_price" placeholder="请输入" autocomplete="off" class="layui-input" required="required">
+            <input type="text" name="trade_price" id="trade_price" placeholder="请输入销售价" autocomplete="off" class="layui-input" required="required">
         </div>
     </div>
     <div class="layui-form-item">
@@ -88,12 +88,12 @@
     </div>    <div class="layui-form-item">
         <label class="layui-form-label">地址：</label>
         <div class="layui-input-block">
-            <input type="text" name="address" id="address" placeholder="请输入产品名称" autocomplete="off" class="layui-input" required="required">
+            <input type="text" name="address" id="address" placeholder="请输入供应商地址" autocomplete="off" class="layui-input" required="required">
         </div>
     </div>    <div class="layui-form-item">
         <label class="layui-form-label">纳税人识别号：</label>
         <div class="layui-input-block">
-            <input type="text" name="taxNum" id="taxNum" placeholder="请输入地址" autocomplete="off" class="layui-input" required="required">
+            <input type="text" name="taxNum" id="taxNum" placeholder="请输入纳税人识别号" autocomplete="off" class="layui-input" required="required">
         </div>
     </div>
     <div class="layui-form-item">
@@ -129,7 +129,6 @@
         var layer = layui.layer;
     });
         $("#sub").click(function () {
-            debugger;
             var supplier = $("#supplier").val();
             var contacts = $("#contacts").val();
             var phonenum = $("#phonenum").val();
@@ -169,7 +168,6 @@
                     "taxRate":taxRate,
                 },
                 success:function (resp) {
-                    debugger;
                     if (resp!=null){
                         layer.msg("新增供应商信息成功，待审核");
                         var index = parent.layer.getFrameIndex(window.name);

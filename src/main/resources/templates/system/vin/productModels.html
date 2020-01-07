@@ -98,34 +98,34 @@
             // $(this).find(":checkbox").attr("checked", true);
         });
         $("#btnDelete").click(function () {//删除多条
-             debugger;
-            var checkids = [];
-            var data = [];
-            $("input[name='ckb']:checked").each(function (i) {
-                checkids[i] = $(this).val();
-            });
-            if (checkids.length <= 0) {
-                alert("请选择一条需要被删除的数据")
-            } else {
-                $("#tbo").find(":checkbox:checked").each(function () {
-                    var val = $(this).parents().children().children(".proid").val();
-                     alert(val);
-                    data.push(val);
-                    $.ajax({
-                        url: "deleteProductModelss",
-                        dateType: "text",
-                        type: "post",
-                        data: {"proids": val},
-                        success: function (resp) {
-                            if (resp != null) {
-                                alert("删除成功");
-                                location.href = "getAllProductModels";
-                            } else {
-                                alert("删除失败")
-                            }
-                        }
-                    });
+            if(confirm('是否确定删除!')) {
+                var checkids = [];
+                var data = [];
+                $("input[name='ckb']:checked").each(function (i) {
+                    checkids[i] = $(this).val();
                 });
+                if (checkids.length <= 0) {
+                    alert("请选择一条需要被删除的数据")
+                } else {
+                    $("#tbo").find(":checkbox:checked").each(function () {
+                        var val = $(this).parents().children().children(".proid").val();
+                        data.push(val);
+                        $.ajax({
+                            url: "deleteProductModelss",
+                            dateType: "text",
+                            type: "post",
+                            data: {"proids": val},
+                            success: function (resp) {
+                                if (resp != null) {
+                                    alert("删除成功");
+                                    location.href = "getAllProductModels";
+                                } else {
+                                    alert("删除失败")
+                                }
+                            }
+                        });
+                    });
+                }
             }
         });
         //全选全不选

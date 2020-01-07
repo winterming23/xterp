@@ -34,7 +34,7 @@ public class SupplierController {
     }
 
     /**
-     * 获取所有供应商信息
+     * 获取所有客户信息
      * @param model
      * @return
      */

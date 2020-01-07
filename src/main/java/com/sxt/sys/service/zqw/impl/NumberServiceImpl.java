@@ -29,18 +29,19 @@ public class NumberServiceImpl implements NumberServiceI {
 
 
     @Override
-    public Boolean inserNum(int id, String startTime, String endTime, int personCharge, Integer[] numbersl, int[] materialsId,String[] catname,Integer quantity,Integer salesid) throws ParseException {
+    public Boolean inserNum(int id, String startTime, String endTime, int personCharge, Integer[] numbersl, int[] materialsId,String[] catname,Integer quantity,Integer salesid,int seleappforid) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = sdf.parse(startTime);
         Date date2 = sdf.parse(endTime);
         Number numbers = null;
+        System.out.println("id:"+id+"==============catname:"+catname);
         for (int i=0;i<numbersl.length;i++){
-                numbers = new Number(0, materialsId[i], numbersl[i], id,catname[i]);
+                numbers = new Number(0, materialsId[i], numbersl[i], seleappforid,catname[i]);
                 System.out.println("添加的值"+catname[i]);
             numberMapper.inserNum(numbers);
         }
         Date t = new Date();
-        Productionplan productionplan = new Productionplan(0, id, date1, date2, personCharge, 0, 0,id ,quantity,salesid);
+        Productionplan productionplan = new Productionplan(0, id, date1, date2, personCharge, 0, 0,seleappforid ,salesid,salesid);
         boolean b1 = productionplanMapper.inserProuct(productionplan);
         return true;
     }

@@ -24,8 +24,8 @@ public class NumberContrller {
      * @return
      */
     @RequestMapping("insernum")
-    public String insernum(int id, String startTime, String endTime, int personCharge, Integer[] numbersl, int[] materialsId, String[] catname, Integer quantity, Integer salesid, HttpServletRequest request) throws ParseException {
-            numberServiceI.inserNum(id,startTime,endTime,personCharge,numbersl,materialsId,catname,quantity,salesid);
+    public String insernum(int id, String startTime, String endTime, int personCharge, Integer[] numbersl, int[] materialsId, String[] catname, Integer quantity, Integer salesid, int seleappforid,HttpServletRequest request) throws ParseException {
+            numberServiceI.inserNum(id,startTime,endTime,personCharge,numbersl,materialsId,catname,quantity,salesid,seleappforid);
             boolean b = pickingService.pickingSh(id, 4);
         return "redirect:/pdsele";
     }

@@ -20,7 +20,7 @@ public interface NumberServiceI {
      * @param
      * @return
      */
-    Boolean inserNum(int id, String startTime, String endTime, int personCharge, Integer[] numbersl, int[] materialsId, String[] catname, Integer quantity, Integer salesid) throws ParseException;
+    Boolean inserNum(int id, String startTime, String endTime, int personCharge, Integer[] numbersl, int[] materialsId, String[] catname, Integer quantity, Integer salesid,int seleappforid) throws ParseException;
 
     /**
      * 查询材料表信息

@@ -77,8 +77,8 @@
                     </div>
                 </div>-->
     <label class="layui-form-label">产品名称</label>
-    <input type="text" name="id"  th:each="dgselepds:${dgselepd}"  th:value="${dgselepds.product_name}" id="big" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 260px">
-    <input  type="hidden"  th:each="dgselepds:${dgselepd}"th:value="${dgselepds.id}"/>
+    <input type="text"  th:each="dgselepd:${dgselepd}"  th:value="${dgselepd.product_name}" id="big" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 260px">
+    <input  type="hidden"   name="id" th:each="dgselepd:${dgselepd}" th:value="${dgselepd.id}"/>
     <br/>
     <br/>
                 <div class="layui-inline" id="startTime">
@@ -97,9 +97,9 @@
                     <div class="layui-form-item" id="big">
                         <div class="layui-input-block">
                             <span th:text="${selepmll.mName}"></span>
-                            <select name="" lay-verify="required" id="id">
+                            <select lay-verify="required" id="id" name="catname">
                                 <option th:text="${'请选择'+selepmll.mName}"></option>
-                                <option th:text="${selepmll.designation}" name="catname">
+                                <option th:text="${selepmll.designation}" >
                                 </option>
                             </select>
                         </div>
@@ -128,6 +128,7 @@
         <div class="layui-input-block">
             <input type="text" name="quantity" required  lay-verify="required"  autocomplete="off" class="layui-input" th:each="seleappfor:${seleappfor}" th:value="${seleappfor.number}">
             <input type="hidden" name="salesid" th:each="seleappfor:${seleappfor}" th:value="${seleappfor.auditor}">
+            <input type="hidden" name="seleappforid" th:each="seleappfor:${seleappfor}" th:value="${seleappfor.id}">
         </div>
     </div>
     <div class="layui-form-item">

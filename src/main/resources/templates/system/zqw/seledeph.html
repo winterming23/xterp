@@ -23,10 +23,6 @@
         <th>单据编号</th>
         <th>物料名称</th>
         <th>所需数量</th>
-<<<<<<< HEAD
-        <th>操作</th>
-=======
->>>>>>> zqw1
     </tr>
     </thead>
     <tbody>
@@ -34,31 +30,28 @@
         <td th:text="${seleDep.Number}"></td>
         <td th:text="${seleDep.catname}"></td>
         <td th:text="${seleDep.numbersl}"></td>
-       <!-- <td>
-            <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDep.Status==0}">
-                <i class="layui-icon"></i>领料中
-            </button>
-            <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDep.Status==1}">
-                <i class="layui-icon">&#xe654;</i>领料成功
-            </button>
-<<<<<<< HEAD
-            <input type="hidden" name="he" th:value="${seleDep.Status}" id="status" />
-        </td>-->
-=======
-        </td>-->
+        <!-- <td>
+             <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDep.Status==0}">
+                 <i class="layui-icon"></i>领料中
+             </button>
+             <button type="button" class="layui-btn layui-btn layui-btn-sm" th:if="${seleDep.Status==1}">
+                 <i class="layui-icon"></i>领料成功
+             </button>
+         </td>-->
     </tr>
     <tr th:each="seleDepqb:${seleDepqb}">
         <td th:text="${seleDepqb.countt}" id="countt"></td>
->>>>>>> zqw1
         <td>
-            <a th:href="@{/selePri(id=${seleDep.deid})}"  id="gx" >
+            <a th:href="@{/selePri(id=${seleDepqb.deid})}"  id="gx" >
                 <button type="button" class="layui-btn layui-btn layui-btn-sm" >
-                    <i class="layui-icon">&#xe654;</i>添加工序
+                    <i class="layui-icon">&#xe654;</i>组装
                 </button>
             </a>
         </td>
     </tr>
-    <tr></tr>
+    <tr th:each="seleDepqba:${seleDepqba}">
+        <td th:text="${seleDepqba.countt}" id="countt2"></td>
+    </tr>
     </tbody>
 </table>
 <script>
@@ -66,6 +59,18 @@
         $("#gx").hide();
        var statusa=$("#status").val()
     })*/
+    $(function () {
+        var countt = $("#countt").text();
+        var countt2 = $("#countt2").text();
+        $("#countt").hide();
+        $("#countt2").hide();
+        /*        alert(countt)
+                alert(countt2)*/
+        $("#gx").hide();
+        if (countt==countt2){
+            $("#gx").show();
+        }
+    })
 </script>
 </body>
 </html>

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Detailed {
-    private Integer id;//主键id
+    private Integer detailed_id;//主键id
     private Integer orderid ;//外键订单表id
     private Integer storehouseid;//外键 仓库id
     private Integer goodsid;//外键 商品明细

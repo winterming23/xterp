@@ -1,5 +1,7 @@
 package com.sxt.sys.mapper.qxs.warehouse;
 
+import com.sxt.sys.domain.hjn.Detailed;
+import com.sxt.sys.domain.hjn.Orders;
 import com.sxt.sys.domain.qxs.warehouse.DepotItem;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -117,4 +119,7 @@ public interface DepotItemMapper {
             " from materials m JOIN depotitem d on m.id=d.materialId" +
             " where m.designation=#{designation} and d.depotId=#{depotId}")
     HashMap getCount( @Param("designation") String designation, @Param("depotId") int depotId);
+
+
+
 }

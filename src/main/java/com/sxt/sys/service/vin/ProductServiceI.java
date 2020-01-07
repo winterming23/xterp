@@ -70,7 +70,7 @@ public interface ProductServiceI {
      * 根据产品型号获取产品类型
      * @return Product_type
      */
-    public Product_type queryByModelName(long id);
+    public Product_model queryByModelName(long id);
 
     /**
      * 根据产品类型获取类型名称

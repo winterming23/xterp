@@ -205,6 +205,13 @@ public class DepotHeadServiceImpl implements DepotHeadServiceI {
                                     if(update && b){
                                         return 10;
                                     }
+                                }else if("零件入库".equals(depothead.getType())){
+                                    //根据采购编号获取采购明细
+                                    int count = depotHeadMapper.getDepotHeadCount(depothead.getNumber());
+                                    System.err.println(count);
+                                    if(count==0){
+                                        boolean b = depotHeadMapper.updateOrder(depothead.getOrganId());
+                                    }
                                 }
                                 return 2;
                             }else {

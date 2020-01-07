@@ -148,7 +148,6 @@ public interface DepotHeadMapper {
     @Select("select * from orders wehre orderid=#{id}")
     Orders queryID(Integer id);
 
-
     /**
      * 新增采购明细
      *
@@ -156,4 +155,28 @@ public interface DepotHeadMapper {
      */
     @Insert("insert into Detailed values(null,#{orderid},#{storehouseid},#{goodsid},#{number},#{tax},#{price},#{remarks})")
     int addDetailed(Detailed detailed);
+
+    /**
+     * 根据销售id获取采购订单id
+     * @param saseId
+     * @return
+     */
+    @Select("select * from orders where sale_id=#{saseId}")
+    Orders getOrdersId(Integer saseId);
+
+    /**
+     * 根据销售id进行计数
+     * @param number
+     * @return
+     */
+    @Select("select count(id) from depotHead where number=#{number} and ")
+    int getDepotHeadCount(String number);
+
+    /**
+     * 根据销售id修改 采购订单状态
+     * @param saseId
+     * @return
+     */
+    @Update("update orders set orderstate=3 where sale_id=#{saseId}")
+    boolean updateOrder(Integer saseId);
 }

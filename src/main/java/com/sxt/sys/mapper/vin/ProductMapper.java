@@ -36,7 +36,7 @@ public interface ProductMapper {
      * 查询所有产品型号
      * @return List<Product_model>
      */
-    @Select("SELECT * FROM product_model where delete_Flag = '0'")
+    @Select("SELECT * FROM product_model where delete_Flag = '0' ")
     public List<Product_model> getProductModel();
 
     /**
@@ -83,8 +83,8 @@ public interface ProductMapper {
      * 根据产品型号获取产品类型
      * @return Product_type
      */
-    @Select("SELECT * from product_type where id =#{id} and delete_Flag = 0")
-    public Product_type queryByModelName(long id);
+    @Select("SELECT * from product_model where id =#{id} and delete_Flag = '0' ")
+    public Product_model queryByModelName(long id);
 
     /**
      * 根据产品类型获取类型名称

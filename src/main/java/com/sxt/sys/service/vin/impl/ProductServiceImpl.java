@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductServiceI {
     }
 
     @Override
-    public Product_type queryByModelName(long id) {
+    public Product_model queryByModelName(long id) {
         return productMapper.queryByModelName(id);
     }
 

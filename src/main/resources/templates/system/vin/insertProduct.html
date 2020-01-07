@@ -91,6 +91,7 @@
         var form = layui.form;
         var layer = layui.layer;
         form.on('select(promodels)', function (data) {
+            debugger;
             var model_id = $("#select_model option:selected").val();
             // alert(model_id);
             $.ajax({
@@ -99,12 +100,16 @@
                 type:"post",
                 data:{"model_id":model_id},
                 success:function (resp) {
-                    // debugger;
+                    debugger;
                     if(resp!=null||resp!=""){
                         // var s = "<td></td>";
-                        var typename = resp.type_name;
-                        var typeid = resp.id;
-                        $("#product_type_name").val(typename);
+                        //var typename = resp.type_name;
+                        var typeid = resp.model_type;
+                        if(resp.model_type==1){
+                            $("#product_type_name").val("游戏本");
+                        }else if(resp.model_type==2){
+                            $("#product_type_name").val("商务本");
+                        }
                         $("#proType").val(typeid);
                     }else {
                         $("#product_type_name").val("");

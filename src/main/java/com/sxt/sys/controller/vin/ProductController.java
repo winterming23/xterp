@@ -94,13 +94,13 @@ public class ProductController {
 
     @RequestMapping("queryByModelName")
     @ResponseBody
-    public Product_type queryByModelName(Integer model_id){
+    public Product_model queryByModelName(Integer model_id){
         System.out.println(model_id);
-        Product_type product_type = productServiceI.queryByModelName(model_id);
-        if(product_type!=null){
-            System.out.println(product_type);
+        Product_model product = productServiceI.queryByModelName(model_id);
+        if(product!=null){
+            System.out.println(product);
         }
-        return product_type;
+        return product;
     }
 
     /**
@@ -187,9 +187,9 @@ public class ProductController {
      */
     @RequestMapping("queryByProductType")
     @ResponseBody
-    public Product_type queryByProductType(Long product_type){
+    public Product_model queryByProductType(Long product_type){
         System.out.println(product_type);
-        Product_type productType = productServiceI.queryByModelName(product_type);
+        Product_model productType = productServiceI.queryByModelName(product_type);
         return productType;
     }
 
